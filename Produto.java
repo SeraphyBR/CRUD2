@@ -7,6 +7,7 @@ class Produto implements Entidade{
     protected float  preco;
     protected String marca;
     protected String origem; 
+    protected int    idCategoria;
 
     //Construtor vazio
     public Produto(){
@@ -16,17 +17,9 @@ class Produto implements Entidade{
         this.preco        = 0;
         this.marca        = "";
         this.origem       = "";
+        this.idCategoria  = -1;
     }//end Produto 
-
-    public void setID(int id){
-        this.idProduto = id;
-    }//end setId
-
-    public int getID(){
-        return this.idProduto;
-    }//end getId
-
-
+    
     //construtor com parametros
     public Produto(String nome_Produto, String descricao, float preco, String marca, String origem){
         this.nome_Produto = nome_Produto;
@@ -35,6 +28,14 @@ class Produto implements Entidade{
         this.marca        = marca;
         this.origem       = origem;
     }//end Produto
+
+    public void setID(int id){
+        this.idProduto = id;
+    }//end setId
+
+    public int getID(){
+        return this.idProduto;
+    }//end getId
 
     //Retorna um array de bytes com os bytes para escrever no arquivo
     public byte[] toByteArray() throws Exception{
@@ -47,6 +48,7 @@ class Produto implements Entidade{
         saida.writeFloat(this.preco);
         saida.writeUTF(this.marca);
         saida.writeUTF(this.origem);
+        saida.writeInt(this.idCategoria);
 
         return dados.toByteArray();
     }//end toByteArray
@@ -62,16 +64,18 @@ class Produto implements Entidade{
         this.preco        = entrada.readFloat();
         this.marca        = entrada.readUTF();
         this.origem       = entrada.readUTF();
+        this.idCategoria  = entrada.readInt();
 
         entrada.close();
     }//end fromByteArray
 
     public String toString(){
-        return "Id: "           + this.idProduto    + 
-                "\nNome: "      + this.nome_Produto + 
-                "\nDescricao: " + this.descricao    + 
-                "\nPreco: "     + this.preco        + 
-                "\nMarca: "     + this.marca        + 
-                "\nOrigem: "    + this.origem;
+        return "Id: "             + this.idProduto    + 
+                "\nNome: "        + this.nome_Produto + 
+                "\nDescricao: "   + this.descricao    + 
+                "\nPreco: "       + this.preco        + 
+                "\nMarca: "       + this.marca        + 
+                "\nOrigem: "      + this.origem       +
+                "\nIdCategoria: " + this.idCategoria;
     }//end toString
 }//end Produto

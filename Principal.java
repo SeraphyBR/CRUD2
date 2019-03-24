@@ -3,15 +3,22 @@ public class Principal{
 
     public static void main(String[] args){
         Scanner read = new Scanner(System.in);
-        String nome, descricao, marca, origem;
+
+        String nomeProduto, descricao, marca, origem, nomeCategoria;
         float preco;
-        Produto p;
         int id; 
         byte opcao;
         boolean erro, result;
+
+        Produto p;
+        Categoria c;
+
         Arquivo<Produto> arq;
+        Arquivo<Categoria> arq2;
         try{
-            arq = new Arquivo<>(Produto.class.getConstructor(), "Produto");
+            arq  = new Arquivo<>(Produto.class.getConstructor(), "Produto");
+            arq2 = new Arquivo<>(Categoria.class.getConstructor(), "Categoria");
+            
             boolean fecharMenu = false;
             do{
                 //menu
@@ -25,8 +32,8 @@ public class Principal{
                         //inserir produto
                         System.out.println("\t** Adicionar produto **\n");
                         System.out.print("Nome do produto: ");
-                        nome = read.nextLine();
-                        nome = read.nextLine();
+                        nomeProduto = read.nextLine();
+                        nomeProduto = read.nextLine();
                         System.out.print("Descricao do produto: ");
                         descricao = read.nextLine();
                         System.out.print("Preco do produto: ");
@@ -42,7 +49,7 @@ public class Principal{
                             System.out.print("1 - SIM\n2 - NÂO\nR: ");
                             switch (read.nextByte()){
                                 case 1:
-                                    id = arq.inserir(new Produto(nome,descricao,preco,marca,origem));
+                                    id = arq.inserir(new Produto(nomeProduto,descricao,preco,marca,origem));
                                     System.out.println("\nProduto inserido com o ID: " + id);   
                                     break;
                                 case 2:
@@ -96,8 +103,8 @@ public class Principal{
                             System.out.println();
                         } while(erro);   
                         System.out.print("Nome do produto: ");
-                        nome = read.nextLine();
-                        nome = read.nextLine();
+                        nomeProduto = read.nextLine();
+                        nomeProduto = read.nextLine();
                         System.out.print("Descricao do produto: ");
                         descricao = read.nextLine();
                         System.out.print("Preco do produto: ");
@@ -113,7 +120,7 @@ public class Principal{
                             System.out.print("1 - SIM\n2 - NÂO\nR: ");
                             switch (read.nextByte()){
                                 case 1:
-                                    result = arq.alterar(id, new Produto(nome,descricao,preco,marca,origem));
+                                    result = arq.alterar(id, new Produto(nomeProduto,descricao,preco,marca,origem));
                                     if(result) System.out.println("Alterado com sucesso!");
                                     else System.out.println("Produto para alterar não encontrado!");  
                                     break;
