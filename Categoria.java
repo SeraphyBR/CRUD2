@@ -1,6 +1,6 @@
 import java.io.*;
 class Categoria implements Entidade{
-    
+
     protected int    idCategoria;
     protected String nome;
 
@@ -48,7 +48,7 @@ class Categoria implements Entidade{
 
     public String toString(){
         return "ID: " + this.idCategoria + 
-               "\nNome: " + this.nome;
+            "\nNome: " + this.nome;
     }//end toString
 
 }//end Categoria

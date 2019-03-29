@@ -76,22 +76,22 @@ public class Arquivo<G extends Entidade>{
     }//end pesquisar
 
     /*metodo para fazer uma busca binaria no indice para achar o id e retornar a posicao do mesmo no arquivo
-    public long buscaI(int idqr, int esq, int dir) throws Exception{
-        long addr = 0;
-        if (dir >= esq){
-            long meio = ((esq + dir)/2) * 12;
-            indice.seek(meio);
-            int id = indice.readInt();
-            if(id == idqr){ 
-                addr = indice.readLong();
-            }//end if
-            else{   
-                if (id < idqr) addr = buscaI(idqr, ((esq + dir)/2) + 1, dir);
-                else addr = buscaI(idqr, esq, ((esq + dir)/2) - 1 );
-            }//end else
-        }//end if
-        return addr;
-    }*/
+      public long buscaI(int idqr, int esq, int dir) throws Exception{
+      long addr = 0;
+      if (dir >= esq){
+      long meio = ((esq + dir)/2) * 12;
+      indice.seek(meio);
+      int id = indice.readInt();
+      if(id == idqr){ 
+      addr = indice.readLong();
+      }//end if
+      else{   
+      if (id < idqr) addr = buscaI(idqr, ((esq + dir)/2) + 1, dir);
+      else addr = buscaI(idqr, esq, ((esq + dir)/2) - 1 );
+      }//end else
+      }//end if
+      return addr;
+      }*/
 
     //metodo para retornar uma lista com todos os objetos no arquivo
     public ArrayList<G> toList()throws Exception{

@@ -19,7 +19,7 @@ class Produto implements Entidade{
         this.origem       = "";
         this.idCategoria  = -1;
     }//end Produto 
-    
+
     //construtor com parametros
     public Produto(String nome_Produto, String descricao, float preco, String marca, String origem){
         this.nome_Produto = nome_Produto;
