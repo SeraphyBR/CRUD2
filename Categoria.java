@@ -1,3 +1,4 @@
+import java.io.*;
 class Categoria{
     
     protected int    idCategoria;
