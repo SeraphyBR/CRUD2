@@ -1,5 +1,5 @@
 import java.io.*;
-class Categoria{
+class Categoria implements Entidade{
     
     protected int    idCategoria;
     protected String nome;
