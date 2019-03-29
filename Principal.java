@@ -74,7 +74,7 @@ public class Principal{
                             System.out.print("1 - SIM\n2 - NÂO\nR: ");
                             switch (read.nextByte()){
                                 case 1:
-                                    result = arq.remover(id); 
+                                    result = arq.remover(id, true); 
                                     if(result) System.out.println("Removido com sucesso!");
                                     else System.out.println("Produto não encontrado!"); 
                                     break;

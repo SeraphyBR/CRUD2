@@ -38,11 +38,7 @@ public class Arquivo<G extends Entidade>{
         raf.seek(0);
         objeto.setID(ultimoID+1); 
 
-        /*escrever a posicao e o id no indice
-        indice.seek(indice.length());
-        indice.writeInt(objeto.getID());
-        indice.writeLong(raf.length());
-        */
+        indice.inserir(ultimoID, raf.length());
         //escrever o array de bytes do objeto no arquivo
         raf.seek(raf.length());
         byte[] b = objeto.toByteArray();
@@ -63,7 +59,7 @@ public class Arquivo<G extends Entidade>{
         G objeto = null;
         int i = raf.readInt();
         if(i >= idqr){
-            long pos = buscaI(idqr, 0, i);
+            long pos = indice.buscar(idqr);
             if (pos != -1){
                 raf.seek(pos);
                 byte lapide = raf.readByte();
@@ -79,7 +75,7 @@ public class Arquivo<G extends Entidade>{
         return objeto;
     }//end pesquisar
 
-    //metodo para fazer uma busca binaria no indice para achar o id e retornar a posicao do mesmo no arquivo
+    /*metodo para fazer uma busca binaria no indice para achar o id e retornar a posicao do mesmo no arquivo
     public long buscaI(int idqr, int esq, int dir) throws Exception{
         long addr = 0;
         if (dir >= esq){
@@ -95,7 +91,7 @@ public class Arquivo<G extends Entidade>{
             }//end else
         }//end if
         return addr;
-    }//end buscaI
+    }*/
 
     //metodo para retornar uma lista com todos os objetos no arquivo
     public ArrayList<G> toList()throws Exception{
@@ -119,20 +115,24 @@ public class Arquivo<G extends Entidade>{
     }//end toList
 
     //metodo para remover o objeto referente ao id lido
-    public boolean remover(int idqr)throws Exception{
+    public boolean remover(int idqr, boolean remi)throws Exception{
         raf.seek(0);
         int i = raf.readInt();
         boolean result = false;
         if(i >= idqr){
-            long pos = buscaI(idqr, 0, i);
+            long pos = indice.buscar(idqr);
             if (pos != -1){
                 raf.seek(pos);
                 byte lapide = raf.readByte();
                 if(lapide == ' '){
                     raf.seek(pos);
                     raf.writeByte('*');
+                    if(remi){
+                        indice.excluir(idqr);
+                    }
                     result = true;
                 }//end if
+
             }//end if
         }//end if
         return result;
@@ -145,7 +145,7 @@ public class Arquivo<G extends Entidade>{
         raf.seek(0);
         int i = raf.readInt();
         if(i >= idqr){
-            removeu = this.remover(idqr);
+            removeu = this.remover(idqr, false);
             if(removeu){
                 result = this.inserirAlterado(objeto, idqr);
             }//end if
@@ -156,13 +156,7 @@ public class Arquivo<G extends Entidade>{
     //metodo para inserir sem alterar o id, modificando no indice apenas a posicao do objeto no arquivo
     public boolean inserirAlterado(G objeto, int idqr) throws Exception{
         objeto.setID(idqr);
-        indice.seek(0);
-        for(int i = 0; i < indice.length() - 12; i = i + 8){
-            int idIndice = indice.readInt();
-            if(idIndice == idqr){
-                indice.writeLong(raf.length());
-            }//end if
-        }//end for
+        indiece.atualizar(idqr, raf.length());
         raf.seek(raf.length());
         byte[] b = objeto.toByteArray();
         raf.writeByte(' ');
