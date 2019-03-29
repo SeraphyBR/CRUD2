@@ -1,3 +1,4 @@
+import java.io.*;
 class Categoria{
     
     protected int    idCategoria;
@@ -15,11 +16,11 @@ class Categoria{
         this.nome        = nome;
     }//end Categoria
 
-    public setID(int id){
+    public void setID(int id){
         this.idCategoria = id;
     }//end setID
 
-    public getID(){
+    public int getID(){
         return this.idCategoria;
     }//end getID
 
@@ -45,7 +46,7 @@ class Categoria{
         entrada.close();
     }//end fromByteArray
 
-    public toString(){
+    public String toString(){
         return "ID: " + this.idCategoria + 
                "\nNome: " + this.nome;
     }//end toString
