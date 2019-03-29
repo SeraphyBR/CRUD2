@@ -45,7 +45,7 @@ class Categoria{
         entrada.close();
     }//end fromByteArray
 
-    public toString(){
+    public String toString(){
         return "ID: " + this.idCategoria + 
                "\nNome: " + this.nome;
     }//end toString
