@@ -15,11 +15,11 @@ class Categoria{
         this.nome        = nome;
     }//end Categoria
 
-    public setID(int id){
+    public void setID(int id){
         this.idCategoria = id;
     }//end setID
 
-    public getID(){
+    public int getID(){
         return this.idCategoria;
     }//end getID
 
