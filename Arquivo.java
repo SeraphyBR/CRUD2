@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Arquivo<G extends Entidade>{
 
     protected RandomAccessFile raf;
-    protected RandomAccessFile indice;
+    protected Indice indice;
     protected String nomeArquivo;
     protected Constructor<G> construtor;
 
@@ -36,11 +36,13 @@ public class Arquivo<G extends Entidade>{
         int ultimoID;
         ultimoID = this.ultimoID();
         raf.seek(0);
-        objeto.setID(ultimoID+1);      
-        //escrever a posicao e o id no indice
+        objeto.setID(ultimoID+1); 
+
+        /*escrever a posicao e o id no indice
         indice.seek(indice.length());
         indice.writeInt(objeto.getID());
         indice.writeLong(raf.length());
+        */
         //escrever o array de bytes do objeto no arquivo
         raf.seek(raf.length());
         byte[] b = objeto.toByteArray();
