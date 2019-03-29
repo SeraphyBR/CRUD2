@@ -5,7 +5,7 @@ import java.util.ArrayList;
 // CHAVE: Int   (usado para id de alguma entidade)
 // VALOR: Long  (usado para endereço do registro dessa entidade no arquivo)
 
-public class ArvoreBMais_Int_Long {
+public class Indice{
 
     private int  ordem;                 // Número máximo de filhos que uma página pode conter
     private int  maxElementos;          // Variável igual a ordem - 1 para facilitar a clareza do código
@@ -127,7 +127,7 @@ public class ArvoreBMais_Int_Long {
     // ------------------------------------------------------------------------------
         
     
-    public ArvoreBMais_Int_Long(int o, String na) throws IOException {
+    public Indice(int o, String na) throws IOException {
         
         // Inicializa os atributos da árvore
         ordem = o;

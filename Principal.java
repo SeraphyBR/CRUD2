@@ -1,27 +1,17 @@
 import java.util.Scanner;
 public class Principal{
 
+    private static final Scanner read = new Scanner(System.in);
+
     public static void main(String[] args){
-        Scanner read = new Scanner(System.in);
-
-        String nomeProduto, descricao, marca, origem, nomeCategoria;
-        float preco;
-        int id; 
         byte opcao;
-        boolean erro, result;
-
-        Produto p;
-        Categoria c;
-
-        Arquivo<Produto> arq;
-        Arquivo<Categoria> arq2;
+        boolean fecharMenu = false;
+        Arquivo<Produto> arqProdutos;
+        Arquivo<Categoria> arqCategorias;
         try{
-            arq  = new Arquivo<>(Produto.class.getConstructor(), "Produto");
-            arq2 = new Arquivo<>(Categoria.class.getConstructor(), "Categoria");
-            
-            boolean fecharMenu = false;
+            arqProdutos  = new Arquivo<>(Produto.class.getConstructor(), "Produto");
+            arqCategorias = new Arquivo<>(Categoria.class.getConstructor(), "Categoria");
             do{
-                //menu
                 System.out.println("\n\t*** MENU ***");
                 System.out.println("0 - Adicionar produto\n1 - Remover produto\n2 - Alterar produto\n3 - Consultar produto\n4 - Listar produtos cadastrados\n5 - Sair");
                 System.out.print("Digite a opção: ");
@@ -29,151 +19,19 @@ public class Principal{
                 System.out.println();
                 switch (opcao){
                     case 0:
-                        //inserir produto
-                        System.out.println("\t** Adicionar produto **\n");
-                        System.out.print("Nome do produto: ");
-                        nomeProduto = read.nextLine();
-                        nomeProduto = read.nextLine();
-                        System.out.print("Descricao do produto: ");
-                        descricao = read.nextLine();
-                        System.out.print("Preco do produto: ");
-                        preco = read.nextFloat();
-                        System.out.print("Marca do produto: ");
-                        marca = read.nextLine();
-                        marca = read.nextLine();
-                        System.out.print("Origem do produto: ");
-                        origem = read.nextLine();
-                        do{
-                            erro = false;
-                            System.out.println("\nAdicionar novo produto?");
-                            System.out.print("1 - SIM\n2 - NÂO\nR: ");
-                            switch (read.nextByte()){
-                                case 1:
-                                    id = arq.inserir(new Produto(nomeProduto,descricao,preco,marca,origem));
-                                    System.out.println("\nProduto inserido com o ID: " + id);   
-                                    break;
-                                case 2:
-                                    System.out.println("\nNovo produto não foi inserido!");
-                                    break;
-                                default:
-                                    System.out.println("\nOpção Inválida!\n");
-                                    erro = true;
-                                    break;
-                            }
-                        } while (erro);
+                        adicionarP(arqProdutos);
                         break;
-
                     case 1:
-                        //remover o produto
-                        System.out.println("\t** Remover produto **\n");
-                        System.out.print("ID do produto a ser removido: ");
-                        id = read.nextInt();
-                        do{
-                            erro = false;
-                            System.out.println("\nRemover produto?");
-                            System.out.print("1 - SIM\n2 - NÂO\nR: ");
-                            switch (read.nextByte()){
-                                case 1:
-                                    result = arq.remover(id, true); 
-                                    if(result) System.out.println("Removido com sucesso!");
-                                    else System.out.println("Produto não encontrado!"); 
-                                    break;
-                                case 2:
-                                    System.out.println("\nOperação Cancelada!");
-                                    break;
-                                default:
-                                    System.out.println("\nOpção Inválida!\n");
-                                    erro = true;
-                                    break;
-                            }
-                        } while (erro); 
+                        removerP(arqProdutos);
                         break;
-
                     case 2:
-                        //alterar o produto pelo ID
-                        System.out.println("\t** Alterar produto **\n");
-                        do{
-                            erro = false;
-                            System.out.print("ID do produto a ser alterado: ");
-                            id = read.nextInt();
-                            if(id <= 0){
-                                erro = true;
-                                System.out.println("ID Inválida! ");
-                            }
-                            System.out.println();
-                        } while(erro);   
-                        System.out.print("Nome do produto: ");
-                        nomeProduto = read.nextLine();
-                        nomeProduto = read.nextLine();
-                        System.out.print("Descricao do produto: ");
-                        descricao = read.nextLine();
-                        System.out.print("Preco do produto: ");
-                        preco = read.nextFloat();
-                        System.out.print("Marca do produto: ");
-                        marca = read.nextLine();
-                        marca = read.nextLine();
-                        System.out.print("Origem do produto: ");
-                        origem = read.nextLine();
-                        do{
-                            erro = false;
-                            System.out.println("\nAlterar produto?");
-                            System.out.print("1 - SIM\n2 - NÂO\nR: ");
-                            switch (read.nextByte()){
-                                case 1:
-                                    result = arq.alterar(id, new Produto(nomeProduto,descricao,preco,marca,origem));
-                                    if(result) System.out.println("Alterado com sucesso!");
-                                    else System.out.println("Produto para alterar não encontrado!");  
-                                    break;
-                                case 2:
-                                    System.out.println("\nOperação Cancelada!");
-                                    break;
-                                default:
-                                    System.out.println("\nOpção Inválida!\n");
-                                    erro = true;
-                                    break;
-                            }
-                        } while (erro); 
+                        alterarP(arqProdutos);
                         break;
-
                     case 3:
-                        //Pesquisar determinado produto pelo id
-                        System.out.println("\t** Consultar produto **\n");
-                        do{
-                            erro = false;
-                            System.out.print("ID do produto a ser consultado: ");
-                            id = read.nextInt();
-                            if(id <= 0){
-                                erro = true;
-                                System.out.println("ID Inválida! ");
-                            }
-                            System.out.println();
-                        } while(erro);
-                        p = arq.pesquisar(id);
-                        if (p != null && p.idProduto != -1 ){
-                            System.out.println(p);
-                        }
-                        else System.out.println("Produto não encontrado!");
+                        consultaP(arqProdutos);
                         break;
                     case 4:
-                        //Listar os produtos
-                        System.out.println("\t** Lista dos produtos cadastrados **\n");
-                        for(int i = 1; i <= arq.ultimoID(); i++){
-                            p = arq.pesquisar(i);
-                            c = arq2.pesquisar(p.idCategoria);
-                            if (p != null && p.idProduto != -1 ){
-                                System.out.println(p);
-                                System.out.println(
-                                    "Id: "             + this.idProduto   + 
-                                    "\nNome: "        + this.nome_Produto + 
-                                    "\nDescricao: "   + this.descricao    + 
-                                    "\nPreco: "       + this.preco        + 
-                                    "\nMarca: "       + this.marca        + 
-                                    "\nOrigem: "      + this.origem       +
-                                    "\nIdCategoria: " + c.idCategoria;)
-                                System.out.println();
-                                Thread.sleep(500);
-                            }  
-                        }
+                        listaP(arqProdutos, arqCategorias);
                         break;
                     case 5:
                         fecharMenu = true;
@@ -184,10 +42,177 @@ public class Principal{
                         break;
                 }
             }while(!fecharMenu);
-            arq.close();
+            arqProdutos.close();
+            arqCategorias.close();
         }//end try 
         catch(Exception e){
             e.printStackTrace();
         }//end catch
     }//end main
+
+    private static void adicionarP(Arquivo<Produto> arq) throws Exception
+    {//Inicio adicionar
+        //inserir produto  
+        String nomeProduto, descricao, marca, origem, nomeCategoria;
+        float preco;
+        int id; 
+        boolean erro;     
+        System.out.println("\t** Adicionar produto **\n");
+        System.out.print("Nome do produto: ");
+        nomeProduto = read.nextLine();
+        nomeProduto = read.nextLine();
+        System.out.print("Descricao do produto: ");
+        descricao = read.nextLine();
+        System.out.print("Preco do produto: ");
+        preco = read.nextFloat();
+        System.out.print("Marca do produto: ");
+        marca = read.nextLine();
+        marca = read.nextLine();
+        System.out.print("Origem do produto: ");
+        origem = read.nextLine();
+        do{
+            erro = false;
+            System.out.println("\nAdicionar novo produto?");
+            System.out.print("1 - SIM\n2 - NÂO\nR: ");
+            switch (read.nextByte()){
+                case 1:
+                    id = arq.inserir(new Produto(nomeProduto,descricao,preco,marca,origem));
+                    System.out.println("\nProduto inserido com o ID: " + id);   
+                    break;
+                case 2:
+                    System.out.println("\nNovo produto não foi inserido!");
+                    break;
+                default:
+                    System.out.println("\nOpção Inválida!\n");
+                    erro = true;
+                    break;
+            }
+        } while (erro);  
+    }//Fim adicionar
+
+    private static void removerP(Arquivo<Produto> arq) throws Exception
+    {//Inicio removerP
+        int id; 
+        boolean erro, result;  
+        System.out.println("\t** Remover produto **\n");
+        System.out.print("ID do produto a ser removido: ");
+        id = read.nextInt();
+        do{
+            erro = false;
+            System.out.println("\nRemover produto?");
+            System.out.print("1 - SIM\n2 - NÂO\nR: ");
+            switch (read.nextByte()){
+                case 1:
+                    result = arq.remover(id, true); 
+                    if(result) System.out.println("Removido com sucesso!");
+                    else System.out.println("Produto não encontrado!"); 
+                    break;
+                case 2:
+                    System.out.println("\nOperação Cancelada!");
+                    break;
+                default:
+                    System.out.println("\nOpção Inválida!\n");
+                    erro = true;
+                    break;
+            }
+        } while (erro);  
+    }//Fim removerP
+
+    private static void alterarP(Arquivo<Produto> arq) throws Exception
+    {//Inicio alterarP
+        String nomeProduto, descricao, marca, origem, nomeCategoria;
+        float preco;
+        int id; 
+        boolean erro, result; 
+        System.out.println("\t** Alterar produto **\n");
+        do{
+            erro = false;
+            System.out.print("ID do produto a ser alterado: ");
+            id = read.nextInt();
+            if(id <= 0){
+                erro = true;
+                System.out.println("ID Inválida! ");
+            }
+            System.out.println();
+        } while(erro);   
+        System.out.print("Nome do produto: ");
+        nomeProduto = read.nextLine();
+        nomeProduto = read.nextLine();
+        System.out.print("Descricao do produto: ");
+        descricao = read.nextLine();
+        System.out.print("Preco do produto: ");
+        preco = read.nextFloat();
+        System.out.print("Marca do produto: ");
+        marca = read.nextLine();
+        marca = read.nextLine();
+        System.out.print("Origem do produto: ");
+        origem = read.nextLine();
+        do{
+            erro = false;
+            System.out.println("\nAlterar produto?");
+            System.out.print("1 - SIM\n2 - NÂO\nR: ");
+            switch (read.nextByte()){
+                case 1:
+                    result = arq.alterar(id, new Produto(nomeProduto,descricao,preco,marca,origem));
+                    if(result) System.out.println("Alterado com sucesso!");
+                    else System.out.println("Produto para alterar não encontrado!");  
+                    break;
+                case 2:
+                    System.out.println("\nOperação Cancelada!");
+                    break;
+                default:
+                    System.out.println("\nOpção Inválida!\n");
+                    erro = true;
+                    break;
+            }
+        } while (erro);  
+    }//Fim alterarP
+
+    private static void consultaP(Arquivo<Produto> arq) throws Exception
+    {//Inicio consultaP
+        boolean erro;
+        int id;
+        Produto p;
+        System.out.println("\t** Consultar produto **\n");
+        do{
+            erro = false;
+            System.out.print("ID do produto a ser consultado: ");
+            id = read.nextInt();
+            if(id <= 0){
+                erro = true;
+                System.out.println("ID Inválida! ");
+            }
+            System.out.println();
+        } while(erro);
+        p = arq.pesquisar(id);
+        if (p != null && p.idProduto != -1 ){
+            System.out.println(p);
+        }
+        else System.out.println("Produto não encontrado!");  
+    }//Fim consultaP
+
+    private static void listaP(Arquivo<Produto> arq, Arquivo<Categoria> arq2) throws Exception
+    {//Inicio listaP
+        Produto p;
+        Categoria c;
+        System.out.println("\t** Lista dos produtos cadastrados **\n");
+        for(int i = 1; i <= arq.ultimoID(); i++){
+            p = arq.pesquisar(i);
+            c = arq2.pesquisar(p.idCategoria);
+            if (p != null && p.idProduto != -1 ){
+                System.out.println(p);
+                System.out.println(
+                        "Id: "            + p.idProduto    + 
+                        "\nNome: "        + p.nome_Produto + 
+                        "\nDescricao: "   + p.descricao    + 
+                        "\nPreco: "       + p.preco        + 
+                        "\nMarca: "       + p.marca        + 
+                        "\nOrigem: "      + p.origem       +
+                        "\nCategoria: "   + c.idCategoria 
+                        );
+                System.out.println();
+                Thread.sleep(500);
+            }  
+        } 
+    }//Fim listaP
 }//end Principal

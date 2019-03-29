@@ -13,7 +13,8 @@ public class Arquivo<G extends Entidade>{
         this.nomeArquivo = nomeArquivo;
         this.construtor   = c;
         this.raf          = new RandomAccessFile(nomeArquivo + ".db", "rw");
-        this.indice       = new RandomAccessFile(nomeArquivo + ".idx", "rw");
+        // Tem que ver que valor usar de ordem na arvore....
+        this.indice       = new Indice(5, nomeArquivo + ".idx");
         if(raf.length() < 4){
             raf.writeInt(0);
         }
@@ -22,7 +23,6 @@ public class Arquivo<G extends Entidade>{
     //metodo para fechar o arquivo
     public void close() throws Exception {
         raf.close();
-        indice.close();
     }//end close
 
     //metodo para pgear o ultimoID do aquivo(primeiros 4 bytes lidos)
@@ -156,7 +156,7 @@ public class Arquivo<G extends Entidade>{
     //metodo para inserir sem alterar o id, modificando no indice apenas a posicao do objeto no arquivo
     public boolean inserirAlterado(G objeto, int idqr) throws Exception{
         objeto.setID(idqr);
-        indiece.atualizar(idqr, raf.length());
+        indice.atualizar(idqr, raf.length());
         raf.seek(raf.length());
         byte[] b = objeto.toByteArray();
         raf.writeByte(' ');
