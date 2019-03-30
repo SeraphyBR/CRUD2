@@ -32,7 +32,7 @@ public class Arquivo<G extends Entidade>{
     }//end utimoID
 
     //metodo para inserir o objeto no arquivo e adiciona-lo no indice
-    public int inserir(G objeto)throws Exception{
+    public int inserir(G objeto) throws Exception{
         int ultimoID;
         ultimoID = this.ultimoID();
         raf.seek(0);
@@ -54,7 +54,7 @@ public class Arquivo<G extends Entidade>{
     }//end inserir 
 
     //metodo para pesquisar o objeto, referente ao id lido, no arquivo, usando a pesquisa feita no indice primeiro
-    public G pesquisar(int idqr)throws Exception{
+    public G pesquisar(int idqr) throws Exception{
         raf.seek(0);
         G objeto = null;
         int i = raf.readInt();
@@ -75,26 +75,8 @@ public class Arquivo<G extends Entidade>{
         return objeto;
     }//end pesquisar
 
-    /*metodo para fazer uma busca binaria no indice para achar o id e retornar a posicao do mesmo no arquivo
-      public long buscaI(int idqr, int esq, int dir) throws Exception{
-      long addr = 0;
-      if (dir >= esq){
-      long meio = ((esq + dir)/2) * 12;
-      indice.seek(meio);
-      int id = indice.readInt();
-      if(id == idqr){ 
-      addr = indice.readLong();
-      }//end if
-      else{   
-      if (id < idqr) addr = buscaI(idqr, ((esq + dir)/2) + 1, dir);
-      else addr = buscaI(idqr, esq, ((esq + dir)/2) - 1 );
-      }//end else
-      }//end if
-      return addr;
-      }*/
-
     //metodo para retornar uma lista com todos os objetos no arquivo
-    public ArrayList<G> toList()throws Exception{
+    public ArrayList<G> toList() throws Exception{
         G objeto;
         ArrayList<G> lista = new ArrayList<G>();
         short tamanho;
@@ -115,7 +97,7 @@ public class Arquivo<G extends Entidade>{
     }//end toList
 
     //metodo para remover o objeto referente ao id lido
-    public boolean remover(int idqr, boolean remi)throws Exception{
+    public boolean remover(int idqr, boolean remi) throws Exception{
         raf.seek(0);
         int i = raf.readInt();
         boolean result = false;
@@ -139,7 +121,7 @@ public class Arquivo<G extends Entidade>{
     }//end remover
 
     //metodo para alterar um objeto (exclui o antigo e adiciona um novo com o mesmo id)
-    public boolean alterar(int idqr, G objeto)throws Exception{
+    public boolean alterar(int idqr, G objeto) throws Exception{
         boolean removeu;
         boolean result = false;
         raf.seek(0);
