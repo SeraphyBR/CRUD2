@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Arrays;
 public class Principal{
 
     private static final Scanner read = new Scanner(System.in);
@@ -96,6 +97,7 @@ public class Principal{
         //inserir produto  
         String nomeProduto, descricao, marca, origem;
         int idCategoria;
+        int[] idsValidosC;
         float preco;
         int id; 
         boolean erro;     
@@ -273,6 +275,7 @@ public class Principal{
                 idsValidos[i - 1] = c.idCategoria;
             }
         }
+        Arrays.sort(idsValidos);
         return idsValidos;
     }//Fim listaCategoriasCadastradas
 }//end Principal
