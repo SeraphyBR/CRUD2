@@ -21,12 +21,13 @@ class Produto implements Entidade{
     }//end Produto 
 
     //construtor com parametros
-    public Produto(String nome_Produto, String descricao, float preco, String marca, String origem){
+    public Produto(String nome_Produto, String descricao, float preco, String marca, String origem, int idCategoria){
         this.nome_Produto = nome_Produto;
         this.descricao    = descricao;
         this.preco        = preco;
         this.marca        = marca;
         this.origem       = origem;
+        this.idCategoria = idCategoria;
     }//end Produto
 
     public void setID(int id){

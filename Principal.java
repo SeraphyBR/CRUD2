@@ -12,8 +12,15 @@ public class Principal{
             arqProdutos  = new Arquivo<>(Produto.class.getConstructor(), "Produto");
             arqCategorias = new Arquivo<>(Categoria.class.getConstructor(), "Categoria");
             do{
-                System.out.println("\n\t*** MENU ***");
-                System.out.println("0 - Adicionar produto\n1 - Remover produto\n2 - Alterar produto\n3 - Consultar produto\n4 - Listar produtos cadastrados\n5 - Sair");
+                System.out.println(
+                        "\n\t*** MENU ***\n" +
+                        "0 - Adicionar produto\n"           +
+                        "1 - Remover produto\n"             +
+                        "2 - Alterar produto\n"             +
+                        "3 - Consultar produto\n"           +
+                        "4 - Listar produtos cadastrados\n" +
+                        "5 - Sair"
+                );
                 System.out.print("Digite a opção: ");
                 opcao = read.nextByte();
                 System.out.println();
@@ -53,7 +60,8 @@ public class Principal{
     private static void adicionarP(Arquivo<Produto> arq) throws Exception
     {//Inicio adicionar
         //inserir produto  
-        String nomeProduto, descricao, marca, origem, nomeCategoria;
+        String nomeProduto, descricao, marca, origem;
+        int idCategoria;
         float preco;
         int id; 
         boolean erro;     
@@ -70,13 +78,15 @@ public class Principal{
         marca = read.nextLine();
         System.out.print("Origem do produto: ");
         origem = read.nextLine();
+        System.out.print("Escolha uma categoria existente: ");
+        // idCategoria = 
         do{
             erro = false;
             System.out.println("\nAdicionar novo produto?");
             System.out.print("1 - SIM\n2 - NÂO\nR: ");
             switch (read.nextByte()){
                 case 1:
-                    id = arq.inserir(new Produto(nomeProduto,descricao,preco,marca,origem));
+                    id = arq.inserir(new Produto(nomeProduto,descricao,preco,marca,origem,idCategoria));
                     System.out.println("\nProduto inserido com o ID: " + id);   
                     break;
                 case 2:
@@ -120,7 +130,8 @@ public class Principal{
 
     private static void alterarP(Arquivo<Produto> arq) throws Exception
     {//Inicio alterarP
-        String nomeProduto, descricao, marca, origem, nomeCategoria;
+        String nomeProduto, descricao, marca, origem; 
+        int idCategoria;
         float preco;
         int id; 
         boolean erro, result; 
@@ -153,7 +164,7 @@ public class Principal{
             System.out.print("1 - SIM\n2 - NÂO\nR: ");
             switch (read.nextByte()){
                 case 1:
-                    result = arq.alterar(id, new Produto(nomeProduto,descricao,preco,marca,origem));
+                    result = arq.alterar(id, new Produto(nomeProduto,descricao,preco,marca,origem,idCategoria));
                     if(result) System.out.println("Alterado com sucesso!");
                     else System.out.println("Produto para alterar não encontrado!");  
                     break;

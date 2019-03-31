@@ -1,5 +1,3 @@
-import java.io.IOException;
-
 //interface para o arquivo generico
 public interface Entidade{
     public int getID();
