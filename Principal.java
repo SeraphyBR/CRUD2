@@ -243,18 +243,18 @@ public class Principal{
         System.out.println("\t** Lista dos produtos cadastrados **\n");
         for(int i = 1; i <= arq.ultimoID(); i++){
             p = arq.pesquisar(i);
-            c = arq2.pesquisar(p.idCategoria);
             if (p != null && p.idProduto != -1 ){
-                System.out.println(p);
+                c = arq2.pesquisar(p.idCategoria);
                 System.out.println(
                         "Id: "            + p.idProduto    + 
                         "\nNome: "        + p.nome_Produto + 
                         "\nDescricao: "   + p.descricao    + 
                         "\nPreco: "       + p.preco        + 
                         "\nMarca: "       + p.marca        + 
-                        "\nOrigem: "      + p.origem       +
-                        "\nCategoria: "   + c.nome 
+                        "\nOrigem: "      + p.origem
                         );
+                if(c != null) System.out.println("Categoria: " + c.nome);
+                else System.out.println("Categoria: " + p.idCategoria);
                 System.out.println();
                 Thread.sleep(500);
             }  
