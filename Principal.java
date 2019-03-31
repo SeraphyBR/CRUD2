@@ -53,7 +53,7 @@ public class Principal{
         boolean fecharMenu = false;
         do{
             System.out.println(
-                    "\n\t*** MENU DE PRODUTOS ***\n" +
+                    "\n\t*** MENU DE PRODUTOS ***\n"    +
                     "0 - Adicionar produto\n"           +
                     "1 - Remover produto\n"             +
                     "2 - Alterar produto\n"             +
@@ -253,11 +253,26 @@ public class Principal{
                         "\nPreco: "       + p.preco        + 
                         "\nMarca: "       + p.marca        + 
                         "\nOrigem: "      + p.origem       +
-                        "\nCategoria: "   + c.idCategoria 
+                        "\nCategoria: "   + c.nome 
                         );
                 System.out.println();
                 Thread.sleep(500);
             }  
         } 
     }//Fim listaP
+
+    private static int[] listaCategoriasCadastradas(Arquivo<Categoria> arq) throws Exception
+    {//Inicio listaCategoriasCadastradas
+        Categoria c;
+        int[] idsValidos = new int[arq.ultimoID() + 1];
+        System.out.println("\t** Lista de categorias cadastradas **\n");
+        for(int i = 1; i <= arq.ultimoID(); i++){
+            c = arq.pesquisar(i);
+            if(c != null && c.idCategoria != -1){
+                System.out.println(c);
+                idsValidos[i - 1] = c.idCategoria;
+            }
+        }
+        return idsValidos;
+    }//Fim listaCategoriasCadastradas
 }//end Principal

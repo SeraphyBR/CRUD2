@@ -47,8 +47,7 @@ class Categoria implements Entidade{
     }//end fromByteArray
 
     public String toString(){
-        return "ID: " + this.idCategoria + 
-            "\nNome: " + this.nome;
+        return "ID: " + this.idCategoria + "Nome: " + this.nome;
     }//end toString
 
 }//end Categoria
