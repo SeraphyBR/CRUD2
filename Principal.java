@@ -13,39 +13,26 @@ public class Principal{
             arqCategorias = new Arquivo<>(Categoria.class.getConstructor(), "Categoria");
             do{
                 System.out.println(
-                        "\n\t*** MENU ***\n" +
-                        "0 - Adicionar produto\n"           +
-                        "1 - Remover produto\n"             +
-                        "2 - Alterar produto\n"             +
-                        "3 - Consultar produto\n"           +
-                        "4 - Listar produtos cadastrados\n" +
-                        "5 - Sair"
-                );
+                        "\n\t*** MENU PRINCIPAL ***\n" +
+                        "0 - Gerenciar produtos\n"     +
+                        "1 - Gerenciar categorias\n"   +
+                        "2 - Fechar programa"
+                        );
                 System.out.print("Digite a opção: ");
                 opcao = read.nextByte();
-                System.out.println();
-                switch (opcao){
+                switch(opcao){
                     case 0:
-                        adicionarP(arqProdutos);
+                        menuProdutos(arqProdutos, arqCategorias);
                         break;
                     case 1:
-                        removerP(arqProdutos);
+                        menuCategoria();
                         break;
                     case 2:
-                        alterarP(arqProdutos);
-                        break;
-                    case 3:
-                        consultaP(arqProdutos);
-                        break;
-                    case 4:
-                        listaP(arqProdutos, arqCategorias);
-                        break;
-                    case 5:
                         fecharMenu = true;
                         break;
-                    default:                    
+                    default: 
                         System.out.println("Opcao invalida!\n");
-                        Thread.sleep(1000);
+                        Thread.sleep(1000);  
                         break;
                 }
             }while(!fecharMenu);
@@ -56,6 +43,53 @@ public class Principal{
             e.printStackTrace();
         }//end catch
     }//end main
+
+    private static void menuCategoria(){
+    }
+
+    private static void menuProdutos(Arquivo<Produto> arqProdutos, Arquivo<Categoria> arqCategorias) throws Exception
+    {//Inicio menuProdutos
+        byte opcao;
+        boolean fecharMenu = false;
+        do{
+            System.out.println(
+                    "\n\t*** MENU DE PRODUTOS ***\n" +
+                    "0 - Adicionar produto\n"           +
+                    "1 - Remover produto\n"             +
+                    "2 - Alterar produto\n"             +
+                    "3 - Consultar produto\n"           +
+                    "4 - Listar produtos cadastrados\n" +
+                    "5 - Sair"
+                    );
+            System.out.print("Digite a opção: ");
+            opcao = read.nextByte();
+            System.out.println();
+            switch (opcao){
+                case 0:
+                    adicionarP(arqProdutos);
+                    break;
+                case 1:
+                    removerP(arqProdutos);
+                    break;
+                case 2:
+                    alterarP(arqProdutos);
+                    break;
+                case 3:
+                    consultaP(arqProdutos);
+                    break;
+                case 4:
+                    listaP(arqProdutos, arqCategorias);
+                    break;
+                case 5:
+                    fecharMenu = true;
+                    break;
+                default:                    
+                    System.out.println("Opcao invalida!\n");
+                    Thread.sleep(1000);
+                    break;
+            }
+        }while(!fecharMenu);
+    }//Fim menuProdutos
 
     private static void adicionarP(Arquivo<Produto> arq) throws Exception
     {//Inicio adicionar
