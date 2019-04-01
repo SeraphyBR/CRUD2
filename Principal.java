@@ -49,6 +49,7 @@ public class Principal{
     {//Inicio menuCategoria
         byte opcao;
         boolean fecharMenu = false;
+        Integer[] listaC = null;
         do{  
             System.out.println(
                     "\n\t*** MENU DE CATEGORIAS ***\n"                   +
@@ -63,10 +64,14 @@ public class Principal{
             System.out.println();
             switch(opcao){
                 case 0:
+                    adicionarC(arqCategorias);
                     break;
                 case 1:
+                    //removerC(arqCategorias);
                     break;
                 case 2:
+                    listaC = listaCategoriasCadastradas(arqCategorias);
+                    if(listaC == null) System.out.println("Não ha categorias cadastradas!");
                     break;
                 case 3:
                     break;
@@ -78,7 +83,6 @@ public class Principal{
                     Thread.sleep(1000);  
                     break;
             }
-
         }while(!fecharMenu);
     }//Fim menuCategoria
 
@@ -182,6 +186,44 @@ public class Principal{
         }
 
     }//Fim adicionar
+
+    private static void adicionarC(Arquivo<Categoria> arq) throws Exception
+    {//inicio adicionarC
+        String nomeCategoria;
+        boolean erro;
+        boolean outro;
+        int id;
+        System.out.println("\t** Adicionar categoria **\n");
+        do{
+            outro = false;
+            System.out.print("Digite o nome da categoria: ");
+            nomeCategoria = read.nextLine();
+            nomeCategoria = read.nextLine();
+            do{
+                erro = false;
+                System.out.println("\nAdicionar nova categoria '" + nomeCategoria + "' ?");
+                System.out.print("1 - SIM\n2 - NÂO\nR: ");
+                switch (read.nextByte()){
+                    case 1:
+                        id = arq.inserir(new Categoria(nomeCategoria));
+                        System.out.println("\nCategoria criada com o ID: " + id);
+                        System.out.println("Operacao concluida com sucesso!");
+                        Thread.sleep(1000);
+                        System.out.println("\nDeseja criar outra categoria ?"); 
+                        System.out.print("1 - SIM\n2 - NÂO\nR: ");
+                        if (read.nextByte() == 1) outro = true;
+                        break;
+                    case 2:
+                        System.out.println("\nNova categoria não foi criada!");
+                        break;
+                    default:
+                        System.out.println("\nOpção Inválida!\n");
+                        erro = true;
+                        break;
+                }
+            } while(erro);
+        } while(outro);
+    }//Fim adicionarC
 
     private static void removerP(Arquivo<Produto> arq) throws Exception
     {//Inicio removerP
@@ -334,11 +376,11 @@ public class Principal{
         if(ultimoID != 0){
             idsValidos = new Integer[arq.ultimoID()];
             System.out.println("\t** Lista de categorias cadastradas **\n");
-            for(int i = 1; i <= arq.ultimoID(); i++){
+            for(int i = 0; i < arq.ultimoID(); i++){
                 c = arq.pesquisar(i);
                 if(c != null && c.idCategoria != -1){
                     System.out.println(c);
-                    idsValidos[i - 1] = c.idCategoria;
+                    idsValidos[i] = c.idCategoria;
                 }
             }
             Arrays.sort(idsValidos); //Ordenar resultado
