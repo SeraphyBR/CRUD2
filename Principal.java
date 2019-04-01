@@ -295,7 +295,12 @@ public class Principal{
                     }
                     else {
                         System.out.println("Existem produtos nessa categoria!!");
-                        System.out.println("O que deseja fazer?");
+                        System.out.println(
+                                "O que deseja fazer?\n" +
+                                "0 - Apagar todos os produtos pertencentes e a categoria\n" +
+                                "1 - Mudar a categoria dos produtos e remover\n" +
+                                "2 - Cancelar remoção\n"
+                                );
                     }
                     break;
                 case 2:
