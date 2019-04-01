@@ -131,7 +131,7 @@ public class Arquivo<G extends Entidade>{
         raf.seek(0);
         int i = raf.readInt();
         if(i >= idqr){
-            removeu = this.remover(idqr, false);
+            removeu = this.remover(idqr - 1, false);
             if(removeu){
                 result = this.inserirAlterado(objeto, idqr);
             }//end if

@@ -259,6 +259,7 @@ public class Principal{
     private static void removerC(Arquivo<Categoria> arqc, Arquivo<Produto> arq) throws Exception 
     {//Inicio removerC
         int idCategoria;
+        int idCategoriaNew;
         boolean erro, valido,result = false;
         Integer[] idsValidosC;
         ArrayList<Produto> lista;
@@ -328,11 +329,11 @@ public class Principal{
                                         System.out.print("\nEscolha uma categoria para o produto,\ne digite o ID: ");
                                         do{
                                             valido = false;
-                                            idCategoria = read.nextInt();
+                                            idCategoriaNew = read.nextInt();
                                             valido = Arrays.asList(idsValidosC).contains(idCategoria);
                                             if(!valido) System.out.println("Esse ID não é valido!\nDigite um ID valido: ");
                                         } while(!valido);
-                                        p.idCategoria = idCategoria;
+                                        p.idCategoria = idCategoriaNew;
                                         result = arq.alterar(p.idProduto, p);
                                         System.out.println("Movido com sucesso!");
                                     }
