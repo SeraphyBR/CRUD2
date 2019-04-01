@@ -114,7 +114,7 @@ public class Principal{
                     alterarP(arqProdutos, arqCategorias);
                     break;
                 case 3:
-                    consultaP(arqProdutos);
+                    consultaP(arqProdutos, arqCategorias);
                     break;
                 case 4:
                     listaP(arqProdutos, arqCategorias);
@@ -152,8 +152,9 @@ public class Principal{
         marca = read.nextLine();
         System.out.print("Origem do produto: ");
         origem = read.nextLine();
+        System.out.println();
         if((idsValidosC = listaCategoriasCadastradas(arqc)) != null){
-            System.out.print("Digite o ID da categoria: ");
+            System.out.print("\nEscolha uma categoria para o produto,\ne digite o ID: ");
             do{
                 valido = false;
                 idCategoria = read.nextInt();
@@ -238,7 +239,7 @@ public class Principal{
             System.out.print("1 - SIM\n2 - NÂO\nR: ");
             switch (read.nextByte()){
                 case 1:
-                    result = arq.remover(id, true); 
+                    result = arq.remover(id - 1, true); 
                     if(result) System.out.println("Removido com sucesso!");
                     else System.out.println("Produto não encontrado!"); 
                     break;
@@ -283,9 +284,10 @@ public class Principal{
         marca = read.nextLine();
         marca = read.nextLine();
         System.out.print("Origem do produto: ");
-        origem = read.nextLine(); 
+        origem = read.nextLine();
+        System.out.println();
         if((idsValidosC = listaCategoriasCadastradas(arqc)) != null){
-            System.out.print("Digite o ID da categoria: ");
+            System.out.print("Escolha uma categoria para o produto,\ne digite o ID: ");
             do{
                 valido = false;
                 idCategoria = read.nextInt();
@@ -320,11 +322,12 @@ public class Principal{
 
     }//Fim alterarP
 
-    private static void consultaP(Arquivo<Produto> arq) throws Exception
+    private static void consultaP(Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception
     {//Inicio consultaP
         boolean erro;
         int id;
         Produto p;
+        Categoria c;
         System.out.println("\t** Consultar produto **\n");
         do{
             erro = false;
@@ -336,22 +339,32 @@ public class Principal{
             }
             System.out.println();
         } while(erro);
-        p = arq.pesquisar(id);
+        p = arq.pesquisar(id - 1);
         if (p != null && p.idProduto != -1 ){
-            System.out.println(p);
+            c = arqc.pesquisar(p.idCategoria - 1);
+            System.out.println(
+                    "Id: "            + p.idProduto    + 
+                    "\nNome: "        + p.nome_Produto + 
+                    "\nDescricao: "   + p.descricao    + 
+                    "\nPreco: "       + p.preco        + 
+                    "\nMarca: "       + p.marca        + 
+                    "\nOrigem: "      + p.origem
+                    );
+            if(c != null) System.out.println("Categoria: " + c.nome);
+            else System.out.println("Categoria: " + p.idCategoria);  
         }
         else System.out.println("Produto não encontrado!");  
     }//Fim consultaP
 
-    private static void listaP(Arquivo<Produto> arq, Arquivo<Categoria> arq2) throws Exception
+    private static void listaP(Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception
     {//Inicio listaP
         Produto p;
-        Categoria c;
+        Categoria c; 
         System.out.println("\t** Lista dos produtos cadastrados **\n");
-        for(int i = 1; i <= arq.ultimoID(); i++){
+        for(int i = 0; i < arq.ultimoID(); i++){
             p = arq.pesquisar(i);
             if (p != null && p.idProduto != -1 ){
-                c = arq2.pesquisar(p.idCategoria);
+                c = arqc.pesquisar(p.idCategoria - 1);
                 System.out.println(
                         "Id: "            + p.idProduto    + 
                         "\nNome: "        + p.nome_Produto + 
