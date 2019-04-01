@@ -40,6 +40,7 @@ public class Principal{
             }while(!fecharMenu);
             arqProdutos.close();
             arqCategorias.close();
+            read.close();
         }//end try 
         catch(Exception e){
             e.printStackTrace();
