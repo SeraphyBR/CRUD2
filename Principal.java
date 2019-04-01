@@ -296,7 +296,7 @@ public class Principal{
                         if(result) System.out.println("Removido com sucesso!");
                     }
                     else {
-                        System.out.println("Existem produtos nessa categoria!!");
+                        System.out.println("\nExistem produtos nessa categoria!!");
                         System.out.println(
                                 "O que deseja fazer?\n" +
                                 "0 - Apagar todos os produtos pertencentes e a categoria\n" +
@@ -305,7 +305,8 @@ public class Principal{
                                 );
                         do{
                             System.out.print("Opção: ");
-                            switch(read.nextByte()){
+                            switch(read.nextByte())
+                            {//Inicio switch
                                 case 0:
                                     for(Produto p: lista){
                                         System.out.println("Removendo '" + p.nome_Produto + "'...");
@@ -318,26 +319,36 @@ public class Principal{
                                     break;
                                 case 1:
                                     idsValidosC = listaCategoriasCadastradas(arqc);
-                                    System.out.println("\nProdutos:");
-                                    for(Produto p: lista){
-                                        System.out.println(
-                                                "\nId: "          + p.idProduto    + 
-                                                "\nNome: "        + p.nome_Produto + 
-                                                "\nDescricao: "   + p.descricao    + 
-                                                "\nMarca: "       + p.marca     
-                                                );  
-                                        System.out.print("\nEscolha uma categoria para o produto,\ne digite o ID: ");
-                                        do{
-                                            valido = false;
-                                            idCategoriaNew = read.nextInt();
-                                            valido = Arrays.asList(idsValidosC).contains(idCategoria);
-                                            if(!valido) System.out.println("Esse ID não é valido!\nDigite um ID valido: ");
-                                        } while(!valido);
-                                        p.idCategoria = idCategoriaNew;
-                                        result = arq.alterar(p.idProduto, p);
-                                        System.out.println("Movido com sucesso!");
+                                    if(idsValidosC.length == 1){
+                                        System.out.println("\nOperação não é possivel!\nSo tem uma categoria!");
+                                        Thread.sleep(1000);
                                     }
-                                    result = arqc.remover(idCategoria - 1);
+                                    else{
+                                        System.out.println("\nProdutos:");
+                                        for(Produto p: lista){
+                                            System.out.println(
+                                                    "\nId: "          + p.idProduto    + 
+                                                    "\nNome: "        + p.nome_Produto + 
+                                                    "\nDescricao: "   + p.descricao    + 
+                                                    "\nMarca: "       + p.marca     
+                                                    );  
+                                            System.out.print("\nEscolha uma outra categoria para o produto,\ne digite o ID: ");
+                                            do{
+                                                valido = false;
+                                                idCategoriaNew = read.nextInt();
+                                                valido = Arrays.asList(idsValidosC).contains(idCategoria);
+                                                if(!valido) System.out.println("Esse ID não é valido!\nDigite um ID valido: ");
+                                                else if(idCategoriaNew == idCategoria){
+                                                    System.out.println("Não pode escolher a mesma categoria antiga!\nDigite um ID valido: ");
+                                                    valido = false;
+                                                } 
+                                            } while(!valido);
+                                            p.idCategoria = idCategoriaNew;
+                                            result = arq.alterar(p.idProduto, p);
+                                            System.out.println("Movido com sucesso!");
+                                        }
+                                        result = arqc.remover(idCategoria - 1);
+                                    }//Fim else
                                     break;
                                 case 2:
                                     System.out.println("\nOperação Cancelada!");
@@ -346,7 +357,7 @@ public class Principal{
                                     System.out.println("\nOpção Inválida!\n");
                                     erro = true;
                                     break; 
-                            }
+                            }//Fim switch
                         }while(erro);
                     }
                     break;
