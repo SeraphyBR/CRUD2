@@ -14,7 +14,7 @@ public class Arquivo<G extends Entidade>{
         this.construtor   = c;
         this.raf          = new RandomAccessFile(nomeArquivo + ".db", "rw");
         // Tem que ver que valor usar de ordem na arvore....
-        this.indice       = new Indice(5, nomeArquivo + ".idx");
+        this.indice       = new Indice(20, nomeArquivo + ".idx");
         if(raf.length() < 4){
             raf.writeInt(0);
         }

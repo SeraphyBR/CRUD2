@@ -26,7 +26,7 @@ public class Principal{
                         menuProdutos(arqProdutos, arqCategorias);
                         break;
                     case 1:
-                        menuCategoria();
+                        menuCategoria(arqCategorias, arqProdutos);
                         break;
                     case 2:
                         fecharMenu = true;
@@ -45,8 +45,42 @@ public class Principal{
         }//end catch
     }//end main
 
-    private static void menuCategoria(){
-    }
+    private static void menuCategoria(Arquivo<Categoria> arqCategorias, Arquivo<Produto> arqProdutos)throws Exception
+    {//Inicio menuCategoria
+        byte opcao;
+        boolean fecharMenu = false;
+        do{  
+            System.out.println(
+                    "\n\t*** MENU DE CATEGORIAS ***\n"                   +
+                    "0 - Adicionar categoria\n"                          +
+                    "1 - Remover categoria\n"                            +
+                    "2 - Listar categorias cadastradas\n"                +
+                    "3 - Listar produtos cadastrados em uma categoria\n" +
+                    "4 - Sair"
+                    );
+            System.out.print("Digite a opção: ");
+            opcao = read.nextByte();
+            System.out.println();
+            switch(opcao){
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    fecharMenu = true;
+                    break;
+                default: 
+                    System.out.println("Opcao invalida!\n");
+                    Thread.sleep(1000);  
+                    break;
+            }
+
+        }while(!fecharMenu);
+    }//Fim menuCategoria
 
     private static void menuProdutos(Arquivo<Produto> arqProdutos, Arquivo<Categoria> arqCategorias) throws Exception
     {//Inicio menuProdutos
