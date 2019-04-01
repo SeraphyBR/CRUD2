@@ -67,13 +67,13 @@ public class Principal{
             System.out.println();
             switch (opcao){
                 case 0:
-                    adicionarP(arqProdutos);
+                    adicionarP(arqProdutos, arqCategorias);
                     break;
                 case 1:
                     removerP(arqProdutos);
                     break;
                 case 2:
-                    alterarP(arqProdutos);
+                    alterarP(arqProdutos, arqCategorias);
                     break;
                 case 3:
                     consultaP(arqProdutos);
@@ -92,15 +92,15 @@ public class Principal{
         }while(!fecharMenu);
     }//Fim menuProdutos
 
-    private static void adicionarP(Arquivo<Produto> arq) throws Exception
+    private static void adicionarP(Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception
     {//Inicio adicionar
         //inserir produto  
         String nomeProduto, descricao, marca, origem;
-        int idCategoria;
-        int[] idsValidosC;
+        int idCategoria = 0;
+        Integer[] idsValidosC;
         float preco;
         int id; 
-        boolean erro;     
+        boolean erro, valido;     
         System.out.println("\t** Adicionar produto **\n");
         System.out.print("Nome do produto: ");
         nomeProduto = read.nextLine();
@@ -114,26 +114,39 @@ public class Principal{
         marca = read.nextLine();
         System.out.print("Origem do produto: ");
         origem = read.nextLine();
-        System.out.print("Escolha uma categoria existente: ");
-        // idCategoria = 
-        do{
-            erro = false;
-            System.out.println("\nAdicionar novo produto?");
-            System.out.print("1 - SIM\n2 - NÂO\nR: ");
-            switch (read.nextByte()){
-                case 1:
-                    id = arq.inserir(new Produto(nomeProduto,descricao,preco,marca,origem,idCategoria));
-                    System.out.println("\nProduto inserido com o ID: " + id);   
-                    break;
-                case 2:
-                    System.out.println("\nNovo produto não foi inserido!");
-                    break;
-                default:
-                    System.out.println("\nOpção Inválida!\n");
-                    erro = true;
-                    break;
-            }
-        } while (erro);  
+        if((idsValidosC = listaCategoriasCadastradas(arqc)) != null){
+            System.out.print("Digite o ID da categoria: ");
+            do{
+                valido = false;
+                idCategoria = read.nextInt();
+                valido = Arrays.asList(idsValidosC).contains(idCategoria);
+                if(!valido) System.out.println("Esse ID não é valido!\nDigite um ID valido: ");
+            } while(!valido);
+            do{
+                erro = false;
+                System.out.println("\nAdicionar novo produto?");
+                System.out.print("1 - SIM\n2 - NÂO\nR: ");
+                switch (read.nextByte()){
+                    case 1:
+                        id = arq.inserir(new Produto(nomeProduto,descricao,preco,marca,origem,idCategoria));
+                        System.out.println("\nProduto inserido com o ID: " + id);   
+                        break;
+                    case 2:
+                        System.out.println("\nNovo produto não foi inserido!");
+                        break;
+                    default:
+                        System.out.println("\nOpção Inválida!\n");
+                        erro = true;
+                        break;
+                }
+            } while(erro);  
+        }
+        else{
+            System.out.println("\nOps..! Aparentemente não existem categorias para associar o novo produto!");
+            System.out.println("Por favor, crie ao menos uma categoria antes de adicionar um produto!");
+            Thread.sleep(1000);
+        }
+
     }//Fim adicionar
 
     private static void removerP(Arquivo<Produto> arq) throws Exception
@@ -164,13 +177,14 @@ public class Principal{
         } while (erro);  
     }//Fim removerP
 
-    private static void alterarP(Arquivo<Produto> arq) throws Exception
+    private static void alterarP(Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception
     {//Inicio alterarP
         String nomeProduto, descricao, marca, origem; 
         int idCategoria;
+        Integer[] idsValidosC;
         float preco;
         int id; 
-        boolean erro, result; 
+        boolean erro, result, valido; 
         System.out.println("\t** Alterar produto **\n");
         do{
             erro = false;
@@ -193,26 +207,41 @@ public class Principal{
         marca = read.nextLine();
         marca = read.nextLine();
         System.out.print("Origem do produto: ");
-        origem = read.nextLine();
-        do{
-            erro = false;
-            System.out.println("\nAlterar produto?");
-            System.out.print("1 - SIM\n2 - NÂO\nR: ");
-            switch (read.nextByte()){
-                case 1:
-                    result = arq.alterar(id, new Produto(nomeProduto,descricao,preco,marca,origem,idCategoria));
-                    if(result) System.out.println("Alterado com sucesso!");
-                    else System.out.println("Produto para alterar não encontrado!");  
-                    break;
-                case 2:
-                    System.out.println("\nOperação Cancelada!");
-                    break;
-                default:
-                    System.out.println("\nOpção Inválida!\n");
-                    erro = true;
-                    break;
-            }
-        } while (erro);  
+        origem = read.nextLine(); 
+        if((idsValidosC = listaCategoriasCadastradas(arqc)) != null){
+            System.out.print("Digite o ID da categoria: ");
+            do{
+                valido = false;
+                idCategoria = read.nextInt();
+                valido = Arrays.asList(idsValidosC).contains(idCategoria);
+                if(!valido) System.out.println("Esse ID não é valido!\nDigite um ID valido: ");
+            } while(!valido);
+            do{
+                erro = false;
+                System.out.println("\nAlterar produto?");
+                System.out.print("1 - SIM\n2 - NÂO\nR: ");
+                switch (read.nextByte()){
+                    case 1:
+                        result = arq.alterar(id, new Produto(nomeProduto,descricao,preco,marca,origem,idCategoria));
+                        if(result) System.out.println("Alterado com sucesso!");
+                        else System.out.println("Produto para alterar não encontrado!");  
+                        break;
+                    case 2:
+                        System.out.println("\nOperação Cancelada!");
+                        break;
+                    default:
+                        System.out.println("\nOpção Inválida!\n");
+                        erro = true;
+                        break;
+                }
+            } while (erro);   
+        }
+        else{
+            System.out.println("\nOps..! Aparentemente não existem categorias para associar ao produto!");
+            System.out.println("Por favor, crie ao menos uma categoria antes de adicionar um produto!");
+            Thread.sleep(1000);
+        } 
+
     }//Fim alterarP
 
     private static void consultaP(Arquivo<Produto> arq) throws Exception
@@ -263,19 +292,23 @@ public class Principal{
         } 
     }//Fim listaP
 
-    private static int[] listaCategoriasCadastradas(Arquivo<Categoria> arq) throws Exception
+    private static Integer[] listaCategoriasCadastradas(Arquivo<Categoria> arq) throws Exception
     {//Inicio listaCategoriasCadastradas
         Categoria c;
-        int[] idsValidos = new int[arq.ultimoID() + 1];
-        System.out.println("\t** Lista de categorias cadastradas **\n");
-        for(int i = 1; i <= arq.ultimoID(); i++){
-            c = arq.pesquisar(i);
-            if(c != null && c.idCategoria != -1){
-                System.out.println(c);
-                idsValidos[i - 1] = c.idCategoria;
+        int ultimoID = arq.ultimoID();
+        Integer[] idsValidos = null; //Lista retornando os ids de categorias validos para consulta
+        if(ultimoID != 0){
+            idsValidos = new Integer[arq.ultimoID()];
+            System.out.println("\t** Lista de categorias cadastradas **\n");
+            for(int i = 1; i <= arq.ultimoID(); i++){
+                c = arq.pesquisar(i);
+                if(c != null && c.idCategoria != -1){
+                    System.out.println(c);
+                    idsValidos[i - 1] = c.idCategoria;
+                }
             }
+            Arrays.sort(idsValidos); //Ordenar resultado
         }
-        Arrays.sort(idsValidos);
         return idsValidos;
     }//Fim listaCategoriasCadastradas
 }//end Principal
