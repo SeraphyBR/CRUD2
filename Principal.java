@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.Arrays;
+import java.util.ArrayList;
 public class Principal{
 
     private static final Scanner read = new Scanner(System.in);
@@ -74,6 +75,7 @@ public class Principal{
                     if(listaC == null) System.out.println("Não ha categorias cadastradas!");
                     break;
                 case 3:
+                    consultaC(arqCategorias, arqProdutos);
                     break;
                 case 4:
                     fecharMenu = true;
@@ -254,6 +256,15 @@ public class Principal{
         } while (erro);  
     }//Fim removerP
 
+    private static void removerC(Arquivo<Categoria> arqc, Arquivo<Produto> arq) throws Exception 
+    {//Inicio removerC
+
+        boolean erro;
+        System.out.println("\t** Remover categoria **\n");
+
+
+    }//Fim removerC
+
     private static void alterarP(Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception
     {//Inicio alterarP
         String nomeProduto, descricao, marca, origem; 
@@ -356,6 +367,42 @@ public class Principal{
         else System.out.println("Produto não encontrado!");  
     }//Fim consultaP
 
+    private static void consultaC(Arquivo<Categoria> arqc, Arquivo<Produto> arq) throws Exception
+    {//Inicio consultaC
+        boolean erro;
+        int idCategoria;
+        String nomeCategoria;
+        ArrayList<Produto> lista;
+        System.out.println("\t** Listar produtos de uma categoria **\n");
+        do{
+            erro = false;
+            System.out.print("ID da categoria a ser consultada: ");
+            idCategoria = read.nextInt();
+            if(idCategoria <= 0){
+                erro = true;
+                System.out.println("ID Inválida! ");
+            }
+            System.out.println();
+        } while(erro);
+        lista = listProdutosC(idCategoria, arq, arqc);
+        if(lista != null && !lista.isEmpty()){
+            nomeCategoria = getNomeCategoria(idCategoria - 1, arqc);
+            System.out.println("Produtos pertencentes a '" + nomeCategoria + "'");
+            for(Produto p: lista){
+                System.out.println(
+                        "Id: "            + p.idProduto    + 
+                        "\nNome: "        + p.nome_Produto + 
+                        "\nDescricao: "   + p.descricao    + 
+                        "\nPreco: "       + p.preco        + 
+                        "\nMarca: "       + p.marca        + 
+                        "\nOrigem: "      + p.origem       +
+                        "\nCategoria: "   + nomeCategoria  
+                        );     
+            }
+        }
+        else System.out.println("Não ha produtos nessa categoria, ou ela não existe!");
+    }//Fim consultaC
+
     private static void listaP(Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception
     {//Inicio listaP
         Produto p;
@@ -400,4 +447,20 @@ public class Principal{
         }
         return idsValidos;
     }//Fim listaCategoriasCadastradas
+
+    private static ArrayList<Produto> listProdutosC(int idCategoria, Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception 
+    {//Inicio listProdutosC
+        ArrayList<Produto> lista = arq.toList();
+        lista.removeIf(p -> p.idCategoria != idCategoria);
+        return lista;
+    }//Fim listProdutosC 
+
+    private static String getNomeCategoria(int idCategoria, Arquivo<Categoria> arqc) throws Exception 
+    {//Inicio getNomeCategoria
+        String nome = null;
+        Categoria c = arqc.pesquisar(idCategoria);
+        if (c != null) nome = c.nome;
+        return nome;
+    }//Fim getNomeCategoria
+
 }//end Principal
