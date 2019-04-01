@@ -68,7 +68,7 @@ public class Principal{
                     adicionarC(arqCategorias);
                     break;
                 case 1:
-                    //removerC(arqCategorias);
+                    removerC(arqCategorias, arqProdutos);
                     break;
                 case 2:
                     listaC = listaCategoriasCadastradas(arqCategorias);
@@ -258,11 +258,55 @@ public class Principal{
 
     private static void removerC(Arquivo<Categoria> arqc, Arquivo<Produto> arq) throws Exception 
     {//Inicio removerC
-
-        boolean erro;
+        int idCategoria;
+        boolean erro, result = false;
+        ArrayList<Produto> lista;
+        String nomeCategoria = null;
         System.out.println("\t** Remover categoria **\n");
+        do{
+            erro = false;
+            System.out.print("ID da categoria a ser removida: ");
+            idCategoria = read.nextInt();
+            if(idCategoria > 0){
+                nomeCategoria = getNomeCategoria(idCategoria - 1, arqc);
+                if(nomeCategoria == null){
+                    erro = true;
+                    System.out.println("Categoria inexistente!");
+                } 
+            }
+            else {
+                erro = true;
+                System.out.println("ID Inválida!");  
+            }
+            System.out.println();
+        } while(erro);
 
-
+        do{
+            erro = false;
+            System.out.println("\nRemover a categoria '" + nomeCategoria + "' ?");
+            System.out.print("1 - SIM\n2 - NÂO\nR: ");
+            switch (read.nextByte()){
+                case 1:
+                    lista = listProdutosC(idCategoria, arq, arqc);
+                    if (lista.isEmpty()){
+                        System.out.println("Não ha produtos associados a '" + nomeCategoria + "', procedendo com remoção...");
+                        result = arqc.remover(idCategoria - 1, true); 
+                        if(result) System.out.println("Removido com sucesso!");
+                    }
+                    else {
+                        System.out.println("Existem produtos nessa categoria!!");
+                        System.out.println("O que deseja fazer?");
+                    }
+                    break;
+                case 2:
+                    System.out.println("\nOperação Cancelada!");
+                    break;
+                default:
+                    System.out.println("\nOpção Inválida!\n");
+                    erro = true;
+                    break;
+            }
+        } while (erro);  
     }//Fim removerC
 
     private static void alterarP(Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception
@@ -406,12 +450,12 @@ public class Principal{
     private static void listaP(Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception
     {//Inicio listaP
         Produto p;
-        Categoria c; 
+        String nomeCategoria;
         System.out.println("\t** Lista dos produtos cadastrados **\n");
         for(int i = 0; i < arq.ultimoID(); i++){
             p = arq.pesquisar(i);
             if (p != null && p.idProduto != -1 ){
-                c = arqc.pesquisar(p.idCategoria - 1);
+                nomeCategoria = getNomeCategoria(p.idCategoria - 1, arqc);
                 System.out.println(
                         "Id: "            + p.idProduto    + 
                         "\nNome: "        + p.nome_Produto + 
@@ -420,7 +464,7 @@ public class Principal{
                         "\nMarca: "       + p.marca        + 
                         "\nOrigem: "      + p.origem
                         );
-                if(c != null) System.out.println("Categoria: " + c.nome);
+                if(nomeCategoria != null) System.out.println("Categoria: " + nomeCategoria);
                 else System.out.println("Categoria: " + p.idCategoria);
                 System.out.println();
                 Thread.sleep(500);
