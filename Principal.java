@@ -241,7 +241,7 @@ public class Principal{
             System.out.print("1 - SIM\n2 - NÂO\nR: ");
             switch (read.nextByte()){
                 case 1:
-                    result = arq.remover(id - 1, true); 
+                    result = arq.remover(id - 1); 
                     if(result) System.out.println("Removido com sucesso!");
                     else System.out.println("Produto não encontrado!"); 
                     break;
@@ -290,7 +290,7 @@ public class Principal{
                     lista = listProdutosC(idCategoria, arq, arqc);
                     if (lista.isEmpty()){
                         System.out.println("Não ha produtos associados a '" + nomeCategoria + "', procedendo com remoção...");
-                        result = arqc.remover(idCategoria - 1, true); 
+                        result = arqc.remover(idCategoria - 1); 
                         if(result) System.out.println("Removido com sucesso!");
                     }
                     else {
@@ -301,6 +301,25 @@ public class Principal{
                                 "1 - Mudar a categoria dos produtos e remover\n" +
                                 "2 - Cancelar remoção\n"
                                 );
+                        System.out.print("Opção: ");
+                        switch(read.nextByte()){
+                            case 0:
+                                for(Produto p: lista){
+                                    System.out.println("Removendo '" + p.nome_Produto + "'...");
+                                    arq.remover(p.idProduto - 1);
+                                }
+                                System.out.println("Excluindo categoria '" + nomeCategoria + "'...");
+                                arqc.remover(idCategoria - 1);
+                                System.out.println("Concluido exclusão de " + lista.size() + "produtos e 1 categoria.");
+                                lista = null;
+                                break;
+                            case 1:
+                                break;
+                            case 2:
+                                System.out.println("\nOperação Cancelada!");
+                                break;
+                        
+                        }
                     }
                     break;
                 case 2:

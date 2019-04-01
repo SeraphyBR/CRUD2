@@ -96,8 +96,12 @@ public class Arquivo<G extends Entidade>{
         return lista;
     }//end toList
 
+    public boolean remover(int idqr) throws Exception{
+        return this.remover(idqr, true);
+    }
+
     //metodo para remover o objeto referente ao id lido
-    public boolean remover(int idqr, boolean remi) throws Exception{
+    private boolean remover(int idqr, boolean removerIndice) throws Exception{
         raf.seek(0);
         int i = raf.readInt();
         boolean result = false;
@@ -109,7 +113,7 @@ public class Arquivo<G extends Entidade>{
                 if(lapide == ' '){
                     raf.seek(pos);
                     raf.writeByte('*');
-                    if(remi){
+                    if(removerIndice){
                         indice.excluir(idqr);
                     }
                     result = true;
