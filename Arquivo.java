@@ -2,6 +2,12 @@ import java.io.*;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
+/**
+ * @author Luiz Junio
+ * @author Allan Vivekanda
+ * @author Breno
+ * @author Henrique Fernandes
+ * */  
 public class Arquivo<G extends Entidade>{
 
     protected RandomAccessFile raf;
@@ -13,7 +19,6 @@ public class Arquivo<G extends Entidade>{
         this.nomeArquivo = nomeArquivo;
         this.construtor   = c;
         this.raf          = new RandomAccessFile(nomeArquivo + ".db", "rw");
-        // Tem que ver que valor usar de ordem na arvore....
         this.indice       = new Indice(20, nomeArquivo + ".idx");
         if(raf.length() < 4){
             raf.writeInt(0);

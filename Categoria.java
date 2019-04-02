@@ -1,4 +1,11 @@
-import java.io.*;
+import java.io.*; 
+
+/**
+ * @author Luiz Junio
+ * @author Allan Vivekanda
+ * @author Breno
+ * @author Henrique Fernandes
+ * */  
 class Categoria implements Entidade{
 
     protected int    idCategoria;

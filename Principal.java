@@ -1,6 +1,13 @@
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.ArrayList;
+
+/**
+ * @author Luiz Junio
+ * @author Allan Vivekanda
+ * @author Breno
+ * @author Henrique Fernandes
+ * */
 public class Principal{
 
     private static final Scanner read = new Scanner(System.in);
@@ -47,6 +54,12 @@ public class Principal{
         }//end catch
     }//end main
 
+    /**
+     * Menu de categorias 
+     * @param arqCategorias arquivo indexado de categorias 
+     * @param arqProdutos arquivo indexado de produtos
+     * @throws Exception
+     * */
     private static void menuCategoria(Arquivo<Categoria> arqCategorias, Arquivo<Produto> arqProdutos)throws Exception
     {//Inicio menuCategoria
         byte opcao;
@@ -89,6 +102,12 @@ public class Principal{
         }while(!fecharMenu);
     }//Fim menuCategoria
 
+    /**
+     * Menu de Produtos 
+     * @param arqCategorias arquivo indexado de categorias 
+     * @param arqProdutos arquivo indexado de produtos
+     * @throws Exception
+     * */  
     private static void menuProdutos(Arquivo<Produto> arqProdutos, Arquivo<Categoria> arqCategorias) throws Exception
     {//Inicio menuProdutos
         byte opcao;
@@ -133,6 +152,12 @@ public class Principal{
         }while(!fecharMenu);
     }//Fim menuProdutos
 
+    /**
+     * Metodo para adicionar um produto.
+     * @param arq Arquivo indexado de produtos
+     * @param arqc Arquivo indexado de categorias
+     * @throws Exception
+     * */
     private static void adicionarP(Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception
     {//Inicio adicionar
         //inserir produto  
@@ -191,6 +216,11 @@ public class Principal{
 
     }//Fim adicionar
 
+    /**
+     * Metodo para adicionar uma categoria.
+     * @param arq Arquivo indexado de categorias
+     * @throws Exception
+     * */  
     private static void adicionarC(Arquivo<Categoria> arq) throws Exception
     {//inicio adicionarC
         String nomeCategoria;
@@ -229,6 +259,11 @@ public class Principal{
         } while(outro);
     }//Fim adicionarC
 
+    /**
+     * Metodo para remover um produto
+     * @param arq Arquivo indexado de produto
+     * @throws Exception
+     * */
     private static void removerP(Arquivo<Produto> arq) throws Exception
     {//Inicio removerP
         int id; 
@@ -257,6 +292,12 @@ public class Principal{
         } while (erro);  
     }//Fim removerP
 
+    /**
+     * Metodo para remover uma categoria
+     * @param arqc Arquivo indexado de categorias
+     * @param arq Arquivo indexado de produtos
+     * @throws Exception
+     * */
     private static void removerC(Arquivo<Categoria> arqc, Arquivo<Produto> arq) throws Exception 
     {//Inicio removerC
         int idCategoria;
@@ -373,6 +414,12 @@ public class Principal{
         } while (erro);  
     }//Fim removerC
 
+    /**
+     * Metodo para alterar um produto
+     * @param arq Arquivo indexado de produtos
+     * @param arqc Arquivo indexado de categorias
+     * @throws Exception
+     * */
     private static void alterarP(Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception
     {//Inicio alterarP
         String nomeProduto, descricao, marca, origem; 
@@ -440,6 +487,12 @@ public class Principal{
         } 
     }//Fim alterarP
 
+    /**
+     * Metodo para consultar um produto
+     * @param arq Arquivo indexado de produtos
+     * @param arqc Arquivo indexado de categorias
+     * @throws Exception
+     * */
     private static void consultaP(Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception
     {//Inicio consultaP
         boolean erro;
@@ -474,6 +527,12 @@ public class Principal{
         else System.out.println("Produto não encontrado!");  
     }//Fim consultaP
 
+    /**
+     * Metodo para mostrar todos os produtos de uma categoria
+     * @param arq Arquivo indexado de produtos
+     * @param arqc Arquivo indexado de categorias
+     * @throws Exception
+     * */  
     private static void consultaC(Arquivo<Categoria> arqc, Arquivo<Produto> arq) throws Exception
     {//Inicio consultaC
         boolean erro;
@@ -509,7 +568,13 @@ public class Principal{
         }
         else System.out.println("Não ha produtos nessa categoria, ou ela não existe!");
     }//Fim consultaC
-
+     
+    /**
+     * Metodo para mostrar todos os produtos cadastrados
+     * @param arq Arquivo indexado de produtos
+     * @param arqc Arquivo indexado de categorias
+     * @throws Exception
+     * */  
     private static void listaP(Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception
     {//Inicio listaP
         String nomeCategoria;
@@ -534,6 +599,12 @@ public class Principal{
         } 
     }//Fim listaP
 
+    /**
+     * Metodo para listar todas as categorias
+     * @param arq Arquivo indexado de categorias
+     * @return Um array de Integer com os ids das categorias para futura validacao
+     * @throws Exception
+     * */
     private static Integer[] listaCategoriasCadastradas(Arquivo<Categoria> arq) throws Exception
     {//Inicio listaCategoriasCadastradas
         int count = 0;
@@ -551,6 +622,14 @@ public class Principal{
         return idsValidos;
     }//Fim listaCategoriasCadastradas
 
+    /**
+     * Metodo para obter uma lista de produtos de uma categoria
+     * @param idCategoria Categoria a ser filtrada
+     * @param arq Arquivo indexado de produtos
+     * @param arqc Arquivo indexado de categorias
+     * @return Arraylist de produtos da categoria
+     * @throws Exception
+     * */
     private static ArrayList<Produto> listProdutosC(int idCategoria, Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception 
     {//Inicio listProdutosC
         ArrayList<Produto> lista = arq.toList();
@@ -558,6 +637,13 @@ public class Principal{
         return lista;
     }//Fim listProdutosC 
 
+    /**
+     * Metodo para obter o nome da categoria
+     * @param idCategoria 
+     * @param arqc Arquivo indexado de categorias
+     * @return O nome da categoria
+     * @throws Exception
+     * */
     private static String getNomeCategoria(int idCategoria, Arquivo<Categoria> arqc) throws Exception 
     {//Inicio getNomeCategoria
         String nome = null;
