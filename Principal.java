@@ -259,6 +259,11 @@ public class Principal{
         } while(outro);
     }//Fim adicionarC
 
+    /**
+     * Metodo para remover um produto
+     * @param arq Arquivo indexado de produto
+     * @throws Exception
+     * */
     private static void removerP(Arquivo<Produto> arq) throws Exception
     {//Inicio removerP
         int id; 
@@ -287,6 +292,12 @@ public class Principal{
         } while (erro);  
     }//Fim removerP
 
+    /**
+     * Metodo para remover uma categoria
+     * @param arqc Arquivo indexado de categorias
+     * @param arq Arquivo indexado de produtos
+     * @throws Exception
+     * */
     private static void removerC(Arquivo<Categoria> arqc, Arquivo<Produto> arq) throws Exception 
     {//Inicio removerC
         int idCategoria;
@@ -403,6 +414,12 @@ public class Principal{
         } while (erro);  
     }//Fim removerC
 
+    /**
+     * Metodo para alterar um produto
+     * @param arq Arquivo indexado de produtos
+     * @param arqc Arquivo indexado de categorias
+     * @throws Exception
+     * */
     private static void alterarP(Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception
     {//Inicio alterarP
         String nomeProduto, descricao, marca, origem; 
@@ -470,6 +487,12 @@ public class Principal{
         } 
     }//Fim alterarP
 
+    /**
+     * Metodo para consultar um produto
+     * @param arq Arquivo indexado de produtos
+     * @param arqc Arquivo indexado de categorias
+     * @throws Exception
+     * */
     private static void consultaP(Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception
     {//Inicio consultaP
         boolean erro;
@@ -504,6 +527,12 @@ public class Principal{
         else System.out.println("Produto não encontrado!");  
     }//Fim consultaP
 
+    /**
+     * Metodo para mostrar todos os produtos de uma categoria
+     * @param arq Arquivo indexado de produtos
+     * @param arqc Arquivo indexado de categorias
+     * @throws Exception
+     * */  
     private static void consultaC(Arquivo<Categoria> arqc, Arquivo<Produto> arq) throws Exception
     {//Inicio consultaC
         boolean erro;
@@ -539,7 +568,13 @@ public class Principal{
         }
         else System.out.println("Não ha produtos nessa categoria, ou ela não existe!");
     }//Fim consultaC
-
+     
+    /**
+     * Metodo para mostrar todos os produtos cadastrados
+     * @param arq Arquivo indexado de produtos
+     * @param arqc Arquivo indexado de categorias
+     * @throws Exception
+     * */  
     private static void listaP(Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception
     {//Inicio listaP
         String nomeCategoria;
