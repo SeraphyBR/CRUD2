@@ -56,7 +56,7 @@ class Compra implements Entidade{
     public String toString(){
         return "Id Compra: "          + this.idCompra + 
                 "\nId Cliente: "      + this.idCliente + 
-                "\nData da compra: "  + this.dataCompra.getTime() + 
+                "\nData da compra: "  + this.dataCompra.toString() + 
                 "\nValor da compra: " + this.valorCompra;
        }
 }
