@@ -1,13 +1,11 @@
 import java.util.Date;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.text.*;
+import java.io.*;
 
 class Compra implements Entidade{
     protected int idCliente;
     protected int idCompra;
     protected Date dataCompra;
-    protected float valorCompra;
+    protected double valorCompra;
 
     public Compra(){
         this.idCliente   = -1;
@@ -38,8 +36,8 @@ class Compra implements Entidade{
 
         saida.writeInt(this.idCliente);
         saida.writeInt(this.idCompra);
-        saida.writeDate(this.dataCompra);
-        saida.writeFloat(this.valorCompra);
+        saida.writeLong(this.dataCompra.getTime());
+        saida.writeDouble(this.valorCompra);
         return dados.toByteArray();
     }
 
@@ -50,15 +48,15 @@ class Compra implements Entidade{
 
         this.idCliente = entrada.readInt();
         this.idCompra = entrada.readInt();
-        this.dataCompra = entrada.readDate();
-        this.valorCompra = entrada.readFloat();
+        this.dataCompra.setTime(entrada.readLong());
+        this.valorCompra = entrada.readDouble();
         entrada.close();
     }
 
     public String toString(){
-        return "Id Compra: " + this.idCompra + 
-                "\nId Cliente: " + this.idCliente + 
-                "\nData da compra: " + this.dataCompra.getTime() + 
+        return "Id Compra: "          + this.idCompra + 
+                "\nId Cliente: "      + this.idCliente + 
+                "\nData da compra: "  + this.dataCompra.getTime() + 
                 "\nValor da compra: " + this.valorCompra;
        }
 }
