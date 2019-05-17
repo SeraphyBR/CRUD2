@@ -1,11 +1,11 @@
 import java.util.Date;
 import java.text.*;
 
-class Compra{
-    public int idCliente;
-    public int idCompra;
-    public Date dataCompra;
-    public float valorCompra;
+class Compra implements Entidade{
+    protected int idCliente;
+    protected int idCompra;
+    protected Date dataCompra;
+    protected float valorCompra;
 
     public Compra(){
         this.idCliente   = -1;
@@ -21,11 +21,11 @@ class Compra{
         this.valorCompra = valorCompra;
     }
 
-    public int getId(){
+    public int getID(){
         return this.idCompra;
     }
 
-    public void setId(int id){
+    public void setID(int id){
         this.idCompra = id;
     }
 
