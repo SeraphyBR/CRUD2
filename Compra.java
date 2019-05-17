@@ -20,4 +20,21 @@ class Compra{
         this.dataCompra  = null;
         this.valorCompra = valorCompra;
     }
+
+    public int getId(){
+        return this.idCompra;
+    }
+
+    public void setId(int id){
+        this.idCompra = id;
+    }
+
+    
+
+    public String toString(){
+        return "Id Compra: " + this.idCompra + 
+                "Id Cliente: " + this.idCliente + 
+                "Data da compra: " + this.dataCompra.getTime() + 
+                "Valor da compra: " + this.valorCompra;
+       }
 }
