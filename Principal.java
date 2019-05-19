@@ -14,11 +14,13 @@ public class Principal{
     private static final Scanner read = new Scanner(System.in);
     private static Arquivo<Produto> arqProdutos;
     private static Arquivo<Categoria> arqCategorias;
+    private static Arquivo<Cliente> arqClientes;
     
     public static void main(String[] args){
         try{
-            arqProdutos  = new Arquivo<>(Produto.class.getConstructor(), "Produto");
-            arqCategorias = new Arquivo<>(Categoria.class.getConstructor(), "Categoria");
+            arqProdutos  = new Arquivo<>(Produto.class.getConstructor(), "Produtos");
+            arqCategorias = new Arquivo<>(Categoria.class.getConstructor(), "Categorias");
+            arqClientes = new Arquivo<>(Cliente.class.getConstructor(), "Clientes");
             menuPrincipal();
             arqProdutos.close();
             arqCategorias.close();
@@ -65,8 +67,19 @@ public class Principal{
     }//Fim menuPrincipal 
 
     private static void menuLogin() throws Exception 
-    {//Inicio menuLogin 
-
+    {//Inicio menuLogin
+        String email, senha;
+        System.out.println("\n\t*** LOGIN ***\n");
+        System.out.print("Email: ");
+        email = read.next();
+        System.out.print("Senha: ");
+        senha = read.next();
+        if(email.equals("admin") && senha.equals("coffe")) menuAdministrador();
+        else{
+            Cliente c = getCliente(email,senha);
+            if(c != null) menuCliente(c.getID());
+            else System.out.println("Usuario não encontrado!\nVerifique se o email e senha estão corretos!");
+        }
     }//Fim menuLogin
 
     private static void menuCadastro() throws Exception 
@@ -110,6 +123,16 @@ public class Principal{
             }
         } while(!fecharMenu);
     }//Fim menuAdministrador 
+
+    /**
+     * Menu de acoes do Usuario
+     * @param idCliente O id do cliente que fez login
+     * @throws Exception 
+     * */
+    private static void menuCliente(int idCliente) throws Exception
+    {//Inicio menuCliente 
+
+    }//Fim menuCliente 
 
     /**
     * Menu de categorias 
@@ -708,5 +731,18 @@ public class Principal{
         if (c != null) nome = c.nome;
         return nome;
     }//Fim getNomeCategoria
+
+    private static Cliente getCliente(String email, String cpf) throws Exception
+    {//Inicio getCliente
+        Cliente cliente = null;
+        ArrayList<Cliente> lista = arqClientes.toList();
+        for(Cliente c: lista){
+            if(c.email.equals(email) && c.cpf.equals(cpf)){
+                cliente = c;
+                break;
+            }
+        }
+        return cliente;
+    }//Fim getCliente
     
 }//end Principal

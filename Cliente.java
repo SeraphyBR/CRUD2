@@ -11,18 +11,21 @@ class Cliente implements Entidade
     protected int idCliente;
     protected String nomeCliente;
     protected String email;
+    protected String cpf;
 
     //Contrutor vazio
     public Cliente(){
         this.idCliente = -1;
         this.nomeCliente = "";
         this.email = "";
+        this.cpf = "";
     }
 
     //Construtor com parametros
-    public Cliente(String nomeCliente, String email){
+    public Cliente(String nomeCliente, String email, String cpf){
         this.nomeCliente = nomeCliente;
         this.email = email;
+        this.cpf = cpf;
     }
 
     public void setID(int id){
@@ -41,6 +44,7 @@ class Cliente implements Entidade
         saida.writeInt(this.idCliente);
         saida.writeUTF(this.nomeCliente);
         saida.writeUTF(this.email);
+        saida.writeUTF(this.cpf);
         return dados.toByteArray();
     }
 
@@ -52,12 +56,14 @@ class Cliente implements Entidade
         this.idCliente = entrada.readInt();
         this.nomeCliente = entrada.readUTF();
         this.email = entrada.readUTF();
+        this.cpf = entrada.readUTF();
         entrada.close();
     }
 
     public String toString(){
         return "Id:"        + this.idCliente +
                 "\nNome: "  + this.nomeCliente +
-                "\nEmail: " + this.email;
+                "\nEmail: " + this.email +
+                "\nCPF: " + this.cpf;
     }
 }//End Cliente
