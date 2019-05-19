@@ -12,14 +12,14 @@ import java.text.*;
 public class Principal{
     
     private static final Scanner read = new Scanner(System.in);
+    private static Arquivo<Produto> arqProdutos;
+    private static Arquivo<Categoria> arqCategorias;
     
     public static void main(String[] args){
-        Arquivo<Produto> arqProdutos;
-        Arquivo<Categoria> arqCategorias;
         try{
             arqProdutos  = new Arquivo<>(Produto.class.getConstructor(), "Produto");
             arqCategorias = new Arquivo<>(Categoria.class.getConstructor(), "Categoria");
-            menuAdministrador(arqCategorias, arqProdutos);
+            menuPrincipal();
             arqProdutos.close();
             arqCategorias.close();
             read.close();
@@ -30,30 +30,75 @@ public class Principal{
     }//end main
     
     /**
-     * Menu de acoes administrativas
-     * @param arqCategorias arquivo indexado de categorias
-     * @param arqProdutos arquivo indexado de produtos
-     * @throws Exception 
+     * Menu Principal
      * */
-    private static void menuAdministrador(Arquivo<Categoria> arqCategorias, Arquivo<Produto> arqProdutos) throws Exception 
-    {//Inicio menuAdministrador    
+    private static void menuPrincipal() throws Exception 
+    {//Inicio menuPrincipal
         byte opcao;
         boolean fecharMenu = false;
         do{
             System.out.println(
             "\n\t*** MENU PRINCIPAL ***\n" +
+            "0 - Efetuar login\n" +
+            "1 - Novo cadastro\n" +
+            "2 - Sair "
+            ); 
+            System.out.print("Digite a opção: ");
+            opcao = read.nextByte();
+            switch(opcao){
+                case 0:
+                menuLogin();
+                break;
+                case 1:
+                menuCadastro();
+                break;
+                case 2:
+                fecharMenu = true;
+                break;
+                default: 
+                System.out.println("Opcao invalida!\n");
+                Thread.sleep(1000);  
+                break;
+            }
+        }while(!fecharMenu);
+
+    }//Fim menuPrincipal 
+
+    private static void menuLogin() throws Exception 
+    {//Inicio menuLogin 
+
+    }//Fim menuLogin
+
+    private static void menuCadastro() throws Exception 
+    {//Inicio menuCadastro 
+
+    }//Fim menuCadastro 
+
+    /**
+     * Menu de acoes administrativas
+     * @param arqCategorias arquivo indexado de categorias
+     * @param arqProdutos arquivo indexado de produtos
+     * @throws Exception 
+     * */
+    private static void menuAdministrador() throws Exception 
+    {//Inicio menuAdministrador    
+        byte opcao;
+        boolean fecharMenu = false;
+        do{
+            System.out.println(
+            "\n\t*** MENU ADMIN ***\n" +
             "0 - Gerenciar produtos\n"     +
             "1 - Gerenciar categorias\n"   +
-            "2 - Fechar programa"
+            "2 - Logout"
             );
             System.out.print("Digite a opção: ");
             opcao = read.nextByte();
             switch(opcao){
                 case 0:
-                menuProdutos(arqProdutos, arqCategorias);
+                menuProdutos();
                 break;
                 case 1:
-                menuCategoria(arqCategorias, arqProdutos);
+                menuCategoria();
                 break;
                 case 2:
                 fecharMenu = true;
@@ -72,7 +117,7 @@ public class Principal{
     * @param arqProdutos arquivo indexado de produtos
     * @throws Exception
     * */
-    private static void menuCategoria(Arquivo<Categoria> arqCategorias, Arquivo<Produto> arqProdutos)throws Exception
+    private static void menuCategoria()throws Exception
     {//Inicio menuCategoria
         byte opcao;
         boolean fecharMenu = false;
@@ -91,17 +136,17 @@ public class Principal{
             System.out.println();
             switch(opcao){
                 case 0:
-                adicionarC(arqCategorias);
+                adicionarC();
                 break;
                 case 1:
-                removerC(arqCategorias, arqProdutos);
+                removerC();
                 break;
                 case 2:
-                listaC = listaCategoriasCadastradas(arqCategorias);
+                listaC = listaCategoriasCadastradas();
                 if(listaC == null) System.out.println("Não ha categorias cadastradas!");
                 break;
                 case 3:
-                consultaC(arqCategorias, arqProdutos);
+                consultaC();
                 break;
                 case 4:
                 fecharMenu = true;
@@ -120,7 +165,7 @@ public class Principal{
     * @param arqProdutos arquivo indexado de produtos
     * @throws Exception
     * */  
-    private static void menuProdutos(Arquivo<Produto> arqProdutos, Arquivo<Categoria> arqCategorias) throws Exception
+    private static void menuProdutos() throws Exception
     {//Inicio menuProdutos
         byte opcao;
         boolean fecharMenu = false;
@@ -139,19 +184,19 @@ public class Principal{
             System.out.println();
             switch (opcao){
                 case 0:
-                adicionarP(arqProdutos, arqCategorias);
+                adicionarP();
                 break;
                 case 1:
-                removerP(arqProdutos);
+                removerP();
                 break;
                 case 2:
-                alterarP(arqProdutos, arqCategorias);
+                alterarP();
                 break;
                 case 3:
-                consultaP(arqProdutos, arqCategorias);
+                consultaP();
                 break;
                 case 4:
-                listaP(arqProdutos, arqCategorias);
+                listaP();
                 break;
                 case 5:
                 fecharMenu = true;
@@ -170,7 +215,7 @@ public class Principal{
     * @param arqc Arquivo indexado de categorias
     * @throws Exception
     * */
-    private static void adicionarP(Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception
+    private static void adicionarP() throws Exception
     {//Inicio adicionar
         //inserir produto  
         String nomeProduto, descricao, marca, origem;
@@ -193,7 +238,7 @@ public class Principal{
         System.out.print("Origem do produto: ");
         origem = read.nextLine();
         System.out.println();
-        if((idsValidosC = listaCategoriasCadastradas(arqc)) != null){
+        if((idsValidosC = listaCategoriasCadastradas()) != null){
             System.out.print("\nEscolha uma categoria para o produto,\ne digite o ID: ");
             do{
                 valido = false;
@@ -207,7 +252,7 @@ public class Principal{
                 System.out.print("1 - SIM\n2 - NÂO\nR: ");
                 switch (read.nextByte()){
                     case 1:
-                    id = arq.inserir(new Produto(nomeProduto,descricao,preco,marca,origem,idCategoria));
+                    id = arqProdutos.inserir(new Produto(nomeProduto,descricao,preco,marca,origem,idCategoria));
                     System.out.println("\nProduto inserido com o ID: " + id);   
                     break;
                     case 2:
@@ -233,7 +278,7 @@ public class Principal{
     * @param arq Arquivo indexado de categorias
     * @throws Exception
     * */  
-    private static void adicionarC(Arquivo<Categoria> arq) throws Exception
+    private static void adicionarC() throws Exception
     {//inicio adicionarC
         String nomeCategoria;
         boolean erro;
@@ -251,7 +296,7 @@ public class Principal{
                 System.out.print("1 - SIM\n2 - NÂO\nR: ");
                 switch (read.nextByte()){
                     case 1:
-                    id = arq.inserir(new Categoria(nomeCategoria));
+                    id = arqCategorias.inserir(new Categoria(nomeCategoria));
                     System.out.println("\nCategoria criada com o ID: " + id);
                     System.out.println("Operacao concluida com sucesso!");
                     Thread.sleep(1000);
@@ -276,7 +321,7 @@ public class Principal{
     * @param arq Arquivo indexado de produto
     * @throws Exception
     * */
-    private static void removerP(Arquivo<Produto> arq) throws Exception
+    private static void removerP() throws Exception
     {//Inicio removerP
         int id; 
         boolean erro, result;  
@@ -289,7 +334,7 @@ public class Principal{
             System.out.print("1 - SIM\n2 - NÂO\nR: ");
             switch (read.nextByte()){
                 case 1:
-                result = arq.remover(id - 1); 
+                result = arqProdutos.remover(id - 1); 
                 if(result) System.out.println("Removido com sucesso!");
                 else System.out.println("Produto não encontrado!"); 
                 break;
@@ -310,7 +355,7 @@ public class Principal{
     * @param arq Arquivo indexado de produtos
     * @throws Exception
     * */
-    private static void removerC(Arquivo<Categoria> arqc, Arquivo<Produto> arq) throws Exception 
+    private static void removerC() throws Exception 
     {//Inicio removerC
         int idCategoria;
         int idCategoriaNew;
@@ -324,7 +369,7 @@ public class Principal{
             System.out.print("ID da categoria a ser removida: ");
             idCategoria = read.nextInt();
             if(idCategoria > 0){
-                nomeCategoria = getNomeCategoria(idCategoria - 1, arqc);
+                nomeCategoria = getNomeCategoria(idCategoria - 1);
                 if(nomeCategoria == null){
                     erro = true;
                     System.out.println("Categoria inexistente!");
@@ -343,10 +388,10 @@ public class Principal{
             System.out.print("1 - SIM\n2 - NÂO\nR: ");
             switch (read.nextByte()){
                 case 1:
-                lista = listProdutosC(idCategoria, arq, arqc);
+                lista = listProdutosC(idCategoria);
                 if (lista.isEmpty()){
                     System.out.println("Não ha produtos associados a '" + nomeCategoria + "', procedendo com remoção...");
-                    result = arqc.remover(idCategoria - 1); 
+                    result = arqCategorias.remover(idCategoria - 1); 
                     if(result) System.out.println("Removido com sucesso!");
                 }
                 else {
@@ -364,15 +409,15 @@ public class Principal{
                             case 0:
                             for(Produto p: lista){
                                 System.out.println("Removendo '" + p.nome_Produto + "'...");
-                                result = arq.remover(p.idProduto - 1);
+                                result = arqProdutos.remover(p.idProduto - 1);
                             }
                             System.out.println("Excluindo categoria '" + nomeCategoria + "'...");
-                            result = arqc.remover(idCategoria - 1);
+                            result = arqCategorias.remover(idCategoria - 1);
                             System.out.println("Concluido exclusão de " + lista.size() + " produtos e 1 categoria.");
                             lista = null;
                             break;
                             case 1:
-                            idsValidosC = listaCategoriasCadastradas(arqc);
+                            idsValidosC = listaCategoriasCadastradas();
                             if(idsValidosC.length == 1){
                                 System.out.println("\nOperação não é possivel!\nSo tem uma categoria!");
                                 Thread.sleep(1000);
@@ -398,10 +443,10 @@ public class Principal{
                                         } 
                                     } while(!valido);
                                     p.idCategoria = idCategoriaNew;
-                                    result = arq.alterar(p.idProduto, p);
+                                    result = arqProdutos.alterar(p.idProduto, p);
                                     System.out.println("Movido com sucesso!");
                                 }
-                                result = arqc.remover(idCategoria - 1);
+                                result = arqCategorias.remover(idCategoria - 1);
                             }//Fim else
                             break;
                             case 2:
@@ -432,7 +477,7 @@ public class Principal{
     * @param arqc Arquivo indexado de categorias
     * @throws Exception
     * */
-    private static void alterarP(Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception
+    private static void alterarP() throws Exception
     {//Inicio alterarP
         String nomeProduto, descricao, marca, origem; 
         int idCategoria;
@@ -464,7 +509,7 @@ public class Principal{
         System.out.print("Origem do produto: ");
         origem = read.nextLine();
         System.out.println();
-        if((idsValidosC = listaCategoriasCadastradas(arqc)) != null){
+        if((idsValidosC = listaCategoriasCadastradas()) != null){
             System.out.print("Escolha uma categoria para o produto,\ne digite o ID: ");
             do{
                 valido = false;
@@ -478,7 +523,7 @@ public class Principal{
                 System.out.print("1 - SIM\n2 - NÂO\nR: ");
                 switch (read.nextByte()){
                     case 1:
-                    result = arq.alterar(id, new Produto(nomeProduto,descricao,preco,marca,origem,idCategoria));
+                    result = arqProdutos.alterar(id, new Produto(nomeProduto,descricao,preco,marca,origem,idCategoria));
                     if(result) System.out.println("Alterado com sucesso!");
                     else System.out.println("Produto para alterar não encontrado!");  
                     break;
@@ -505,7 +550,7 @@ public class Principal{
     * @param arqc Arquivo indexado de categorias
     * @throws Exception
     * */
-    private static void consultaP(Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception
+    private static void consultaP() throws Exception
     {//Inicio consultaP
         boolean erro;
         int id;
@@ -522,9 +567,9 @@ public class Principal{
             }
             System.out.println();
         } while(erro);
-        p = arq.pesquisar(id - 1);
+        p = arqProdutos.pesquisar(id - 1);
         if (p != null && p.idProduto != -1 ){
-            c = arqc.pesquisar(p.idCategoria - 1);
+            c = arqCategorias.pesquisar(p.idCategoria - 1);
             System.out.println(
             "Id: "            + p.idProduto    + 
             "\nNome: "        + p.nome_Produto + 
@@ -545,7 +590,7 @@ public class Principal{
     * @param arqc Arquivo indexado de categorias
     * @throws Exception
     * */  
-    private static void consultaC(Arquivo<Categoria> arqc, Arquivo<Produto> arq) throws Exception
+    private static void consultaC() throws Exception
     {//Inicio consultaC
         boolean erro;
         int idCategoria;
@@ -562,9 +607,9 @@ public class Principal{
             }
             System.out.println();
         } while(erro);
-        lista = listProdutosC(idCategoria, arq, arqc);
+        lista = listProdutosC(idCategoria);
         if(lista != null && !lista.isEmpty()){
-            nomeCategoria = getNomeCategoria(idCategoria - 1, arqc);
+            nomeCategoria = getNomeCategoria(idCategoria - 1);
             System.out.println("Produtos pertencentes a '" + nomeCategoria + "'");
             for(Produto p: lista){
                 System.out.println(
@@ -587,14 +632,14 @@ public class Principal{
     * @param arqc Arquivo indexado de categorias
     * @throws Exception
     * */  
-    private static void listaP(Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception
+    private static void listaP() throws Exception
     {//Inicio listaP
         String nomeCategoria;
-        ArrayList<Produto> lista = arq.toList();
+        ArrayList<Produto> lista = arqProdutos.toList();
         if(!lista.isEmpty()) System.out.println("\t** Lista dos produtos cadastrados **\n");
         for(Produto p: lista){
             if (p != null && p.idProduto != -1 ){
-                nomeCategoria = getNomeCategoria(p.idCategoria - 1, arqc);
+                nomeCategoria = getNomeCategoria(p.idCategoria - 1);
                 System.out.println(
                 "Id: "            + p.idProduto    + 
                 "\nNome: "        + p.nome_Produto + 
@@ -617,10 +662,10 @@ public class Principal{
     * @return Um array de Integer com os ids das categorias para futura validacao
     * @throws Exception
     * */
-    private static Integer[] listaCategoriasCadastradas(Arquivo<Categoria> arq) throws Exception
+    private static Integer[] listaCategoriasCadastradas() throws Exception
     {//Inicio listaCategoriasCadastradas
         int count = 0;
-        ArrayList<Categoria> lista = arq.toList();
+        ArrayList<Categoria> lista = arqCategorias.toList();
         Integer[] idsValidos = null; //Lista retornando os ids de categorias validos para consulta
         if(!lista.isEmpty()){
             idsValidos = new Integer[lista.size()];
@@ -642,9 +687,9 @@ public class Principal{
     * @return Arraylist de produtos da categoria
     * @throws Exception
     * */
-    private static ArrayList<Produto> listProdutosC(int idCategoria, Arquivo<Produto> arq, Arquivo<Categoria> arqc) throws Exception 
+    private static ArrayList<Produto> listProdutosC(int idCategoria) throws Exception 
     {//Inicio listProdutosC
-        ArrayList<Produto> lista = arq.toList();
+        ArrayList<Produto> lista = arqProdutos.toList();
         lista.removeIf(p -> p.idCategoria != idCategoria);
         return lista;
     }//Fim listProdutosC 
@@ -656,10 +701,10 @@ public class Principal{
     * @return O nome da categoria
     * @throws Exception
     * */
-    private static String getNomeCategoria(int idCategoria, Arquivo<Categoria> arqc) throws Exception 
+    private static String getNomeCategoria(int idCategoria) throws Exception 
     {//Inicio getNomeCategoria
         String nome = null;
-        Categoria c = arqc.pesquisar(idCategoria);
+        Categoria c = arqCategorias.pesquisar(idCategoria);
         if (c != null) nome = c.nome;
         return nome;
     }//Fim getNomeCategoria
