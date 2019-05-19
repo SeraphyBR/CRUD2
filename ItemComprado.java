@@ -1,12 +1,10 @@
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-
+import java.io.*;
 class ItemComprado{
 
     public int idCompra;
     public int idProduto;
     public int qtdProduto;
-    public float precoUnitario;
+    public double precoUnitario;
 
     public ItemComprado(){
         this.idCompra      = -1;
@@ -23,7 +21,7 @@ class ItemComprado{
         saida.writeInt(this.idCompra);
         saida.writeInt(this.idProduto);
         saida.writeInt(this.qtdProduto);
-        saida.writeFloat(this.precoUnitario);
+        saida.writeDouble(this.precoUnitario);
         return dados.toByteArray();
     }
 
@@ -35,11 +33,11 @@ class ItemComprado{
         this.idCompra = entrada.readInt();
         this.idProduto = entrada.readInt();
         this.qtdProduto = entrada.readInt();
-        this.precoUnitario = entrada.readFloat();
+        this.precoUnitario = entrada.readDouble();
         entrada.close();
     }
 
-    public ItemComprado(int idCompra, int idProduto, int qtdProduto, flaot precoUnitario){
+    public ItemComprado(int idCompra, int idProduto, int qtdProduto, double precoUnitario){
         this.idCompra      = idCompra;
         this.idProduto     = idProduto;
         this.qtdProduto    = qtdProduto;
