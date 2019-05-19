@@ -62,8 +62,8 @@ class Cliente implements Entidade
 
     public String toString(){
         return "Id:"        + this.idCliente +
-                "\nNome: "  + this.nomeCliente +
-                "\nEmail: " + this.email +
-                "\nCPF: " + this.cpf;
+            "\nNome: "  + this.nomeCliente +
+            "\nEmail: " + this.email +
+            "\nCPF: " + this.cpf;
     }
 }//End Cliente

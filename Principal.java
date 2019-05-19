@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.text.*;
 
 /**
-* @author Luiz Junio
-* @author Allan Vivekanda
-* @author Breno
-* @author Henrique Fernandes
-* */
+ * @author Luiz Junio
+ * @author Allan Vivekanda
+ * @author Breno
+ * @author Henrique Fernandes
+ * */
 public class Principal{
-    
+
     private static final Scanner read = new Scanner(System.in);
     private static Arquivo<Produto> arqProdutos;
     private static Arquivo<Categoria> arqCategorias;
     private static Arquivo<Cliente> arqClientes;
-    
+
     public static void main(String[] args){
         try{
             arqProdutos  = new Arquivo<>(Produto.class.getConstructor(), "Produtos");
@@ -30,7 +30,7 @@ public class Principal{
             e.printStackTrace();
         }//end catch
     }//end main
-    
+
     /**
      * Menu Principal
      * */
@@ -40,27 +40,27 @@ public class Principal{
         boolean fecharMenu = false;
         do{
             System.out.println(
-            "\n\t*** MENU PRINCIPAL ***\n" +
-            "0 - Efetuar login\n" +
-            "1 - Novo cadastro\n" +
-            "2 - Sair "
-            ); 
+                    "\n\t*** MENU PRINCIPAL ***\n" +
+                    "0 - Efetuar login\n" +
+                    "1 - Novo cadastro\n" +
+                    "2 - Sair "
+                    ); 
             System.out.print("Digite a opção: ");
             opcao = read.nextByte();
             switch(opcao){
                 case 0:
-                menuLogin();
-                break;
+                    menuLogin();
+                    break;
                 case 1:
-                menuCadastro();
-                break;
+                    menuCadastro();
+                    break;
                 case 2:
-                fecharMenu = true;
-                break;
+                    fecharMenu = true;
+                    break;
                 default: 
-                System.out.println("Opcao invalida!\n");
-                Thread.sleep(1000);  
-                break;
+                    System.out.println("Opcao invalida!\n");
+                    Thread.sleep(1000);  
+                    break;
             }
         }while(!fecharMenu);
 
@@ -99,27 +99,30 @@ public class Principal{
         boolean fecharMenu = false;
         do{
             System.out.println(
-            "\n\t*** MENU ADMIN ***\n" +
-            "0 - Gerenciar produtos\n"     +
-            "1 - Gerenciar categorias\n"   +
-            "2 - Logout"
-            );
+                    "\n\t*** MENU ADMIN ***\n" +
+                    "0 - Gerenciar produtos\n"     +
+                    "1 - Gerenciar categorias\n"   +
+                    "2 - Gerar relatorios\n" +
+                    "3 - Logout"
+                    );
             System.out.print("Digite a opção: ");
             opcao = read.nextByte();
             switch(opcao){
                 case 0:
-                menuProdutos();
-                break;
+                    menuProdutos();
+                    break;
                 case 1:
-                menuCategoria();
-                break;
+                    menuCategoria();
+                    break;
                 case 2:
-                fecharMenu = true;
-                break;
+                    break;
+                case 3:
+                    fecharMenu = true;
+                    break;
                 default: 
-                System.out.println("Opcao invalida!\n");
-                Thread.sleep(1000);  
-                break;
+                    System.out.println("Opcao invalida!\n");
+                    Thread.sleep(1000);  
+                    break;
             }
         } while(!fecharMenu);
     }//Fim menuAdministrador 
@@ -135,11 +138,11 @@ public class Principal{
     }//Fim menuCliente 
 
     /**
-    * Menu de categorias 
-    * @param arqCategorias arquivo indexado de categorias 
-    * @param arqProdutos arquivo indexado de produtos
-    * @throws Exception
-    * */
+     * Menu de categorias 
+     * @param arqCategorias arquivo indexado de categorias 
+     * @param arqProdutos arquivo indexado de produtos
+     * @throws Exception
+     * */
     private static void menuCategoria()throws Exception
     {//Inicio menuCategoria
         byte opcao;
@@ -147,97 +150,97 @@ public class Principal{
         Integer[] listaC = null;
         do{  
             System.out.println(
-            "\n\t*** MENU DE CATEGORIAS ***\n"                   +
-            "0 - Adicionar categoria\n"                          +
-            "1 - Remover categoria\n"                            +
-            "2 - Listar categorias cadastradas\n"                +
-            "3 - Listar produtos cadastrados em uma categoria\n" +
-            "4 - Sair"
-            );
+                    "\n\t*** MENU DE CATEGORIAS ***\n"                   +
+                    "0 - Adicionar categoria\n"                          +
+                    "1 - Remover categoria\n"                            +
+                    "2 - Listar categorias cadastradas\n"                +
+                    "3 - Listar produtos cadastrados em uma categoria\n" +
+                    "4 - Sair"
+                    );
             System.out.print("Digite a opção: ");
             opcao = read.nextByte();
             System.out.println();
             switch(opcao){
                 case 0:
-                adicionarC();
-                break;
+                    adicionarC();
+                    break;
                 case 1:
-                removerC();
-                break;
+                    removerC();
+                    break;
                 case 2:
-                listaC = listaCategoriasCadastradas();
-                if(listaC == null) System.out.println("Não ha categorias cadastradas!");
-                break;
+                    listaC = listaCategoriasCadastradas();
+                    if(listaC == null) System.out.println("Não ha categorias cadastradas!");
+                    break;
                 case 3:
-                consultaC();
-                break;
+                    consultaC();
+                    break;
                 case 4:
-                fecharMenu = true;
-                break;
+                    fecharMenu = true;
+                    break;
                 default: 
-                System.out.println("Opcao invalida!\n");
-                Thread.sleep(1000);  
-                break;
+                    System.out.println("Opcao invalida!\n");
+                    Thread.sleep(1000);  
+                    break;
             }
         }while(!fecharMenu);
     }//Fim menuCategoria
-    
+
     /**
-    * Menu de Produtos 
-    * @param arqCategorias arquivo indexado de categorias 
-    * @param arqProdutos arquivo indexado de produtos
-    * @throws Exception
-    * */  
+     * Menu de Produtos 
+     * @param arqCategorias arquivo indexado de categorias 
+     * @param arqProdutos arquivo indexado de produtos
+     * @throws Exception
+     * */  
     private static void menuProdutos() throws Exception
     {//Inicio menuProdutos
         byte opcao;
         boolean fecharMenu = false;
         do{
             System.out.println(
-            "\n\t*** MENU DE PRODUTOS ***\n"    +
-            "0 - Adicionar produto\n"           +
-            "1 - Remover produto\n"             +
-            "2 - Alterar produto\n"             +
-            "3 - Consultar produto\n"           +
-            "4 - Listar produtos cadastrados\n" +
-            "5 - Sair"
-            );
+                    "\n\t*** MENU DE PRODUTOS ***\n"    +
+                    "0 - Adicionar produto\n"           +
+                    "1 - Remover produto\n"             +
+                    "2 - Alterar produto\n"             +
+                    "3 - Consultar produto\n"           +
+                    "4 - Listar produtos cadastrados\n" +
+                    "5 - Sair"
+                    );
             System.out.print("Digite a opção: ");
             opcao = read.nextByte();
             System.out.println();
             switch (opcao){
                 case 0:
-                adicionarP();
-                break;
+                    adicionarP();
+                    break;
                 case 1:
-                removerP();
-                break;
+                    removerP();
+                    break;
                 case 2:
-                alterarP();
-                break;
+                    alterarP();
+                    break;
                 case 3:
-                consultaP();
-                break;
+                    consultaP();
+                    break;
                 case 4:
-                listaP();
-                break;
+                    listaP();
+                    break;
                 case 5:
-                fecharMenu = true;
-                break;
+                    fecharMenu = true;
+                    break;
                 default:                    
-                System.out.println("Opcao invalida!\n");
-                Thread.sleep(1000);
-                break;
+                    System.out.println("Opcao invalida!\n");
+                    Thread.sleep(1000);
+                    break;
             }
         }while(!fecharMenu);
     }//Fim menuProdutos
-    
+
     /**
-    * Metodo para adicionar um produto.
-    * @param arq Arquivo indexado de produtos
-    * @param arqc Arquivo indexado de categorias
-    * @throws Exception
-    * */
+     * Metodo para adicionar um produto.
+     * @param arq Arquivo indexado de produtos
+     * @param arqc Arquivo indexado de categorias
+     * @throws Exception
+     * */
     private static void adicionarP() throws Exception
     {//Inicio adicionar
         //inserir produto  
@@ -275,16 +278,16 @@ public class Principal{
                 System.out.print("1 - SIM\n2 - NÂO\nR: ");
                 switch (read.nextByte()){
                     case 1:
-                    id = arqProdutos.inserir(new Produto(nomeProduto,descricao,preco,marca,origem,idCategoria));
-                    System.out.println("\nProduto inserido com o ID: " + id);   
-                    break;
+                        id = arqProdutos.inserir(new Produto(nomeProduto,descricao,preco,marca,origem,idCategoria));
+                        System.out.println("\nProduto inserido com o ID: " + id);   
+                        break;
                     case 2:
-                    System.out.println("\nNovo produto não foi inserido!");
-                    break;
+                        System.out.println("\nNovo produto não foi inserido!");
+                        break;
                     default:
-                    System.out.println("\nOpção Inválida!\n");
-                    erro = true;
-                    break;
+                        System.out.println("\nOpção Inválida!\n");
+                        erro = true;
+                        break;
                 }
             } while(erro);  
         }
@@ -293,14 +296,14 @@ public class Principal{
             System.out.println("Por favor, crie ao menos uma categoria antes de adicionar um produto!");
             Thread.sleep(1000);
         }
-        
+
     }//Fim adicionar
-    
+
     /**
-    * Metodo para adicionar uma categoria.
-    * @param arq Arquivo indexado de categorias
-    * @throws Exception
-    * */  
+     * Metodo para adicionar uma categoria.
+     * @param arq Arquivo indexado de categorias
+     * @throws Exception
+     * */  
     private static void adicionarC() throws Exception
     {//inicio adicionarC
         String nomeCategoria;
@@ -319,31 +322,31 @@ public class Principal{
                 System.out.print("1 - SIM\n2 - NÂO\nR: ");
                 switch (read.nextByte()){
                     case 1:
-                    id = arqCategorias.inserir(new Categoria(nomeCategoria));
-                    System.out.println("\nCategoria criada com o ID: " + id);
-                    System.out.println("Operacao concluida com sucesso!");
-                    Thread.sleep(1000);
-                    System.out.println("\nDeseja criar outra categoria ?"); 
-                    System.out.print("1 - SIM\n2 - NÂO\nR: ");
-                    if (read.nextByte() == 1) outro = true;
-                    break;
+                        id = arqCategorias.inserir(new Categoria(nomeCategoria));
+                        System.out.println("\nCategoria criada com o ID: " + id);
+                        System.out.println("Operacao concluida com sucesso!");
+                        Thread.sleep(1000);
+                        System.out.println("\nDeseja criar outra categoria ?"); 
+                        System.out.print("1 - SIM\n2 - NÂO\nR: ");
+                        if (read.nextByte() == 1) outro = true;
+                        break;
                     case 2:
-                    System.out.println("\nNova categoria não foi criada!");
-                    break;
+                        System.out.println("\nNova categoria não foi criada!");
+                        break;
                     default:
-                    System.out.println("\nOpção Inválida!\n");
-                    erro = true;
-                    break;
+                        System.out.println("\nOpção Inválida!\n");
+                        erro = true;
+                        break;
                 }
             } while(erro);
         } while(outro);
     }//Fim adicionarC
-    
+
     /**
-    * Metodo para remover um produto
-    * @param arq Arquivo indexado de produto
-    * @throws Exception
-    * */
+     * Metodo para remover um produto
+     * @param arq Arquivo indexado de produto
+     * @throws Exception
+     * */
     private static void removerP() throws Exception
     {//Inicio removerP
         int id; 
@@ -357,27 +360,27 @@ public class Principal{
             System.out.print("1 - SIM\n2 - NÂO\nR: ");
             switch (read.nextByte()){
                 case 1:
-                result = arqProdutos.remover(id - 1); 
-                if(result) System.out.println("Removido com sucesso!");
-                else System.out.println("Produto não encontrado!"); 
-                break;
+                    result = arqProdutos.remover(id - 1); 
+                    if(result) System.out.println("Removido com sucesso!");
+                    else System.out.println("Produto não encontrado!"); 
+                    break;
                 case 2:
-                System.out.println("\nOperação Cancelada!");
-                break;
+                    System.out.println("\nOperação Cancelada!");
+                    break;
                 default:
-                System.out.println("\nOpção Inválida!\n");
-                erro = true;
-                break;
+                    System.out.println("\nOpção Inválida!\n");
+                    erro = true;
+                    break;
             }
         } while (erro);  
     }//Fim removerP
-    
+
     /**
-    * Metodo para remover uma categoria
-    * @param arqc Arquivo indexado de categorias
-    * @param arq Arquivo indexado de produtos
-    * @throws Exception
-    * */
+     * Metodo para remover uma categoria
+     * @param arqc Arquivo indexado de categorias
+     * @param arq Arquivo indexado de produtos
+     * @throws Exception
+     * */
     private static void removerC() throws Exception 
     {//Inicio removerC
         int idCategoria;
@@ -404,102 +407,102 @@ public class Principal{
             }
             System.out.println();
         } while(erro);
-        
+
         do{
             erro = false;
             System.out.println("\nRemover a categoria '" + nomeCategoria + "' ?");
             System.out.print("1 - SIM\n2 - NÂO\nR: ");
             switch (read.nextByte()){
                 case 1:
-                lista = listProdutosC(idCategoria);
-                if (lista.isEmpty()){
-                    System.out.println("Não ha produtos associados a '" + nomeCategoria + "', procedendo com remoção...");
-                    result = arqCategorias.remover(idCategoria - 1); 
-                    if(result) System.out.println("Removido com sucesso!");
-                }
-                else {
-                    System.out.println("\nExistem produtos nessa categoria!!");
-                    System.out.println(
-                    "O que deseja fazer?\n" +
-                    "0 - Apagar todos os produtos pertencentes e a categoria\n" +
-                    "1 - Mudar a categoria dos produtos e remover\n" +
-                    "2 - Cancelar remoção\n"
-                    );
-                    do{
-                        System.out.print("Opção: ");
-                        switch(read.nextByte())
-                        {//Inicio switch
-                            case 0:
-                            for(Produto p: lista){
-                                System.out.println("Removendo '" + p.nome_Produto + "'...");
-                                result = arqProdutos.remover(p.idProduto - 1);
-                            }
-                            System.out.println("Excluindo categoria '" + nomeCategoria + "'...");
-                            result = arqCategorias.remover(idCategoria - 1);
-                            System.out.println("Concluido exclusão de " + lista.size() + " produtos e 1 categoria.");
-                            lista = null;
-                            break;
-                            case 1:
-                            idsValidosC = listaCategoriasCadastradas();
-                            if(idsValidosC.length == 1){
-                                System.out.println("\nOperação não é possivel!\nSo tem uma categoria!");
-                                Thread.sleep(1000);
-                            }
-                            else{
-                                System.out.println("\nProdutos:");
-                                for(Produto p: lista){
-                                    System.out.println(
-                                    "\nId: "          + p.idProduto    + 
-                                    "\nNome: "        + p.nome_Produto + 
-                                    "\nDescricao: "   + p.descricao    + 
-                                    "\nMarca: "       + p.marca     
-                                    );  
-                                    System.out.print("\nEscolha uma outra categoria para o produto,\ne digite o ID: ");
-                                    do{
-                                        valido = false;
-                                        idCategoriaNew = read.nextInt();
-                                        valido = Arrays.asList(idsValidosC).contains(idCategoria);
-                                        if(!valido) System.out.println("Esse ID não é valido!\nDigite um ID valido: ");
-                                        else if(idCategoriaNew == idCategoria){
-                                            System.out.println("Não pode escolher a mesma categoria antiga!\nDigite um ID valido: ");
-                                            valido = false;
-                                        } 
-                                    } while(!valido);
-                                    p.idCategoria = idCategoriaNew;
-                                    result = arqProdutos.alterar(p.idProduto, p);
-                                    System.out.println("Movido com sucesso!");
-                                }
-                                result = arqCategorias.remover(idCategoria - 1);
-                            }//Fim else
-                            break;
-                            case 2:
-                            System.out.println("\nOperação Cancelada!");
-                            break;  
-                            default:
-                            System.out.println("\nOpção Inválida!\n");
-                            erro = true;
-                            break; 
-                        }//Fim switch
-                    }while(erro);
-                }
-                break;
+                    lista = listProdutosC(idCategoria);
+                    if (lista.isEmpty()){
+                        System.out.println("Não ha produtos associados a '" + nomeCategoria + "', procedendo com remoção...");
+                        result = arqCategorias.remover(idCategoria - 1); 
+                        if(result) System.out.println("Removido com sucesso!");
+                    }
+                    else {
+                        System.out.println("\nExistem produtos nessa categoria!!");
+                        System.out.println(
+                                "O que deseja fazer?\n" +
+                                "0 - Apagar todos os produtos pertencentes e a categoria\n" +
+                                "1 - Mudar a categoria dos produtos e remover\n" +
+                                "2 - Cancelar remoção\n"
+                                );
+                        do{
+                            System.out.print("Opção: ");
+                            switch(read.nextByte())
+                            {//Inicio switch
+                                case 0:
+                                    for(Produto p: lista){
+                                        System.out.println("Removendo '" + p.nome_Produto + "'...");
+                                        result = arqProdutos.remover(p.idProduto - 1);
+                                    }
+                                    System.out.println("Excluindo categoria '" + nomeCategoria + "'...");
+                                    result = arqCategorias.remover(idCategoria - 1);
+                                    System.out.println("Concluido exclusão de " + lista.size() + " produtos e 1 categoria.");
+                                    lista = null;
+                                    break;
+                                case 1:
+                                    idsValidosC = listaCategoriasCadastradas();
+                                    if(idsValidosC.length == 1){
+                                        System.out.println("\nOperação não é possivel!\nSo tem uma categoria!");
+                                        Thread.sleep(1000);
+                                    }
+                                    else{
+                                        System.out.println("\nProdutos:");
+                                        for(Produto p: lista){
+                                            System.out.println(
+                                                    "\nId: "          + p.idProduto    + 
+                                                    "\nNome: "        + p.nome_Produto + 
+                                                    "\nDescricao: "   + p.descricao    + 
+                                                    "\nMarca: "       + p.marca     
+                                                    );  
+                                            System.out.print("\nEscolha uma outra categoria para o produto,\ne digite o ID: ");
+                                            do{
+                                                valido = false;
+                                                idCategoriaNew = read.nextInt();
+                                                valido = Arrays.asList(idsValidosC).contains(idCategoria);
+                                                if(!valido) System.out.println("Esse ID não é valido!\nDigite um ID valido: ");
+                                                else if(idCategoriaNew == idCategoria){
+                                                    System.out.println("Não pode escolher a mesma categoria antiga!\nDigite um ID valido: ");
+                                                    valido = false;
+                                                } 
+                                            } while(!valido);
+                                            p.idCategoria = idCategoriaNew;
+                                            result = arqProdutos.alterar(p.idProduto, p);
+                                            System.out.println("Movido com sucesso!");
+                                        }
+                                        result = arqCategorias.remover(idCategoria - 1);
+                                    }//Fim else
+                                    break;
+                                case 2:
+                                    System.out.println("\nOperação Cancelada!");
+                                    break;  
+                                default:
+                                    System.out.println("\nOpção Inválida!\n");
+                                    erro = true;
+                                    break; 
+                            }//Fim switch
+                        }while(erro);
+                    }
+                    break;
                 case 2:
-                System.out.println("\nOperação Cancelada!");
-                break;
+                    System.out.println("\nOperação Cancelada!");
+                    break;
                 default:
-                System.out.println("\nOpção Inválida!\n");
-                erro = true;
-                break;
+                    System.out.println("\nOpção Inválida!\n");
+                    erro = true;
+                    break;
             }
         } while (erro);  
     }//Fim removerC
-    
+
     /**
-    * Metodo para alterar um produto
-    * @param arq Arquivo indexado de produtos
-    * @param arqc Arquivo indexado de categorias
-    * @throws Exception
-    * */
+     * Metodo para alterar um produto
+     * @param arq Arquivo indexado de produtos
+     * @param arqc Arquivo indexado de categorias
+     * @throws Exception
+     * */
     private static void alterarP() throws Exception
     {//Inicio alterarP
         String nomeProduto, descricao, marca, origem; 
@@ -546,17 +549,17 @@ public class Principal{
                 System.out.print("1 - SIM\n2 - NÂO\nR: ");
                 switch (read.nextByte()){
                     case 1:
-                    result = arqProdutos.alterar(id, new Produto(nomeProduto,descricao,preco,marca,origem,idCategoria));
-                    if(result) System.out.println("Alterado com sucesso!");
-                    else System.out.println("Produto para alterar não encontrado!");  
-                    break;
+                        result = arqProdutos.alterar(id, new Produto(nomeProduto,descricao,preco,marca,origem,idCategoria));
+                        if(result) System.out.println("Alterado com sucesso!");
+                        else System.out.println("Produto para alterar não encontrado!");  
+                        break;
                     case 2:
-                    System.out.println("\nOperação Cancelada!");
-                    break;
+                        System.out.println("\nOperação Cancelada!");
+                        break;
                     default:
-                    System.out.println("\nOpção Inválida!\n");
-                    erro = true;
-                    break;
+                        System.out.println("\nOpção Inválida!\n");
+                        erro = true;
+                        break;
                 }
             } while (erro);   
         }
@@ -566,13 +569,13 @@ public class Principal{
             Thread.sleep(1000);
         } 
     }//Fim alterarP
-    
+
     /**
-    * Metodo para consultar um produto
-    * @param arq Arquivo indexado de produtos
-    * @param arqc Arquivo indexado de categorias
-    * @throws Exception
-    * */
+     * Metodo para consultar um produto
+     * @param arq Arquivo indexado de produtos
+     * @param arqc Arquivo indexado de categorias
+     * @throws Exception
+     * */
     private static void consultaP() throws Exception
     {//Inicio consultaP
         boolean erro;
@@ -594,25 +597,25 @@ public class Principal{
         if (p != null && p.idProduto != -1 ){
             c = arqCategorias.pesquisar(p.idCategoria - 1);
             System.out.println(
-            "Id: "            + p.idProduto    + 
-            "\nNome: "        + p.nome_Produto + 
-            "\nDescricao: "   + p.descricao    + 
-            "\nPreco: "       + p.preco        + 
-            "\nMarca: "       + p.marca        + 
-            "\nOrigem: "      + p.origem
-            );
+                    "Id: "            + p.idProduto    + 
+                    "\nNome: "        + p.nome_Produto + 
+                    "\nDescricao: "   + p.descricao    + 
+                    "\nPreco: "       + p.preco        + 
+                    "\nMarca: "       + p.marca        + 
+                    "\nOrigem: "      + p.origem
+                    );
             if(c != null) System.out.println("Categoria: " + c.nome);
             else System.out.println("Categoria: " + p.idCategoria);  
         }
         else System.out.println("Produto não encontrado!");  
     }//Fim consultaP
-    
+
     /**
-    * Metodo para mostrar todos os produtos de uma categoria
-    * @param arq Arquivo indexado de produtos
-    * @param arqc Arquivo indexado de categorias
-    * @throws Exception
-    * */  
+     * Metodo para mostrar todos os produtos de uma categoria
+     * @param arq Arquivo indexado de produtos
+     * @param arqc Arquivo indexado de categorias
+     * @throws Exception
+     * */  
     private static void consultaC() throws Exception
     {//Inicio consultaC
         boolean erro;
@@ -636,25 +639,25 @@ public class Principal{
             System.out.println("Produtos pertencentes a '" + nomeCategoria + "'");
             for(Produto p: lista){
                 System.out.println(
-                "Id: "            + p.idProduto    + 
-                "\nNome: "        + p.nome_Produto + 
-                "\nDescricao: "   + p.descricao    + 
-                "\nPreco: "       + p.preco        + 
-                "\nMarca: "       + p.marca        + 
-                "\nOrigem: "      + p.origem       +
-                "\nCategoria: "   + nomeCategoria  
-                );     
+                        "Id: "            + p.idProduto    + 
+                        "\nNome: "        + p.nome_Produto + 
+                        "\nDescricao: "   + p.descricao    + 
+                        "\nPreco: "       + p.preco        + 
+                        "\nMarca: "       + p.marca        + 
+                        "\nOrigem: "      + p.origem       +
+                        "\nCategoria: "   + nomeCategoria  
+                        );     
             }
         }
         else System.out.println("Não ha produtos nessa categoria, ou ela não existe!");
     }//Fim consultaC
-    
+
     /**
-    * Metodo para mostrar todos os produtos cadastrados
-    * @param arq Arquivo indexado de produtos
-    * @param arqc Arquivo indexado de categorias
-    * @throws Exception
-    * */  
+     * Metodo para mostrar todos os produtos cadastrados
+     * @param arq Arquivo indexado de produtos
+     * @param arqc Arquivo indexado de categorias
+     * @throws Exception
+     * */  
     private static void listaP() throws Exception
     {//Inicio listaP
         String nomeCategoria;
@@ -664,13 +667,13 @@ public class Principal{
             if (p != null && p.idProduto != -1 ){
                 nomeCategoria = getNomeCategoria(p.idCategoria - 1);
                 System.out.println(
-                "Id: "            + p.idProduto    + 
-                "\nNome: "        + p.nome_Produto + 
-                "\nDescricao: "   + p.descricao    + 
-                "\nPreco: "       + p.preco        + 
-                "\nMarca: "       + p.marca        + 
-                "\nOrigem: "      + p.origem
-                );
+                        "Id: "            + p.idProduto    + 
+                        "\nNome: "        + p.nome_Produto + 
+                        "\nDescricao: "   + p.descricao    + 
+                        "\nPreco: "       + p.preco        + 
+                        "\nMarca: "       + p.marca        + 
+                        "\nOrigem: "      + p.origem
+                        );
                 if(nomeCategoria != null) System.out.println("Categoria: " + nomeCategoria);
                 else System.out.println("Categoria: " + p.idCategoria);
                 System.out.println();
@@ -678,13 +681,13 @@ public class Principal{
             }  
         } 
     }//Fim listaP
-    
+
     /**
-    * Metodo para listar todas as categorias
-    * @param arq Arquivo indexado de categorias
-    * @return Um array de Integer com os ids das categorias para futura validacao
-    * @throws Exception
-    * */
+     * Metodo para listar todas as categorias
+     * @param arq Arquivo indexado de categorias
+     * @return Um array de Integer com os ids das categorias para futura validacao
+     * @throws Exception
+     * */
     private static Integer[] listaCategoriasCadastradas() throws Exception
     {//Inicio listaCategoriasCadastradas
         int count = 0;
@@ -701,29 +704,29 @@ public class Principal{
         }
         return idsValidos;
     }//Fim listaCategoriasCadastradas
-    
+
     /**
-    * Metodo para obter uma lista de produtos de uma categoria
-    * @param idCategoria Categoria a ser filtrada
-    * @param arq Arquivo indexado de produtos
-    * @param arqc Arquivo indexado de categorias
-    * @return Arraylist de produtos da categoria
-    * @throws Exception
-    * */
+     * Metodo para obter uma lista de produtos de uma categoria
+     * @param idCategoria Categoria a ser filtrada
+     * @param arq Arquivo indexado de produtos
+     * @param arqc Arquivo indexado de categorias
+     * @return Arraylist de produtos da categoria
+     * @throws Exception
+     * */
     private static ArrayList<Produto> listProdutosC(int idCategoria) throws Exception 
     {//Inicio listProdutosC
         ArrayList<Produto> lista = arqProdutos.toList();
         lista.removeIf(p -> p.idCategoria != idCategoria);
         return lista;
     }//Fim listProdutosC 
-    
+
     /**
-    * Metodo para obter o nome da categoria
-    * @param idCategoria 
-    * @param arqc Arquivo indexado de categorias
-    * @return O nome da categoria
-    * @throws Exception
-    * */
+     * Metodo para obter o nome da categoria
+     * @param idCategoria 
+     * @param arqc Arquivo indexado de categorias
+     * @return O nome da categoria
+     * @throws Exception
+     * */
     private static String getNomeCategoria(int idCategoria) throws Exception 
     {//Inicio getNomeCategoria
         String nome = null;
@@ -744,5 +747,5 @@ public class Principal{
         }
         return cliente;
     }//Fim getCliente
-    
+
 }//end Principal
