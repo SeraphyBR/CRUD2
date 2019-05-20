@@ -5,7 +5,7 @@ class Compra implements Entidade{
     protected int idCliente;
     protected int idCompra;
     protected Date dataCompra;
-    protected double valorCompra;
+    private double valorCompra;
 
     public Compra(){
         this.idCliente   = -1;
@@ -14,11 +14,11 @@ class Compra implements Entidade{
         this.valorCompra = 0.0;
     }
 
-    public Compra(int idCompra, float valorCompra){
-        this.idCliente   = -1;
-        this.idCompra    = idCompra;
+    public Compra(int idCliente){
+        this.idCliente   = idCliente;
+        this.idCompra    = -1;
         this.dataCompra  = null;
-        this.valorCompra = valorCompra;
+        this.valorCompra = 0.0;
     }
 
     public int getID(){
