@@ -1,4 +1,7 @@
 import java.util.Scanner;
+
+import com.sun.jmx.remote.internal.ArrayQueue;
+
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.text.*;
@@ -15,15 +18,19 @@ public class Principal{
     private static Arquivo<Produto> arqProdutos;
     private static Arquivo<Categoria> arqCategorias;
     private static Arquivo<Cliente> arqClientes;
+    private static Arquivo<Compra> arqCompra;
 
     public static void main(String[] args){
         try{
             arqProdutos  = new Arquivo<>(Produto.class.getConstructor(), "Produtos");
             arqCategorias = new Arquivo<>(Categoria.class.getConstructor(), "Categorias");
             arqClientes = new Arquivo<>(Cliente.class.getConstructor(), "Clientes");
+            arqCompra = new Arquivo<>(Compra.class.getConstructor(), "Compras");
             menuPrincipal();
             arqProdutos.close();
             arqCategorias.close();
+            arqClientes.close();
+            arqCompra.close();
             read.close();
         }//end try 
         catch(Exception e){
