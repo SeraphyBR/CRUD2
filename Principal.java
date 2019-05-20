@@ -1,7 +1,4 @@
 import java.util.Scanner;
-
-import com.sun.jmx.remote.internal.ArrayQueue;
-
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.text.*;
@@ -158,6 +155,39 @@ public class Principal{
      * */
     private static void menuCliente(int idCliente) throws Exception
     {//Inicio menuCliente 
+        byte opcao;
+        boolean fecharMenu = false;
+        do{
+            System.out.println(
+                "\n\t*** MENU CLIENTE ***\n"             +
+                "0 - Comprar\n"                          +
+                "1 - Remover compra\n"                   +
+                "2 - Gerar relatorio de uma compra\n"    +
+                "3 - \nExcluir conta" +
+                "4 - Logout"
+                );
+                System.out.print("Digite sua opcao: ");
+                opcao = read.nextByte();
+            switch(opcao){
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2: 
+                    break;
+                case 3:
+                    if(arqClientes.remover(idCliente-1)) System.out.println("Cliente removido com sucesso");
+                    fecharMenu = true;
+                    break;
+                case 4:
+                    fecharMenu = true;
+                    break;    
+                default:
+                    System.out.println("Opcao invalida!\n");
+                    Thread.sleep(1000);
+                    break;
+            }
+        }while(!fecharMenu);
 
     }//Fim menuCliente 
 
