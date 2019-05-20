@@ -2,3 +2,5 @@
 *.db
 *.idx
 *.aux
+*.idxc
+*.jar
