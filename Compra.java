@@ -14,9 +14,9 @@ class Compra implements Entidade{
         this.valorCompra = 0.0;
     }
 
-    public Compra(int idCompra, float valorCompra){
-        this.idCliente   = -1;
-        this.idCompra    = idCompra;
+    public Compra(int idCliente, double valorCompra){
+        this.idCliente   = idCliente;
+        this.idCompra    = -1;
         this.dataCompra  = null;
         this.valorCompra = valorCompra;
     }
