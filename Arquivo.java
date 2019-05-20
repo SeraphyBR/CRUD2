@@ -138,7 +138,7 @@ public class Arquivo<G extends Entidade>{
         if(i >= idqr){
             removeu = this.remover(idqr - 1, false);
             if(removeu){
-                result = this.inserirAlterado(objeto, idqr);
+                result = this.inserirAlterado(objeto, idqr-1);
             }//end if
         }//end if
         return result;

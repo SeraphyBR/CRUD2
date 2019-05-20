@@ -142,6 +142,7 @@ public class Principal{
                     menuCategoria();
                     break;
                 case 2:
+                    //RELATORIO
                     break;
                 case 3:
                     fecharMenu = true;
@@ -168,10 +169,9 @@ public class Principal{
             System.out.println(
                 "\n\t*** MENU CLIENTE ***\n"             +
                 "0 - Comprar\n"                          +
-                "1 - Remover compra\n"                   +
-                "2 - Gerar relatorio de uma compra\n"    +
-                "3 - \nExcluir conta"                    +
-                "4 - Logout"
+                "1 - Gerar relatorio de compra\n"    +
+                "2 - \nExcluir conta"                    +
+                "3 - Logout"
                 );
                 System.out.print("Digite sua opcao: ");
                 opcao = read.nextByte();
@@ -181,14 +181,13 @@ public class Principal{
                     menuCompra(idCliente, idCompra);
                     break;
                 case 1:
+                    //RELATORIO
                     break;
-                case 2: 
-                    break;
-                case 3:
+                case 2:
                     if(arqClientes.remover(idCliente-1)) System.out.println("Cliente removido com sucesso");
                     fecharMenu = true;
                     break;
-                case 4:
+                case 3:
                     fecharMenu = true;
                     break;    
                 default:
@@ -203,6 +202,8 @@ public class Principal{
     private static void menuCompra(int idCliente, int idCompra) throws Exception{
         byte opcao;
         boolean fecharMenu = false;
+        int[] lista;
+        int idItemComprado = 0;
         do{  
             System.out.println(
                     "\n\t*** MENU DE COMPRA ***\n"           +
@@ -210,7 +211,8 @@ public class Principal{
                     "1 - Adicionar produto a compra\n"       +
                     "2 - Remover produto da compra\n"        +
                     "3 - Visualizar compra\n"                +
-                    "4 - Finalizar compra\n"
+                    "4 - Finalizar compra\n"                 +
+                    "5 - Cancelar compra\n"
                     );
             System.out.print("Digite a opção: ");
             opcao = read.nextByte();
@@ -223,13 +225,27 @@ public class Principal{
                     adicionarItem(idCompra);
                     break;
                 case 2:
-                    
+                    //VERIFICAR SE ID EXISTE
+                        System.out.println("Qual o id do produto a ser removido? ");
+                        idItemComprado = read.nextInt();
+                        indice_Compra_ItemComprado.excluir(idCompra, idItemComprado);
+                        arqItemComprado.remover(idItemComprado);
                     break;
                 case 3:
-                    indice_Compra_ItemComprado.lista(idCompra);
+                    lista = indice_Compra_ItemComprado.lista(idCompra);
+                    //RELATORIO
                     break;
                 case 4:
                     fecharMenu = true;
+                    break;
+                case 5:
+                    fecharMenu = true;
+                    lista = indice_Compra_ItemComprado.lista(idCompra);
+                    for(int i = 0; i < lista.length; i ++){
+                        indice_Compra_ItemComprado.excluir(idCompra, lista[i]);
+                        arqItemComprado.remover(lista[i]);
+                    }
+                    arqCompra.remover(idCompra);
                     break;
                 default: 
                     System.out.println("Opcao invalida!\n");
@@ -243,6 +259,7 @@ public class Principal{
         int idItemComprado;
         boolean qtdInvalida = false;
         boolean idInvalido = false;
+
         do{
             System.out.println("Digite o id do produto desejado: ");
             int id = read.nextInt();
