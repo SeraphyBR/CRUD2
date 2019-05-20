@@ -138,7 +138,7 @@ public class Arquivo<G extends Entidade>{
         if(i >= idqr){
             removeu = this.remover(idqr - 1, false);
             if(removeu){
-                result = this.inserirAlterado(objeto, idqr-1);
+                result = this.inserirAlterado(objeto, idqr);
             }//end if
         }//end if
         return result;
@@ -147,7 +147,7 @@ public class Arquivo<G extends Entidade>{
     //metodo para inserir sem alterar o id, modificando no indice apenas a posicao do objeto no arquivo
     public boolean inserirAlterado(G objeto, int idqr) throws Exception{
         objeto.setID(idqr);
-        indice.atualizar(idqr, raf.length());
+        indice.atualizar(idqr - 1, raf.length());
         raf.seek(raf.length());
         byte[] b = objeto.toByteArray();
         raf.writeByte(' ');
