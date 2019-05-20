@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.awt.SystemTray;
 import java.text.*;
 
 /**
@@ -16,6 +17,8 @@ public class Principal{
     private static Arquivo<Categoria> arqCategorias;
     private static Arquivo<Cliente> arqClientes;
     private static Arquivo<Compra> arqCompra;
+    private static Arquivo<ItemComprado> arqItemComprado;
+    private static IndiceChaveComposta indice_Compra_ItemComprado;
 
     public static void main(String[] args){
         try{
@@ -23,11 +26,14 @@ public class Principal{
             arqCategorias = new Arquivo<>(Categoria.class.getConstructor(), "Categorias");
             arqClientes = new Arquivo<>(Cliente.class.getConstructor(), "Clientes");
             arqCompra = new Arquivo<>(Compra.class.getConstructor(), "Compras");
+            arqItemComprado = new Arquivo<>(ItemComprado.class.getConstructor(), "ItensComprados");
+            indice_Compra_ItemComprado = new IndiceChaveComposta(20, "indice_Compra_ItemComprado.idxc");
             menuPrincipal();
             arqProdutos.close();
             arqCategorias.close();
             arqClientes.close();
             arqCompra.close();
+            arqItemComprado.close();
             read.close();
         }//end try 
         catch(Exception e){
@@ -156,6 +162,7 @@ public class Principal{
     private static void menuCliente(int idCliente) throws Exception
     {//Inicio menuCliente 
         byte opcao;
+        int idCompra;
         boolean fecharMenu = false;
         do{
             System.out.println(
@@ -163,13 +170,15 @@ public class Principal{
                 "0 - Comprar\n"                          +
                 "1 - Remover compra\n"                   +
                 "2 - Gerar relatorio de uma compra\n"    +
-                "3 - \nExcluir conta" +
+                "3 - \nExcluir conta"                    +
                 "4 - Logout"
                 );
                 System.out.print("Digite sua opcao: ");
                 opcao = read.nextByte();
             switch(opcao){
                 case 0:
+                    idCompra = arqCompra.inserir(new Compra(idCliente));
+                    menuCompra(idCliente, idCompra);
                     break;
                 case 1:
                     break;
@@ -190,6 +199,72 @@ public class Principal{
         }while(!fecharMenu);
 
     }//Fim menuCliente 
+
+    private static void menuCompra(int idCliente, int idCompra) throws Exception{
+        byte opcao;
+        boolean fecharMenu = false;
+        do{  
+            System.out.println(
+                    "\n\t*** MENU DE COMPRA ***\n"           +
+                    "0 - Listar produtos\n"                  +
+                    "1 - Adicionar produto a compra\n"       +
+                    "2 - Remover produto da compra\n"        +
+                    "3 - Visualizar compra\n"                +
+                    "4 - Finalizar compra\n"
+                    );
+            System.out.print("Digite a opção: ");
+            opcao = read.nextByte();
+            System.out.println();
+            switch(opcao){
+                case 0:
+                    listaP();
+                    break;
+                case 1:
+                    adicionarItem(idCompra);
+                    break;
+                case 2:
+                    
+                    break;
+                case 3:
+                    indice_Compra_ItemComprado.lista(idCompra);
+                    break;
+                case 4:
+                    fecharMenu = true;
+                    break;
+                default: 
+                    System.out.println("Opcao invalida!\n");
+                    Thread.sleep(1000);  
+                    break;
+            }
+        }while(!fecharMenu);
+    }
+
+    private static void adicionarItem(int idCompra) throws Exception{
+        int idItemComprado;
+        boolean qtdInvalida = false;
+        boolean idInvalido = false;
+        do{
+            System.out.println("Digite o id do produto desejado: ");
+            int id = read.nextInt();
+            Produto p = arqProdutos.pesquisar(id - 1);
+            if (p != null && p.idProduto != -1 ){
+                do{
+                    System.out.println("Qual a quantidade desejada? ");
+                    byte qtdProduto = read.nextByte();
+                    if(qtdProduto > 0 && qtdProduto <= 255){
+                        idItemComprado = arqItemComprado.inserir(new ItemComprado(idCompra, qtdProduto, p));
+                        indice_Compra_ItemComprado.inserir(idCompra, idItemComprado);
+                    }else {
+                        System.out.println("Valor invalido");
+                        qtdInvalida = true;
+                    }
+                }while(!qtdInvalida);   
+            }else{
+                 System.out.print("Id invalido");
+                 idInvalido = true;
+            }
+        }while(!idInvalido);
+    }//end adicionaritem
 
     /**
      * Menu de categorias 

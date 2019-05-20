@@ -3,7 +3,7 @@ class ItemComprado{
 
     public int idCompra;
     public int idProduto;
-    public int qtdProduto;
+    public byte qtdProduto;
     public double precoUnitario;
 
     public ItemComprado(){
@@ -11,6 +11,21 @@ class ItemComprado{
         this.idProduto     = -1;
         this.qtdProduto    = 0;
         this.precoUnitario = 0.0;
+    }
+    
+    
+    public ItemComprado(int idCompra, int idProduto, byte qtdProduto, double precoUnitario){
+        this.idCompra      = idCompra;
+        this.idProduto     = idProduto;
+        this.qtdProduto    = qtdProduto;
+        this.precoUnitario = precoUnitario;
+    }
+
+    public ItemComprado(int idCompra, byte qtdProduto, Produto p){
+        this.idCompra = idCompra;
+        this.idProduto = p.getID();
+        this.qtdProduto = qtdProduto;
+        this.precoUnitario = p.preco;
     }
 
     //Retorna um array de bytes com os bytes para escrever no arquivo
@@ -37,10 +52,4 @@ class ItemComprado{
         entrada.close();
     }
 
-    public ItemComprado(int idCompra, int idProduto, int qtdProduto, double precoUnitario){
-        this.idCompra      = idCompra;
-        this.idProduto     = idProduto;
-        this.qtdProduto    = qtdProduto;
-        this.precoUnitario = precoUnitario;
-    }
 }
