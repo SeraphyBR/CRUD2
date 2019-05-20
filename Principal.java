@@ -91,7 +91,24 @@ public class Principal{
 
     private static void menuCadastro() throws Exception 
     {//Inicio menuCadastro 
-
+        String nome, email, cpf;
+        int id;
+        boolean erro = false;
+        System.out.println("\n\t*** Cadastro ***\n");
+        System.out.print("Nome completo: ");
+        nome = read.nextLine();
+        System.out.print("Email: ");
+        email = read.next();
+        do{
+            System.out.print("CPF: ");
+            cpf = read.next().replaceAll(".", "").replace("-", "");
+            if(cpf.length() != 11){
+                System.out.println("CPF inválido!\nDigite novamente!");
+                erro = true;
+            }
+        }while(erro);
+        id = arqClientes.inserir(new Cliente(nome,email,cpf));
+        System.out.println("Cadastro efetuado!");
     }//Fim menuCadastro 
 
     /**
