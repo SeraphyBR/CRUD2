@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.awt.SystemTray;
 import java.util.Date;
+import java.util.Random;
 import java.text.*;
 
 /**
@@ -92,15 +93,15 @@ public class Principal{
         senha = read.next();
         if(email.equals("admin") && senha.equals("coffe")) menuAdministrador();
         else{
-            Cliente c = getCliente(email,senha);
-            if(c != null) menuCliente(c.getID());
+            Cliente c = getCliente(email);
+            if(c != null && c.validaSenha(senha)) menuCliente(c.getID());
             else System.out.println("Usuario não encontrado!\nVerifique se o email e senha estão corretos!");
         }
     }//Fim menuLogin
 
     private static void menuCadastro() throws Exception 
     {//Inicio menuCadastro 
-        String nome, email, cpf;
+        String nome, email, cpf, senha;
         int id;
         boolean erro = false;
         System.out.println("\n\t*** Cadastro ***\n");
@@ -118,8 +119,16 @@ public class Principal{
                 erro = true;
             }
         }while(erro);
-        id = arqClientes.inserir(new Cliente(nome,email,cpf));
-        System.out.println("Cadastro efetuado!");
+        Random rd = new Random();
+        senha = new String("" + rd.nextInt(100000));
+        Cliente c = getCliente(email);
+        if(c == null){
+            id = arqClientes.inserir(new Cliente(nome,email,cpf,senha));
+            System.out.println("Cadastro efetuado!");
+            System.out.println("Sua senha eh: " + senha);
+        }
+        else System.out.println("\nJá existe Usuario com esse email!\nCadastro cancelado!"); 
+        
     }//Fim menuCadastro 
 
     /**
@@ -866,12 +875,12 @@ public class Principal{
         return nome;
     }//Fim getNomeCategoria
 
-    private static Cliente getCliente(String email, String cpf) throws Exception
+    private static Cliente getCliente(String email) throws Exception
     {//Inicio getCliente
         Cliente cliente = null;
         ArrayList<Cliente> lista = arqClientes.toList();
         for(Cliente c: lista){
-            if(c.email.equals(email) && c.cpf.equals(cpf)){
+            if(c.email.equals(email)){
                 cliente = c;
                 break;
             }
