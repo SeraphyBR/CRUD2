@@ -277,6 +277,7 @@ public class Principal{
                     if(qtdProduto > 0 && qtdProduto <= 255){
                         idItemComprado = arqItemComprado.inserir(new ItemComprado(idCompra, qtdProduto, p));
                         indice_Compra_ItemComprado.inserir(idCompra, idItemComprado);
+                        System.out.println("Adicionado "+ qtdProduto + "x '" + p.nomeProduto + "'");
                     }else {
                         System.out.println("Valor invalido!");
                         qtdInvalida = true;
@@ -576,7 +577,7 @@ public class Principal{
                             {//Inicio switch
                                 case 0:
                                     for(Produto p: lista){
-                                        System.out.println("Removendo '" + p.nome_Produto + "'...");
+                                        System.out.println("Removendo '" + p.nomeProduto + "'...");
                                         result = arqProdutos.remover(p.idProduto - 1);
                                     }
                                     System.out.println("Excluindo categoria '" + nomeCategoria + "'...");
@@ -595,7 +596,7 @@ public class Principal{
                                         for(Produto p: lista){
                                             System.out.println(
                                                     "\nId: "          + p.idProduto    + 
-                                                    "\nNome: "        + p.nome_Produto + 
+                                                    "\nNome: "        + p.nomeProduto + 
                                                     "\nDescricao: "   + p.descricao    + 
                                                     "\nMarca: "       + p.marca     
                                                     );  
@@ -736,7 +737,7 @@ public class Principal{
             c = arqCategorias.pesquisar(p.idCategoria - 1);
             System.out.println(
                     "Id: "            + p.idProduto    + 
-                    "\nNome: "        + p.nome_Produto + 
+                    "\nNome: "        + p.nomeProduto + 
                     "\nDescricao: "   + p.descricao    + 
                     "\nPreco: "       + p.preco        + 
                     "\nMarca: "       + p.marca        + 
@@ -776,7 +777,7 @@ public class Principal{
             for(Produto p: lista){
                 System.out.println(
                         "Id: "            + p.idProduto    + 
-                        "\nNome: "        + p.nome_Produto + 
+                        "\nNome: "        + p.nomeProduto + 
                         "\nDescricao: "   + p.descricao    + 
                         "\nPreco: "       + p.preco        + 
                         "\nMarca: "       + p.marca        + 
@@ -802,7 +803,7 @@ public class Principal{
                 nomeCategoria = getNomeCategoria(p.idCategoria - 1);
                 System.out.println(
                         "Id: "            + p.idProduto    + 
-                        "\nNome: "        + p.nome_Produto + 
+                        "\nNome: "        + p.nomeProduto + 
                         "\nDescricao: "   + p.descricao    + 
                         "\nPreco: "       + p.preco        + 
                         "\nMarca: "       + p.marca        + 

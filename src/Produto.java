@@ -9,7 +9,7 @@ import java.io.*;
 class Produto implements Entidade{
 
     protected int    idProduto;
-    protected String nome_Produto;
+    protected String nomeProduto;
     protected String descricao;
     protected float  preco;
     protected String marca;
@@ -19,7 +19,7 @@ class Produto implements Entidade{
     //Construtor vazio
     public Produto(){
         this.idProduto    = -1;
-        this.nome_Produto = "";
+        this.nomeProduto = "";
         this.descricao    = "";
         this.preco        = 0;
         this.marca        = "";
@@ -28,8 +28,8 @@ class Produto implements Entidade{
     }//end Produto 
 
     //construtor com parametros
-    public Produto(String nome_Produto, String descricao, float preco, String marca, String origem, int idCategoria){
-        this.nome_Produto = nome_Produto;
+    public Produto(String nomeProduto, String descricao, float preco, String marca, String origem, int idCategoria){
+        this.nomeProduto = nomeProduto;
         this.descricao    = descricao;
         this.preco        = preco;
         this.marca        = marca;
@@ -51,7 +51,7 @@ class Produto implements Entidade{
         DataOutputStream saida = new DataOutputStream(dados);
 
         saida.writeInt(this.idProduto);
-        saida.writeUTF(this.nome_Produto);
+        saida.writeUTF(this.nomeProduto);
         saida.writeUTF(this.descricao);
         saida.writeFloat(this.preco);
         saida.writeUTF(this.marca);
@@ -67,7 +67,7 @@ class Produto implements Entidade{
         DataInputStream      entrada = new DataInputStream(dados);
 
         this.idProduto    = entrada.readInt();
-        this.nome_Produto = entrada.readUTF();
+        this.nomeProduto = entrada.readUTF();
         this.descricao    = entrada.readUTF();
         this.preco        = entrada.readFloat();
         this.marca        = entrada.readUTF();
@@ -79,7 +79,7 @@ class Produto implements Entidade{
 
     public String toString(){
         return "Id: "             + this.idProduto    + 
-            "\nNome: "        + this.nome_Produto + 
+            "\nNome: "        + this.nomeProduto + 
             "\nDescricao: "   + this.descricao    + 
             "\nPreco: "       + this.preco        + 
             "\nMarca: "       + this.marca        + 
