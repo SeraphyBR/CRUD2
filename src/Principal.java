@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.io.File;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.awt.SystemTray;
@@ -22,12 +23,13 @@ public class Principal{
 
     public static void main(String[] args){
         try{
-            arqProdutos  = new Arquivo<>(Produto.class.getConstructor(), "Produtos");
-            arqCategorias = new Arquivo<>(Categoria.class.getConstructor(), "Categorias");
-            arqClientes = new Arquivo<>(Cliente.class.getConstructor(), "Clientes");
-            arqCompra = new Arquivo<>(Compra.class.getConstructor(), "Compras");
-            arqItemComprado = new Arquivo<>(ItemComprado.class.getConstructor(), "ItensComprados");
-            indice_Compra_ItemComprado = new IndiceChaveComposta(20, "indice_Compra_ItemComprado.idxc");
+            arqProdutos  = new Arquivo<>(Produto.class.getConstructor(), "Produtos", "crud");
+            arqCategorias = new Arquivo<>(Categoria.class.getConstructor(), "Categorias", "crud");
+            arqClientes = new Arquivo<>(Cliente.class.getConstructor(), "Clientes", "crud");
+            arqCompra = new Arquivo<>(Compra.class.getConstructor(), "Compras", "crud");
+            arqItemComprado = new Arquivo<>(ItemComprado.class.getConstructor(), "ItensComprados", "crud");
+            ProgramFile pf = new ProgramFile("crud");
+            indice_Compra_ItemComprado = new IndiceChaveComposta(20, pf.addFile("indice_Compra_ItemComprado.idxc"));
             menuPrincipal();
             arqProdutos.close();
             arqCategorias.close();
@@ -100,11 +102,13 @@ public class Principal{
         System.out.println("\n\t*** Cadastro ***\n");
         System.out.print("Nome completo: ");
         nome = read.nextLine();
+        nome = read.nextLine();
         System.out.print("Email: ");
         email = read.next();
         do{
             System.out.print("CPF: ");
-            cpf = read.next().replaceAll(".", "").replace("-", "");
+            cpf = read.next().replace(".", "").replace("-", "");
+            System.out.println(cpf);
             if(cpf.length() != 11){
                 System.out.println("CPF inválido!\nDigite novamente!");
                 erro = true;
@@ -169,8 +173,8 @@ public class Principal{
             System.out.println(
                 "\n\t*** MENU CLIENTE ***\n"             +
                 "0 - Comprar\n"                          +
-                "1 - Gerar relatorio de compra\n"    +
-                "2 - \nExcluir conta"                    +
+                "1 - Gerar relatorio de compra\n"        +
+                "2 - Excluir conta\n"                    +
                 "3 - Logout"
                 );
                 System.out.print("Digite sua opcao: ");

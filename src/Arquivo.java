@@ -15,11 +15,12 @@ public class Arquivo<G extends Entidade>{
     protected String nomeArquivo;
     protected Constructor<G> construtor;
 
-    public Arquivo(Constructor<G> c, String nomeArquivo)throws Exception{
+    public Arquivo(Constructor<G> c, String nomeArquivo, String programName)throws Exception{
+        ProgramFile pf = new ProgramFile(programName); 
         this.nomeArquivo = nomeArquivo;
         this.construtor   = c;
-        this.raf          = new RandomAccessFile(nomeArquivo + ".db", "rw");
-        this.indice       = new Indice(20, nomeArquivo + ".idx");
+        this.raf          = new RandomAccessFile(pf.addFile(nomeArquivo + ".db"), "rw");
+        this.indice       = new Indice(20, pf.addFile(nomeArquivo + ".idx"));
         if(raf.length() < 4){
             raf.writeInt(0);
         }

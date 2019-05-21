@@ -139,7 +139,20 @@ public class Indice{
         if(arquivo.length()<8) 
             arquivo.writeLong(-1);  // raiz vazia
     }
+     
+    public Indice(int o, File na) throws IOException {
 
+        // Inicializa os atributos da árvore
+        ordem = o;
+        maxElementos = o-1;
+        maxFilhos = o;
+        nomeArquivo = na.getAbsolutePath();
+
+        // Abre (ou cria) o arquivo, escrevendo uma raiz vazia, se necessário.
+        arquivo = new RandomAccessFile(na,"rw");
+        if(arquivo.length()<8) 
+            arquivo.writeLong(-1);  // raiz vazia
+    }
     // Testa se a árvore está vazia. Uma árvore vazia é identificada pela raiz == -1
     public boolean vazia() throws IOException {
         long raiz;
