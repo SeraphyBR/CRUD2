@@ -32,7 +32,9 @@ public class Principal{
             arqItemComprado = new Arquivo<>(ItemComprado.class.getConstructor(), "ItensComprados", programName);
             ProgramFile pf = new ProgramFile(programName);
             indice_Compra_ItemComprado = new IndiceChaveComposta(20, pf.addFile("indice_Compra_ItemComprado.idxc"));
+
             menuPrincipal();
+
             arqProdutos.close();
             arqCategorias.close();
             arqClientes.close();
@@ -122,8 +124,6 @@ public class Principal{
 
     /**
      * Menu de acoes administrativas
-     * @param arqCategorias arquivo indexado de categorias
-     * @param arqProdutos arquivo indexado de produtos
      * @throws Exception 
      * */
     private static void menuAdministrador() throws Exception 
@@ -278,21 +278,19 @@ public class Principal{
                         idItemComprado = arqItemComprado.inserir(new ItemComprado(idCompra, qtdProduto, p));
                         indice_Compra_ItemComprado.inserir(idCompra, idItemComprado);
                     }else {
-                        System.out.println("Valor invalido");
+                        System.out.println("Valor invalido!");
                         qtdInvalida = true;
                     }
-                }while(!qtdInvalida);   
+                }while(qtdInvalida);   
             }else{
-                 System.out.print("Id invalido");
+                 System.out.print("Id invalido!");
                  idInvalido = true;
             }
-        }while(!idInvalido);
+        }while(idInvalido);
     }//end adicionaritem
 
     /**
      * Menu de categorias 
-     * @param arqCategorias arquivo indexado de categorias 
-     * @param arqProdutos arquivo indexado de produtos
      * @throws Exception
      * */
     private static void menuCategoria()throws Exception
@@ -339,8 +337,6 @@ public class Principal{
 
     /**
      * Menu de Produtos 
-     * @param arqCategorias arquivo indexado de categorias 
-     * @param arqProdutos arquivo indexado de produtos
      * @throws Exception
      * */  
     private static void menuProdutos() throws Exception
@@ -389,8 +385,6 @@ public class Principal{
 
     /**
      * Metodo para adicionar um produto.
-     * @param arq Arquivo indexado de produtos
-     * @param arqc Arquivo indexado de categorias
      * @throws Exception
      * */
     private static void adicionarP() throws Exception
@@ -453,7 +447,6 @@ public class Principal{
 
     /**
      * Metodo para adicionar uma categoria.
-     * @param arq Arquivo indexado de categorias
      * @throws Exception
      * */  
     private static void adicionarC() throws Exception
@@ -496,7 +489,6 @@ public class Principal{
 
     /**
      * Metodo para remover um produto
-     * @param arq Arquivo indexado de produto
      * @throws Exception
      * */
     private static void removerP() throws Exception
@@ -529,8 +521,6 @@ public class Principal{
 
     /**
      * Metodo para remover uma categoria
-     * @param arqc Arquivo indexado de categorias
-     * @param arq Arquivo indexado de produtos
      * @throws Exception
      * */
     private static void removerC() throws Exception 
@@ -651,8 +641,6 @@ public class Principal{
 
     /**
      * Metodo para alterar um produto
-     * @param arq Arquivo indexado de produtos
-     * @param arqc Arquivo indexado de categorias
      * @throws Exception
      * */
     private static void alterarP() throws Exception
@@ -724,8 +712,6 @@ public class Principal{
 
     /**
      * Metodo para consultar um produto
-     * @param arq Arquivo indexado de produtos
-     * @param arqc Arquivo indexado de categorias
      * @throws Exception
      * */
     private static void consultaP() throws Exception
@@ -764,8 +750,6 @@ public class Principal{
 
     /**
      * Metodo para mostrar todos os produtos de uma categoria
-     * @param arq Arquivo indexado de produtos
-     * @param arqc Arquivo indexado de categorias
      * @throws Exception
      * */  
     private static void consultaC() throws Exception
@@ -806,8 +790,6 @@ public class Principal{
 
     /**
      * Metodo para mostrar todos os produtos cadastrados
-     * @param arq Arquivo indexado de produtos
-     * @param arqc Arquivo indexado de categorias
      * @throws Exception
      * */  
     private static void listaP() throws Exception
@@ -836,7 +818,6 @@ public class Principal{
 
     /**
      * Metodo para listar todas as categorias
-     * @param arq Arquivo indexado de categorias
      * @return Um array de Integer com os ids das categorias para futura validacao
      * @throws Exception
      * */
@@ -860,8 +841,6 @@ public class Principal{
     /**
      * Metodo para obter uma lista de produtos de uma categoria
      * @param idCategoria Categoria a ser filtrada
-     * @param arq Arquivo indexado de produtos
-     * @param arqc Arquivo indexado de categorias
      * @return Arraylist de produtos da categoria
      * @throws Exception
      * */
@@ -875,7 +854,6 @@ public class Principal{
     /**
      * Metodo para obter o nome da categoria
      * @param idCategoria 
-     * @param arqc Arquivo indexado de categorias
      * @return O nome da categoria
      * @throws Exception
      * */

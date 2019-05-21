@@ -214,7 +214,7 @@ public class IndiceChaveComposta {
         if(i<pa.n && pa.filhos[0]==-1 && chave1==pa.chaves1[i]) {
 
             // Cria a lista de retorno e insere as chaves secundárias encontradas
-            ArrayList lista = new ArrayList();
+            ArrayList<Integer> lista = new ArrayList<Integer>();
             while(chave1<=pa.chaves1[i]) {
 
                 if(chave1==pa.chaves1[i])
@@ -259,7 +259,7 @@ public class IndiceChaveComposta {
             if(chave1<=pa.chaves1[0]) {
 
                 // Cria a lista de retorno
-                ArrayList lista = new ArrayList();
+                ArrayList<Integer> lista = new ArrayList<Integer>();
 
                 // Testa se a chave foi encontrada, e adiciona todas as chaves
                 // secundárias
