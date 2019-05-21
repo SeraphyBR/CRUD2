@@ -3,6 +3,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.awt.SystemTray;
+import java.util.Date;
 import java.text.*;
 
 /**
@@ -14,6 +15,7 @@ import java.text.*;
 public class Principal{
 
     private static final Scanner read = new Scanner(System.in);
+    private static final String programName = "crud";
     private static Arquivo<Produto> arqProdutos;
     private static Arquivo<Categoria> arqCategorias;
     private static Arquivo<Cliente> arqClientes;
@@ -23,12 +25,12 @@ public class Principal{
 
     public static void main(String[] args){
         try{
-            arqProdutos  = new Arquivo<>(Produto.class.getConstructor(), "Produtos", "crud");
-            arqCategorias = new Arquivo<>(Categoria.class.getConstructor(), "Categorias", "crud");
-            arqClientes = new Arquivo<>(Cliente.class.getConstructor(), "Clientes", "crud");
-            arqCompra = new Arquivo<>(Compra.class.getConstructor(), "Compras", "crud");
-            arqItemComprado = new Arquivo<>(ItemComprado.class.getConstructor(), "ItensComprados", "crud");
-            ProgramFile pf = new ProgramFile("crud");
+            arqProdutos  = new Arquivo<>(Produto.class.getConstructor(), "Produtos", programName);
+            arqCategorias = new Arquivo<>(Categoria.class.getConstructor(), "Categorias", programName);
+            arqClientes = new Arquivo<>(Cliente.class.getConstructor(), "Clientes", programName);
+            arqCompra = new Arquivo<>(Compra.class.getConstructor(), "Compras", programName);
+            arqItemComprado = new Arquivo<>(ItemComprado.class.getConstructor(), "ItensComprados", programName);
+            ProgramFile pf = new ProgramFile(programName);
             indice_Compra_ItemComprado = new IndiceChaveComposta(20, pf.addFile("indice_Compra_ItemComprado.idxc"));
             menuPrincipal();
             arqProdutos.close();
@@ -181,7 +183,7 @@ public class Principal{
                 opcao = read.nextByte();
             switch(opcao){
                 case 0:
-                    idCompra = arqCompra.inserir(new Compra(idCliente));
+                    idCompra = arqCompra.inserir(new Compra(idCliente, new Date()));
                     menuCompra(idCliente, idCompra);
                     break;
                 case 1:

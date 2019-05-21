@@ -2,22 +2,22 @@ import java.util.Date;
 import java.io.*;
 
 class Compra implements Entidade{
-    protected int idCliente;
     protected int idCompra;
+    protected int idCliente;
     protected Date dataCompra;
     private double valorCompra;
 
     public Compra(){
-        this.idCliente   = -1;
         this.idCompra    = -1;
+        this.idCliente   = -1;
         this.dataCompra  = null;
         this.valorCompra = 0.0;
     }
 
-    public Compra(int idCliente){
-        this.idCliente   = idCliente;
+    public Compra(int idCliente, Date data){
         this.idCompra    = -1;
-        this.dataCompra  = null;
+        this.idCliente   = idCliente;
+        this.dataCompra  = data;
         this.valorCompra = 0.0;
     }
 
@@ -34,8 +34,8 @@ class Compra implements Entidade{
         ByteArrayOutputStream dados = new ByteArrayOutputStream();
         DataOutputStream saida = new DataOutputStream(dados);
 
-        saida.writeInt(this.idCliente);
         saida.writeInt(this.idCompra);
+        saida.writeInt(this.idCliente);
         saida.writeLong(this.dataCompra.getTime());
         saida.writeDouble(this.valorCompra);
         return dados.toByteArray();
@@ -46,8 +46,8 @@ class Compra implements Entidade{
         ByteArrayInputStream dados = new ByteArrayInputStream(b);
         DataInputStream entrada = new DataInputStream(dados);
 
-        this.idCliente = entrada.readInt();
         this.idCompra = entrada.readInt();
+        this.idCliente = entrada.readInt();
         this.dataCompra.setTime(entrada.readLong());
         this.valorCompra = entrada.readDouble();
         entrada.close();
