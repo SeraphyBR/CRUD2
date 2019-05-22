@@ -54,6 +54,7 @@ public class Principal{
 
     /**
      * Menu Principal
+     * @throws Exception 
      * */
     private static void menuPrincipal() throws Exception 
     {//Inicio menuPrincipal
@@ -87,6 +88,10 @@ public class Principal{
 
     }//Fim menuPrincipal 
 
+    /**
+     * Menu de Login
+     * @throws Exception 
+     * */
     private static void menuLogin() throws Exception 
     {//Inicio menuLogin
         String email, senha;
@@ -102,6 +107,10 @@ public class Principal{
         }
     }//Fim menuLogin
 
+    /**
+     * Menu de cadastro de cliente
+     * @throws Exception 
+     * */
     private static void menuCadastro() throws Exception 
     {//Inicio menuCadastro 
         String nome, email, cpf, senha;
@@ -219,9 +228,14 @@ public class Principal{
                     break;
             }
         }while(!fecharMenu);
+    }//Fim menuCliente
 
-    }//Fim menuCliente 
-
+    /**
+     * Menu de Compra do Cliente
+     * @param idCliente ID do cliente que fez login
+     * @param idCompra ID da nova compra criada
+     * @throws Exception 
+     * */
     private static void menuCompra(int idCliente, int idCompra) throws Exception{
         byte opcao;
         boolean fecharMenu = false;
@@ -280,6 +294,11 @@ public class Principal{
         }while(!fecharMenu);
     }
 
+    /**
+     * Metodo para Adicionar um novo produto a compra
+     * @param idCompra Id da compra
+     * @throws Exception 
+     * */
     private static void adicionarItem(int idCompra) throws Exception{
         int idItemComprado;
         boolean qtdInvalida = false;
@@ -311,7 +330,7 @@ public class Principal{
     }//end adicionaritem
 
     /**
-     * Menu de categorias 
+     * Menu de categorias de produtos 
      * @throws Exception
      * */
     private static void menuCategoria()throws Exception
@@ -357,7 +376,7 @@ public class Principal{
     }//Fim menuCategoria
 
     /**
-     * Menu de Produtos 
+     * Menu administrativo de Produtos 
      * @throws Exception
      * */  
     private static void menuProdutos() throws Exception
