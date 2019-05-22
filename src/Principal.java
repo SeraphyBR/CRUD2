@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.awt.SystemTray;
 import java.util.Date;
 import java.util.Random;
+import java.io.Console;
 import java.text.*;
 
 /**
@@ -16,14 +17,15 @@ import java.text.*;
 public class Principal{
 
     private static final Scanner read = new Scanner(System.in);
+    private static final Console term = System.console();
     private static final String programName = "crud";
     private static Arquivo<Produto> arqProdutos;
     private static Arquivo<Categoria> arqCategorias;
     private static Arquivo<Cliente> arqClientes;
     private static Arquivo<Compra> arqCompra;
     private static Arquivo<ItemComprado> arqItemComprado;
-    private static IndiceChaveComposta indice_Compra_ItemComprado;
-    private static IndiceChaveComposta indice_ItemComprado_Compra;
+    private static IndiceChaveComposta indice_Compra_Produto;
+    private static IndiceChaveComposta indice_Produto_Compra;
 
     public static void main(String[] args){
         try{
@@ -33,8 +35,8 @@ public class Principal{
             arqCompra = new Arquivo<>(Compra.class.getConstructor(), "Compras", programName);
             arqItemComprado = new Arquivo<>(ItemComprado.class.getConstructor(), "ItensComprados", programName);
             ProgramFile pf = new ProgramFile(programName);
-            indice_Compra_ItemComprado = new IndiceChaveComposta(20, pf.addFile("indice_Compra_ItemComprado.idxc"));
-            indice_ItemComprado_Compra = new IndiceChaveComposta(20, pf.addFile("indice_ItemComprado_Compra.idxc"));
+            indice_Compra_Produto = new IndiceChaveComposta(20, pf.addFile("indice_Compra_Produto.idxc"));
+            indice_Produto_Compra = new IndiceChaveComposta(20, pf.addFile("indice_Produto_Compra.idxc"));
 
             menuPrincipal();
 
@@ -91,8 +93,7 @@ public class Principal{
         System.out.println("\n\t*** LOGIN ***\n");
         System.out.print("Email: ");
         email = read.next();
-        System.out.print("Senha: ");
-        senha = read.next();
+        senha = new String(term.readPassword("Senha: "));
         if(email.equals("admin") && senha.equals("coffe")) menuAdministrador();
         else{
             Cliente c = getCliente(email);
@@ -225,7 +226,7 @@ public class Principal{
         byte opcao;
         boolean fecharMenu = false;
         int[] lista;
-        int idItemComprado = 0;
+        int idProduto = 0;
         do{  
             System.out.println(
                     "\n\t*** MENU DE COMPRA ***\n"           +
@@ -249,13 +250,13 @@ public class Principal{
                 case 2:
                     //VERIFICAR SE ID EXISTE
                         System.out.println("Qual o id do produto a ser removido? ");
-                        idItemComprado = read.nextInt();
-                        indice_Compra_ItemComprado.excluir(idCompra, idItemComprado);
-                        indice_ItemComprado_Compra.excluir(idItemComprado, idCompra);
-                        arqItemComprado.remover(idItemComprado);
+                        idProduto = read.nextInt();
+                        indice_Compra_Produto.excluir(idCompra, idProduto);
+                        indice_Produto_Compra.excluir(idProduto, idCompra);
+                        arqItemComprado.remover(getIdItemComprado(idCompra, idProduto));
                     break;
                 case 3:
-                    lista = indice_Compra_ItemComprado.lista(idCompra);
+                    lista = indice_Compra_Produto.lista(idCompra);
                     //RELATORIO
                     break;
                 case 4:
@@ -263,11 +264,11 @@ public class Principal{
                     break;
                 case 5:
                     fecharMenu = true;
-                    lista = indice_Compra_ItemComprado.lista(idCompra);
+                    lista = indice_Compra_Produto.lista(idCompra);
                     for(int i = 0; i < lista.length; i ++){
-                        indice_Compra_ItemComprado.excluir(idCompra, lista[i]);
-                        indice_ItemComprado_Compra.excluir(lista[i], idCompra);
-                        arqItemComprado.remover(lista[i]);
+                        indice_Compra_Produto.excluir(idCompra, lista[i]);
+                        indice_Produto_Compra.excluir(lista[i], idCompra);
+                        arqItemComprado.remover(getIdItemComprado(idCompra, idProduto));
                     }
                     arqCompra.remover(idCompra);
                     break;
@@ -285,17 +286,17 @@ public class Principal{
         boolean idInvalido = false;
 
         do{
-            System.out.println("Digite o id do produto desejado: ");
+            System.out.print("Digite o id do produto desejado: ");
             int id = read.nextInt();
             Produto p = arqProdutos.pesquisar(id - 1);
             if (p != null && p.idProduto != -1 ){
                 do{
-                    System.out.println("Qual a quantidade desejada? ");
+                    System.out.print("Qual a quantidade desejada? ");
                     byte qtdProduto = read.nextByte();
                     if(qtdProduto > 0 && qtdProduto <= 255){
                         idItemComprado = arqItemComprado.inserir(new ItemComprado(idCompra, qtdProduto, p));
-                        indice_Compra_ItemComprado.inserir(idCompra, idItemComprado);
-                        indice_ItemComprado_Compra.inserir(idItemComprado, idCompra);
+                        indice_Compra_Produto.inserir(idCompra, p.getID());
+                        indice_Produto_Compra.inserir(p.getID(), idCompra);
                         System.out.println("Adicionado "+ qtdProduto + "x '" + p.nomeProduto + "'");
                     }else {
                         System.out.println("Valor invalido!");
@@ -897,5 +898,17 @@ public class Principal{
         }
         return cliente;
     }//Fim getCliente
+
+    private static int getIdItemComprado(int idCompra, int idProduto) throws Exception 
+    {//Inicio getIdItemComprado
+        int idItemComprado = 0;
+        ArrayList<ItemComprado> lista = arqItemComprado.toList();
+        for(ItemComprado i: lista){
+            if(i.idProduto == idProduto && i.idCompra == idCompra){
+                idItemComprado = i.getID(); 
+            }
+        }
+        return idItemComprado;
+    }//Fim getIdItemComprado
 
 }//end Principal
