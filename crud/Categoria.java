@@ -1,4 +1,6 @@
-import java.io.*; 
+package crud;
+
+import java.io.*;
 
 /**
  * @author Luiz Junio

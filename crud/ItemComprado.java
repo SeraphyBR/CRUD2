@@ -1,3 +1,5 @@
+package crud;
+
 import java.io.*;
 
 class ItemComprado implements Entidade
@@ -9,24 +11,23 @@ class ItemComprado implements Entidade
     public byte qtdProduto;
     public double precoUnitario;
 
-    public ItemComprado(){
+    public ItemComprado() {
         this.idItemComprado = -1;
-        this.idCompra      = -1;
-        this.idProduto     = -1;
-        this.qtdProduto    = 0;
+        this.idCompra = -1;
+        this.idProduto = -1;
+        this.qtdProduto = 0;
         this.precoUnitario = 0.0;
     }
 
-
-    public ItemComprado(int idCompra, int idProduto, byte qtdProduto, double precoUnitario){
+    public ItemComprado(int idCompra, int idProduto, byte qtdProduto, double precoUnitario) {
         this.idItemComprado = -1;
-        this.idCompra      = idCompra;
-        this.idProduto     = idProduto;
-        this.qtdProduto    = qtdProduto;
+        this.idCompra = idCompra;
+        this.idProduto = idProduto;
+        this.qtdProduto = qtdProduto;
         this.precoUnitario = precoUnitario;
     }
 
-    public ItemComprado(int idCompra, byte qtdProduto, Produto p){
+    public ItemComprado(int idCompra, byte qtdProduto, Produto p) {
         this.idItemComprado = -1;
         this.idCompra = idCompra;
         this.idProduto = p.getID();
