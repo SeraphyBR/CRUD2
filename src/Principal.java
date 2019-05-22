@@ -23,6 +23,7 @@ public class Principal{
     private static Arquivo<Compra> arqCompra;
     private static Arquivo<ItemComprado> arqItemComprado;
     private static IndiceChaveComposta indice_Compra_ItemComprado;
+    private static IndiceChaveComposta indice_ItemComprado_Compra;
 
     public static void main(String[] args){
         try{
@@ -33,6 +34,7 @@ public class Principal{
             arqItemComprado = new Arquivo<>(ItemComprado.class.getConstructor(), "ItensComprados", programName);
             ProgramFile pf = new ProgramFile(programName);
             indice_Compra_ItemComprado = new IndiceChaveComposta(20, pf.addFile("indice_Compra_ItemComprado.idxc"));
+            indice_ItemComprado_Compra = new IndiceChaveComposta(20, pf.addFile("indice_ItemComprado_Compra.idxc"));
 
             menuPrincipal();
 
@@ -128,7 +130,6 @@ public class Principal{
             System.out.println("Sua senha eh: " + senha);
         }
         else System.out.println("\nJá existe Usuario com esse email!\nCadastro cancelado!"); 
-        
     }//Fim menuCadastro 
 
     /**
@@ -145,7 +146,8 @@ public class Principal{
                     "0 - Gerenciar produtos\n"     +
                     "1 - Gerenciar categorias\n"   +
                     "2 - Gerar relatorios\n" +
-                    "3 - Logout"
+                    "3 - Listar usuarios cadastrados\n" +
+                    "4 - Logout"
                     );
             System.out.print("Digite a opção: ");
             opcao = read.nextByte();
@@ -160,6 +162,8 @@ public class Principal{
                     //RELATORIO
                     break;
                 case 3:
+                    break;
+                case 4:
                     fecharMenu = true;
                     break;
                 default: 
@@ -185,8 +189,9 @@ public class Principal{
                 "\n\t*** MENU CLIENTE ***\n"             +
                 "0 - Comprar\n"                          +
                 "1 - Gerar relatorio de compra\n"        +
-                "2 - Excluir conta\n"                    +
-                "3 - Logout"
+                "2 - Alterar meus dados\n"               +
+                "3 - Excluir conta\n"                    +
+                "4 - Logout"
                 );
                 System.out.print("Digite sua opcao: ");
                 opcao = read.nextByte();
@@ -199,10 +204,12 @@ public class Principal{
                     //RELATORIO
                     break;
                 case 2:
+                    break;
+                case 3:
                     if(arqClientes.remover(idCliente-1)) System.out.println("Cliente removido com sucesso");
                     fecharMenu = true;
                     break;
-                case 3:
+                case 4:
                     fecharMenu = true;
                     break;    
                 default:
@@ -244,6 +251,7 @@ public class Principal{
                         System.out.println("Qual o id do produto a ser removido? ");
                         idItemComprado = read.nextInt();
                         indice_Compra_ItemComprado.excluir(idCompra, idItemComprado);
+                        indice_ItemComprado_Compra.excluir(idItemComprado, idCompra);
                         arqItemComprado.remover(idItemComprado);
                     break;
                 case 3:
@@ -258,6 +266,7 @@ public class Principal{
                     lista = indice_Compra_ItemComprado.lista(idCompra);
                     for(int i = 0; i < lista.length; i ++){
                         indice_Compra_ItemComprado.excluir(idCompra, lista[i]);
+                        indice_ItemComprado_Compra.excluir(lista[i], idCompra);
                         arqItemComprado.remover(lista[i]);
                     }
                     arqCompra.remover(idCompra);
@@ -286,6 +295,7 @@ public class Principal{
                     if(qtdProduto > 0 && qtdProduto <= 255){
                         idItemComprado = arqItemComprado.inserir(new ItemComprado(idCompra, qtdProduto, p));
                         indice_Compra_ItemComprado.inserir(idCompra, idItemComprado);
+                        indice_ItemComprado_Compra.inserir(idItemComprado, idCompra);
                         System.out.println("Adicionado "+ qtdProduto + "x '" + p.nomeProduto + "'");
                     }else {
                         System.out.println("Valor invalido!");
