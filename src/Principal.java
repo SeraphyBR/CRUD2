@@ -1,7 +1,4 @@
-package crud;
-
 import java.util.Scanner;
-import java.io.File;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,8 +22,8 @@ public class Principal{
     private static Arquivo<Cliente> arqClientes;
     private static Arquivo<Compra> arqCompra;
     private static Arquivo<ItemComprado> arqItemComprado;
-    private static IndiceChaveComposta indice_Compra_Produto;
-    private static IndiceChaveComposta indice_Produto_Compra;
+    private static IndiceChaveComposta indice_Compra_ItemComprado;
+    private static IndiceChaveComposta indice_ItemComprado_Compra;
 
     public static void main(String[] args){
         try{
@@ -36,8 +33,8 @@ public class Principal{
             arqCompra = new Arquivo<>(Compra.class.getConstructor(), "Compras", programName);
             arqItemComprado = new Arquivo<>(ItemComprado.class.getConstructor(), "ItensComprados", programName);
             ProgramFile pf = new ProgramFile(programName);
-            indice_Compra_Produto = new IndiceChaveComposta(20, pf.addFile("indice_Compra_Produto.idxc"));
-            indice_Produto_Compra = new IndiceChaveComposta(20, pf.addFile("indice_Produto_Compra.idxc"));
+            indice_Compra_ItemComprado = new IndiceChaveComposta(20, pf.addFile("indice_Compra_ItemComprado.idxc"));
+            indice_ItemComprado_Compra = new IndiceChaveComposta(20, pf.addFile("indice_ItemComprado_Compra.idxc"));
 
             menuPrincipal();
 
@@ -241,7 +238,7 @@ public class Principal{
         byte opcao;
         boolean fecharMenu = false;
         int[] lista;
-        int idProduto = 0;
+        int idItemComprado = 0;
         do{  
             System.out.println(
                     "\n\t*** MENU DE COMPRA ***\n"           +
@@ -264,14 +261,14 @@ public class Principal{
                     break;
                 case 2:
                     //VERIFICAR SE ID EXISTE
-                        System.out.println("Qual o id do produto a ser removido? ");
-                        idProduto = read.nextInt();
-                        indice_Compra_Produto.excluir(idCompra, idProduto);
-                        indice_Produto_Compra.excluir(idProduto, idCompra);
-                        arqItemComprado.remover(getIdItemComprado(idCompra, idProduto));
+                        System.out.println("Qual o id do item a ser removido? ");
+                        idItemComprado = read.nextInt();
+                        indice_Compra_ItemComprado.excluir(idCompra, idItemComprado);
+                        indice_ItemComprado_Compra.excluir(idItemComprado, idCompra);
+                        arqItemComprado.remover(idItemComprado);
                     break;
                 case 3:
-                    lista = indice_Compra_Produto.lista(idCompra);
+                    lista = indice_Compra_ItemComprado.lista(idCompra);
                     //RELATORIO
                     break;
                 case 4:
@@ -279,11 +276,11 @@ public class Principal{
                     break;
                 case 5:
                     fecharMenu = true;
-                    lista = indice_Compra_Produto.lista(idCompra);
-                    for(int i = 0; i < lista.length; i ++){
-                        indice_Compra_Produto.excluir(idCompra, lista[i]);
-                        indice_Produto_Compra.excluir(lista[i], idCompra);
-                        arqItemComprado.remover(getIdItemComprado(idCompra, idProduto));
+                    lista = indice_Compra_ItemComprado.lista(idCompra);
+                    for(int i = 0; i < lista.length; i++){
+                        indice_Compra_ItemComprado.excluir(idCompra, lista[i]);
+                        indice_ItemComprado_Compra.excluir(lista[i], idCompra);
+                        arqItemComprado.remover(idItemComprado);
                     }
                     arqCompra.remover(idCompra);
                     break;
@@ -315,8 +312,8 @@ public class Principal{
                     byte qtdProduto = read.nextByte();
                     if(qtdProduto > 0 && qtdProduto <= 255){
                         idItemComprado = arqItemComprado.inserir(new ItemComprado(idCompra, qtdProduto, p));
-                        indice_Compra_Produto.inserir(idCompra, p.getID());
-                        indice_Produto_Compra.inserir(p.getID(), idCompra);
+                        indice_Compra_ItemComprado.inserir(idCompra, idItemComprado);
+                        indice_ItemComprado_Compra.inserir(idItemComprado, idCompra);
                         System.out.println("Adicionado "+ qtdProduto + "x '" + p.nomeProduto + "'");
                     }else {
                         System.out.println("Valor invalido!");
@@ -918,17 +915,4 @@ public class Principal{
         }
         return cliente;
     }//Fim getCliente
-
-    private static int getIdItemComprado(int idCompra, int idProduto) throws Exception 
-    {//Inicio getIdItemComprado
-        int idItemComprado = 0;
-        ArrayList<ItemComprado> lista = arqItemComprado.toList();
-        for(ItemComprado i: lista){
-            if(i.idProduto == idProduto && i.idCompra == idCompra){
-                idItemComprado = i.getID(); 
-            }
-        }
-        return idItemComprado;
-    }//Fim getIdItemComprado
-
 }//end Principal

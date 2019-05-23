@@ -1,5 +1,3 @@
-package crud;
-
 import java.io.*;
 
 /**

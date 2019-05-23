@@ -1,7 +1,3 @@
-package crud;
-
-import java.io.*;
-
 /**
  * @author Luiz Junio
  * @author Allan Vivekanda

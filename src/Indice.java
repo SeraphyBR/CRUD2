@@ -1,5 +1,3 @@
-package crud;
-
 import java.io.*;
 
 // Árvore B+ para ser usada como índice direto de algum arquivo de entidades

@@ -1,5 +1,3 @@
-package crud;
-
 //interface para o arquivo generico
 public interface Entidade{
     public int getID();
