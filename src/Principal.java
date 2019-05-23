@@ -195,8 +195,8 @@ public class Principal{
         do{
             System.out.println(
                 "\n\t*** MENU CLIENTE ***\n"             +
-                "0 - Comprar\n"                          +
-                "1 - Gerar relatorio de compra\n"        +
+                "0 - Nova compra\n"                      +
+                "1 - Minhas compras\n"                   +
                 "2 - Alterar meus dados\n"               +
                 "3 - Excluir conta\n"                    +
                 "4 - Logout"
@@ -209,7 +209,6 @@ public class Principal{
                     menuCompra(idCliente, idCompra);
                     break;
                 case 1:
-                    //RELATORIO
                     break;
                 case 2:
                     break;
