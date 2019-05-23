@@ -3,8 +3,9 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.io.Console;
-import java.text.*;
 
 /**
  * @author Luiz Junio
@@ -16,6 +17,7 @@ public class Principal{
 
     private static final Scanner read = new Scanner(System.in);
     private static final Console term = System.console();
+    private static final DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
     private static final String programName = "crud";
     private static Arquivo<Produto> arqProdutos;
     private static Arquivo<Categoria> arqCategorias;
@@ -191,6 +193,7 @@ public class Principal{
     {//Inicio menuCliente 
         byte opcao;
         int idCompra;
+        ArrayList<Compra> minhasCompras = null;
         boolean fecharMenu = false;
         do{
             System.out.println(
@@ -209,6 +212,10 @@ public class Principal{
                     menuCompra(idCliente, idCompra);
                     break;
                 case 1:
+                    minhasCompras = listComprasC(idCliente);
+                    for(Compra c: minhasCompras){
+                        System.out.println("\n\t*** ID: " + c.idCompra + " Data: " + df.format(c.dataCompra));
+                    }
                     break;
                 case 2:
                     break;
@@ -914,4 +921,11 @@ public class Principal{
         }
         return cliente;
     }//Fim getCliente
+
+    private static ArrayList<Compra> listComprasC(int idCliente) throws Exception
+    {//Inicio mostraCompras
+        ArrayList<Compra> list =  arqCompra.toList();
+        list.removeIf(c -> c.idCliente != idCliente);
+        return list;
+    }//Fim mostraCompras 
 }//end Principal

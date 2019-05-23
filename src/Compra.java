@@ -48,7 +48,7 @@ class Compra implements Entidade{
 
         this.idCompra = entrada.readInt();
         this.idCliente = entrada.readInt();
-        this.dataCompra.setTime(entrada.readLong());
+        this.dataCompra = new Date(entrada.readLong());
         this.valorCompra = entrada.readDouble();
         entrada.close();
     }
