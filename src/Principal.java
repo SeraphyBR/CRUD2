@@ -171,7 +171,7 @@ public class Principal{
                     menuCategoria();
                     break;
                 case 2:
-                    //RELATORIO
+                    menuRelatorio();
                     break;
                 case 3:
                     break;
@@ -185,6 +185,41 @@ public class Principal{
             }
         } while(!fecharMenu);
     }//Fim menuAdministrador 
+
+    private static void menuRelatorio() throws Exception 
+    {//Inicio menuRelatorio
+        byte opcao;
+        boolean fecharMenu = false;
+        do{
+            System.out.println(
+                    "\n\t*** MENU RELATORIO ***\n"             +
+                    "0 - Mostrar os N produtos mais Vendidos\n"                      +
+                    "1 - Mostrar os N melhores clientes\n"   +
+                    "2 - Mostrar quantidade de vendas por mês\n"               +
+                    "3 - Mostrar os ganhos por Categoria\n"                    +
+                    "4 - Sair"
+                    );
+            System.out.print("Digite sua opcao: ");
+            opcao = read.nextByte();
+            switch(opcao){
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    fecharMenu = true;
+                    break;    
+                default:
+                    System.out.println("Opcao invalida!\n");
+                    Thread.sleep(1000);
+                    break;
+            }
+        }while(!fecharMenu); 
+    }//Fim menuRelatorio 
 
     /**
      * Menu de acoes do Usuario
@@ -201,15 +236,15 @@ public class Principal{
         boolean fecharMenu = false;
         do{
             System.out.println(
-                "\n\t*** MENU CLIENTE ***\n"             +
-                "0 - Nova compra\n"                      +
-                "1 - Minhas compras\n"                   +
-                "2 - Alterar meus dados\n"               +
-                "3 - Excluir conta\n"                    +
-                "4 - Logout"
-                );
-                System.out.print("Digite sua opcao: ");
-                opcao = read.nextByte();
+                    "\n\t*** MENU CLIENTE ***\n"             +
+                    "0 - Nova compra\n"                      +
+                    "1 - Minhas compras\n"                   +
+                    "2 - Alterar meus dados\n"               +
+                    "3 - Excluir conta\n"                    +
+                    "4 - Logout"
+                    );
+            System.out.print("Digite sua opcao: ");
+            opcao = read.nextByte();
             switch(opcao){
                 case 0:
                     idCompra = arqCompra.inserir(new Compra(idCliente, new Date()));
@@ -284,17 +319,16 @@ public class Principal{
                         idItemComprado = read.nextInt();
                         lista = indice_Compra_ItemComprado.lista(idItemComprado);
                         if(lista.length == 0){
-                             erro = true;
-                             System.out.println("Id Invalido");
+                            erro = true;
+                            System.out.println("Id Invalido");
                         }
                     }while(erro);
-                        indice_Compra_ItemComprado.excluir(idCompra, idItemComprado);
-                        indice_ItemComprado_Compra.excluir(idItemComprado, idCompra);
-                        arqItemComprado.remover(idItemComprado);
+                    indice_Compra_ItemComprado.excluir(idCompra, idItemComprado);
+                    indice_ItemComprado_Compra.excluir(idItemComprado, idCompra);
+                    arqItemComprado.remover(idItemComprado);
                     break;
                 case 3:
                     lista = indice_Compra_ItemComprado.lista(idCompra);
-                    //RELATORIO
                     break;
                 case 4:
                     fecharMenu = true;
@@ -348,8 +382,8 @@ public class Principal{
                     }
                 }while(qtdInvalida);   
             }else{
-                 System.out.print("Id invalido!");
-                 idInvalido = true;
+                System.out.print("Id invalido!");
+                idInvalido = true;
             }
         }while(idInvalido);
     }//end adicionaritem
