@@ -194,6 +194,8 @@ public class Principal{
         byte opcao;
         int idCompra;
         ArrayList<Compra> minhasCompras = null;
+        ArrayList<ItemComprado> meusItensComprados = null;
+        ArrayList<Produto> listProdutos = null;
         boolean fecharMenu = false;
         do{
             System.out.println(
@@ -212,9 +214,18 @@ public class Principal{
                     menuCompra(idCliente, idCompra);
                     break;
                 case 1:
+                    listProdutos = arqProdutos.toList();
                     minhasCompras = listComprasC(idCliente);
                     for(Compra c: minhasCompras){
-                        System.out.println("\n\t*** ID: " + c.idCompra + " Data: " + df.format(c.dataCompra));
+                        System.out.println("\n*** ID: " + c.idCompra + " Data: " + df.format(c.dataCompra));
+                        meusItensComprados = listItensComprados(c.idCompra);
+                        for(ItemComprado ic: meusItensComprados){
+                            for(Produto p: listProdutos){
+                                if(p.idProduto == ic.idProduto){
+                                    System.out.println("\tProduto: " + p.nomeProduto + "Marca: " + p.marca + " Preço:" + ic.precoUnitario + "Quant: "+ ic.qtdProduto);
+                                }
+                            }
+                        }
                     }
                     break;
                 case 2:
@@ -927,5 +938,12 @@ public class Principal{
         ArrayList<Compra> list =  arqCompra.toList();
         list.removeIf(c -> c.idCliente != idCliente);
         return list;
-    }//Fim mostraCompras 
+    }//Fim mostraCompras  
+
+    private static ArrayList<ItemComprado> listItensComprados(int idCompra) throws Exception 
+    {//Inicio listItensComprados
+        ArrayList<ItemComprado> list = arqItemComprado.toList();
+        list.removeIf(ic -> ic.idCompra != idCompra);
+        return list;
+    }//Fim listItensComprados
 }//end Principal

@@ -7,17 +7,17 @@ class ItemComprado implements Entidade
     public int idCompra;
     public int idProduto;
     public byte qtdProduto;
-    public double precoUnitario;
+    public float precoUnitario;
 
     public ItemComprado() {
         this.idItemComprado = -1;
         this.idCompra = -1;
         this.idProduto = -1;
         this.qtdProduto = 0;
-        this.precoUnitario = 0.0;
+        this.precoUnitario = 0;
     }
 
-    public ItemComprado(int idCompra, int idProduto, byte qtdProduto, double precoUnitario) {
+    public ItemComprado(int idCompra, int idProduto, byte qtdProduto, float precoUnitario) {
         this.idItemComprado = -1;
         this.idCompra = idCompra;
         this.idProduto = idProduto;
@@ -50,7 +50,7 @@ class ItemComprado implements Entidade
         saida.writeInt(this.idCompra);
         saida.writeInt(this.idProduto);
         saida.writeInt(this.qtdProduto);
-        saida.writeDouble(this.precoUnitario);
+        saida.writeFloat(this.precoUnitario);
         return dados.toByteArray();
     }
 
@@ -63,7 +63,7 @@ class ItemComprado implements Entidade
         this.idCompra = entrada.readInt();
         this.idProduto = entrada.readInt();
         this.qtdProduto = entrada.readByte();
-        this.precoUnitario = entrada.readDouble();
+        this.precoUnitario = entrada.readFloat();
         entrada.close();
     }
 

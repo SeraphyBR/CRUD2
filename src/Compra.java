@@ -5,20 +5,20 @@ class Compra implements Entidade{
     protected int idCompra;
     protected int idCliente;
     protected Date dataCompra;
-    private double valorCompra;
+    private float valorCompra;
 
     public Compra(){
         this.idCompra    = -1;
         this.idCliente   = -1;
         this.dataCompra  = null;
-        this.valorCompra = 0.0;
+        this.valorCompra = 0;
     }
 
     public Compra(int idCliente, Date data){
         this.idCompra    = -1;
         this.idCliente   = idCliente;
         this.dataCompra  = data;
-        this.valorCompra = 0.0;
+        this.valorCompra = 0;
     }
 
     public int getID(){
@@ -37,7 +37,7 @@ class Compra implements Entidade{
         saida.writeInt(this.idCompra);
         saida.writeInt(this.idCliente);
         saida.writeLong(this.dataCompra.getTime());
-        saida.writeDouble(this.valorCompra);
+        saida.writeFloat(this.valorCompra);
         return dados.toByteArray();
     }
 
@@ -49,7 +49,7 @@ class Compra implements Entidade{
         this.idCompra = entrada.readInt();
         this.idCliente = entrada.readInt();
         this.dataCompra = new Date(entrada.readLong());
-        this.valorCompra = entrada.readDouble();
+        this.valorCompra = entrada.readFloat();
         entrada.close();
     }
 
