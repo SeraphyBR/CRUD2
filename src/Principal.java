@@ -222,7 +222,7 @@ public class Principal{
                         for(ItemComprado ic: meusItensComprados){
                             for(Produto p: listProdutos){
                                 if(p.idProduto == ic.idProduto){
-                                    System.out.println("\tProduto: " + p.nomeProduto + "Marca: " + p.marca + " Preço:" + ic.precoUnitario + "Quant: "+ ic.qtdProduto);
+                                    System.out.println("\tProduto: " + p.nomeProduto + " Marca: " + p.marca + " Preço: " + ic.precoUnitario + " Quant: " + ic.qtdProduto);
                                 }
                             }
                         }
