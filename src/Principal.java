@@ -38,8 +38,6 @@ public class Principal{
             indice_Compra_ItemComprado = new IndiceChaveComposta(20, pf.addFile("indice_Compra_ItemComprado.idxc"));
             indice_ItemComprado_Compra = new IndiceChaveComposta(20, pf.addFile("indice_ItemComprado_Compra.idxc"));
 
-
-
             menuPrincipal();
 
             arqProdutos.close();
@@ -192,11 +190,11 @@ public class Principal{
         boolean fecharMenu = false;
         do{
             System.out.println(
-                    "\n\t*** MENU RELATORIO ***\n"             +
-                    "0 - Mostrar os N produtos mais Vendidos\n"                      +
-                    "1 - Mostrar os N melhores clientes\n"   +
-                    "2 - Mostrar quantidade de vendas por mês\n"               +
-                    "3 - Mostrar os ganhos por Categoria\n"                    +
+                    "\n\t*** MENU RELATORIO ***\n"                +
+                    "0 - Mostrar os N produtos mais Vendidos\n"   +
+                    "1 - Mostrar os N melhores clientes\n"        +
+                    "2 - Mostrar quantidade de vendas por mês\n"  +
+                    "3 - Mostrar os ganhos por Categoria\n"       +
                     "4 - Sair"
                     );
             System.out.print("Digite sua opcao: ");
@@ -259,7 +257,12 @@ public class Principal{
                         for(ItemComprado ic: meusItensComprados){
                             for(Produto p: listProdutos){
                                 if(p.idProduto == ic.idProduto){
-                                    System.out.println("\n\tProduto: " + p.nomeProduto + "\n\tMarca: " + p.marca + "\n\tPreço: " + ic.precoUnitario + "\n\tQuant: "+ ic.qtdProduto);
+                                    System.out.println(
+                                            "\n\tProduto: " + p.nomeProduto + 
+                                            "\n\tMarca: " + p.marca + 
+                                            "\n\tPreço: " + ic.precoUnitario + 
+                                            "\n\tQuant: "+ ic.qtdProduto
+                                            );
                                 }
                             }
                         }
@@ -372,7 +375,6 @@ public class Principal{
                     if(qtdProduto > 0 && qtdProduto <= 255){
                         ItemComprado ic = new ItemComprado(idCompra,qtdProduto, p);
                         idItemComprado = arqItemComprado.inserir(ic);
-                        System.out.println("IdItemComprado: " + ic.getID() + " ID compra: " + ic.idCompra + "Id produto: "+ p.idProduto + "qtd Produto: " + ic.qtdProduto + " preco: " + ic.precoUnitario);
                         indice_Compra_ItemComprado.inserir(idCompra, idItemComprado);
                         indice_ItemComprado_Compra.inserir(idItemComprado, idCompra);
                         System.out.println("Adicionado "+ qtdProduto + "x '" + p.nomeProduto + "'");
@@ -501,7 +503,7 @@ public class Principal{
         nomeProduto = read.nextLine();
         System.out.print("Descricao do produto: ");
         descricao = read.nextLine();
-        System.out.print("Preco do produto: ");
+        System.out.print("Preco do produto: R$");
         preco = read.nextFloat();
         System.out.print("Marca do produto: ");
         marca = read.nextLine();
