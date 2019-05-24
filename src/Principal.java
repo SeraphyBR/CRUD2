@@ -253,7 +253,7 @@ public class Principal{
      * */
     private static void menuCompra(int idCliente, int idCompra) throws Exception{
         byte opcao;
-        boolean fecharMenu = false;
+        boolean fecharMenu = false, erro = false;
         int[] lista;
         int idItemComprado = 0;
         do{  
@@ -277,9 +277,15 @@ public class Principal{
                     adicionarItem(idCompra);
                     break;
                 case 2:
-                    //VERIFICAR SE ID EXISTE
+                    do{
                         System.out.println("Qual o id do item a ser removido? ");
                         idItemComprado = read.nextInt();
+                        lista = indice_Compra_ItemComprado.lista(idItemComprado);
+                        if(lista.length == 0){
+                             erro = true;
+                             System.out.println("Id Invalido");
+                        }
+                    }while(erro);
                         indice_Compra_ItemComprado.excluir(idCompra, idItemComprado);
                         indice_ItemComprado_Compra.excluir(idItemComprado, idCompra);
                         arqItemComprado.remover(idItemComprado);

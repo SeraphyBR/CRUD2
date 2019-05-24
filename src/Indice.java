@@ -1,6 +1,6 @@
 import java.io.*;
 
-// Árvore B+ para ser usada como índice direto de algum arquivo de entidades
+// Arvore B+ para ser usada como índice direto de algum arquivo de entidades
 // CHAVE: Int   (usado para id de alguma entidade)
 // VALOR: Long  (usado para endereço do registro dessa entidade no arquivo)
 
