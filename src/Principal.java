@@ -374,7 +374,7 @@ public class Principal{
      * @param idCompra Id da compra
      * @throws Exception 
      * */
-    private static void adicionarItem(int idCliente, int idCompra) throws Exception{
+    private static void adicionarItem(int idCompra) throws Exception{
         int idItemComprado;
         boolean qtdInvalida = false;
         boolean idInvalido = false;
