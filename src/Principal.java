@@ -26,6 +26,8 @@ public class Principal{
     private static Arquivo<ItemComprado> arqItemComprado;
     private static IndiceChaveComposta indice_Compra_ItemComprado;
     private static IndiceChaveComposta indice_ItemComprado_Compra;
+    private static IndiceChaveComposta indice_Cliente_Produto;
+    private static IndiceChaveComposta indice_Produto_Cliente;
 
     public static void main(String[] args){
         try{
@@ -37,6 +39,8 @@ public class Principal{
             ProgramFile pf = new ProgramFile(programName);
             indice_Compra_ItemComprado = new IndiceChaveComposta(20, pf.addFile("indice_Compra_ItemComprado.idxc"));
             indice_ItemComprado_Compra = new IndiceChaveComposta(20, pf.addFile("indice_ItemComprado_Compra.idxc"));
+            indice_Cliente_Produto = new IndiceChaveComposta(20, pf.addFile("indice_Cliente_Produto.idxc"));
+            indice_Produto_Cliente = new IndiceChaveComposta(20, pf.addFile("indice_Produto_Cliente.idxc"));
 
             menuPrincipal();
 
@@ -188,6 +192,7 @@ public class Principal{
     {//Inicio menuRelatorio
         byte opcao;
         boolean fecharMenu = false;
+        int idCliente;
         do{
             System.out.println(
                     "\n\t*** MENU RELATORIO ***\n"                       +
@@ -214,13 +219,7 @@ public class Principal{
                 case 4:
                     System.out.print("Digite o id do cliente desejado: ");
                     idCliente = read.nextInt();
-                    Cliente cliente = getClienteId(idCliente);
-                    int produtos[] = cliente.getProdutoComprado();
-                    Produto p;
-                    for(int i = 0;i < produtos[].length();i++){
-                       p = arqProdutos.pesquisar((produtos[i] - 1));
-                       p.toString();
-                    }
+                    int[] idsProdutos = indice_Cliente_Produto.lista(idCliente);
                     break;
                 case 5:
                     break;
@@ -379,11 +378,9 @@ public class Principal{
         int idItemComprado;
         boolean qtdInvalida = false;
         boolean idInvalido = false;
-        Cliente idC = getClientePeloId(idCliente);
         do{
             System.out.print("Digite o id do produto desejado: ");
             int id = read.nextInt();
-            idC.setProdutoComprado(id);
             Produto p = arqProdutos.pesquisar(id - 1);
             if (p != null && p.idProduto != -1 ){
                 do{
@@ -411,7 +408,7 @@ public class Principal{
      * Menu de categorias de produtos 
      * @throws Exception
      * */
-    private static void menuCategoria()throws Exception
+    private static void menuCategoria() throws Exception
     {//Inicio menuCategoria
         byte opcao;
         boolean fecharMenu = false;
@@ -995,18 +992,7 @@ public class Principal{
         }
         return cliente;
     }//Fim getCliente
-    private static Cliente getClientePeloId(int id) throws Exception
-    {//Inicio getClientePeloId
-        Cliente cliente = null;
-        ArrayList<Cliente> lista = arqClientes.toList();
-        for(Cliente c: lista){
-            if(c.idCliente.equals(id)){
-                cliente = c;
-                break;
-            }
-        }
-        return cliente;
-    }//Fim getClientePeloId
+
     private static ArrayList<Compra> listComprasC(int idCliente) throws Exception
     {//Inicio mostraCompras
         ArrayList<Compra> list =  arqCompra.toList();

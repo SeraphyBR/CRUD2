@@ -12,9 +12,6 @@ class Cliente implements Entidade
     protected String email;
     protected String cpf;
     private String senha;
-    protected int idProdutoC;
-    protected int[] ProdutosComprados; 
-    protected int contador;
 
     //Contrutor vazio
     public Cliente(){
@@ -23,8 +20,6 @@ class Cliente implements Entidade
         this.email = "";
         this.cpf = "";
         this.senha = "";
-        this.idProdutoC = -1;
-        this.contador = 0;
     }
 
     //Construtor com parametros
@@ -78,14 +73,5 @@ class Cliente implements Entidade
             "\nNome: "  + this.nomeCliente +
             "\nEmail: " + this.email +
             "\nCPF: "   + this.cpf;
-    }
-    public void setProdutoComprado(int idProduto) throws Exception {
-        ProdutosComprados[contador] = idProduto;
-        contador++;
-
-    }
-    public int[] getProdutoComprado() throws Exception {
-        return ProdutosComprados;
-
     }
 }//End Cliente
