@@ -270,7 +270,10 @@ public class Principal{
                         System.out.println("Qual o id do item a ser removido? ");
                         idItemComprado = read.nextInt();
                         lista = indice_Compra_ItemComprado.lista(idItemComprado);
-                        if(lista == null) erro = true;
+                        if(lista == null){
+                             erro = true;
+                             System.out.println("Id Invalido");
+                        }
                     }while(!erro);
                         indice_Compra_ItemComprado.excluir(idCompra, idItemComprado);
                         indice_ItemComprado_Compra.excluir(idItemComprado, idCompra);
