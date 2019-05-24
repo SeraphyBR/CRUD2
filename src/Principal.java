@@ -10,7 +10,7 @@ import java.io.Console;
 /**
  * @author Luiz Junio
  * @author Allan Vivekanda
- * @author Breno
+ * @author Breno Soares
  * @author Henrique Fernandes
  * */
 public class Principal{
@@ -190,17 +190,20 @@ public class Principal{
         boolean fecharMenu = false;
         do{
             System.out.println(
-                    "\n\t*** MENU RELATORIO ***\n"                +
-                    "0 - Mostrar os N produtos mais Vendidos\n"   +
-                    "1 - Mostrar os N melhores clientes\n"        +
-                    "2 - Mostrar quantidade de vendas por mês\n"  +
-                    "3 - Mostrar os ganhos por Categoria\n"       +
-                    "4 - Sair"
+                    "\n\t*** MENU RELATORIO ***\n"                       +
+                    "0 - Mostrar os N produtos mais Vendidos\n"          +
+                    "1 - Mostrar os N melhores clientes\n"               +
+                    "2 - Mostrar quantidade de vendas por mês\n"         +
+                    "3 - Mostrar os ganhos por Categoria\n"              +
+                    "4 - Mostrar os produtos comprados por um cliente\n" +
+                    "5 - Mostrar Clientes que compraram um produto\n"    +
+                    "6 - Sair"
                     );
             System.out.print("Digite sua opcao: ");
             opcao = read.nextByte();
             switch(opcao){
                 case 0:
+
                     break;
                 case 1:
                     break;
@@ -209,6 +212,19 @@ public class Principal{
                 case 3:
                     break;
                 case 4:
+                    System.out.print("Digite o id do cliente desejado: ");
+                    idCliente = read.nextInt();
+                    Cliente cliente = getClienteId(idCliente);
+                    int produtos[] = cliente.getProdutoComprado();
+                    Produto p;
+                    for(int i = 0;i < produtos[].length();i++){
+                       p = arqProdutos.pesquisar((produtos[i] - 1));
+                       p.toString();
+                    }
+                    break;
+                case 5:
+                    break;
+                case 6:
                     fecharMenu = true;
                     break;    
                 default:
@@ -314,7 +330,7 @@ public class Principal{
                     listaP();
                     break;
                 case 1:
-                    adicionarItem(idCompra);
+                    adicionarItem(idCliente,idCompra);
                     break;
                 case 2:
                     do{
@@ -359,14 +375,15 @@ public class Principal{
      * @param idCompra Id da compra
      * @throws Exception 
      * */
-    private static void adicionarItem(int idCompra) throws Exception{
+    private static void adicionarItem(int idCliente, int idCompra) throws Exception{
         int idItemComprado;
         boolean qtdInvalida = false;
         boolean idInvalido = false;
-
+        Cliente idC = getClientePeloId(idCliente);
         do{
             System.out.print("Digite o id do produto desejado: ");
             int id = read.nextInt();
+            idC.setProdutoComprado(id);
             Produto p = arqProdutos.pesquisar(id - 1);
             if (p != null && p.idProduto != -1 ){
                 do{
@@ -978,7 +995,18 @@ public class Principal{
         }
         return cliente;
     }//Fim getCliente
-
+    private static Cliente getClientePeloId(int id) throws Exception
+    {//Inicio getClientePeloId
+        Cliente cliente = null;
+        ArrayList<Cliente> lista = arqClientes.toList();
+        for(Cliente c: lista){
+            if(c.idCliente.equals(id)){
+                cliente = c;
+                break;
+            }
+        }
+        return cliente;
+    }//Fim getClientePeloId
     private static ArrayList<Compra> listComprasC(int idCliente) throws Exception
     {//Inicio mostraCompras
         ArrayList<Compra> list =  arqCompra.toList();
