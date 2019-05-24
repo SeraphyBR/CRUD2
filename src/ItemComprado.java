@@ -49,7 +49,7 @@ class ItemComprado implements Entidade
         saida.writeInt(this.idItemComprado);
         saida.writeInt(this.idCompra);
         saida.writeInt(this.idProduto);
-        saida.writeInt(this.qtdProduto);
+        saida.writeByte(this.qtdProduto);
         saida.writeFloat(this.precoUnitario);
         return dados.toByteArray();
     }

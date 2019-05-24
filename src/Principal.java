@@ -38,6 +38,8 @@ public class Principal{
             indice_Compra_ItemComprado = new IndiceChaveComposta(20, pf.addFile("indice_Compra_ItemComprado.idxc"));
             indice_ItemComprado_Compra = new IndiceChaveComposta(20, pf.addFile("indice_ItemComprado_Compra.idxc"));
 
+
+
             menuPrincipal();
 
             arqProdutos.close();
@@ -222,7 +224,7 @@ public class Principal{
                         for(ItemComprado ic: meusItensComprados){
                             for(Produto p: listProdutos){
                                 if(p.idProduto == ic.idProduto){
-                                    System.out.println("\tProduto: " + p.nomeProduto + " Marca: " + p.marca + " Preço: " + ic.precoUnitario + " Quant: " + ic.qtdProduto);
+                                    System.out.println("\n\tProduto: " + p.nomeProduto + "\n\tMarca: " + p.marca + "\n\tPreço: " + ic.precoUnitario + "\n\tQuant: "+ ic.qtdProduto);
                                 }
                             }
                         }
@@ -334,7 +336,9 @@ public class Principal{
                     System.out.print("Qual a quantidade desejada? ");
                     byte qtdProduto = read.nextByte();
                     if(qtdProduto > 0 && qtdProduto <= 255){
-                        idItemComprado = arqItemComprado.inserir(new ItemComprado(idCompra, qtdProduto, p));
+                        ItemComprado ic = new ItemComprado(idCompra,qtdProduto, p);
+                        idItemComprado = arqItemComprado.inserir(ic);
+                        System.out.println("IdItemComprado: " + ic.getID() + " ID compra: " + ic.idCompra + "Id produto: "+ p.idProduto + "qtd Produto: " + ic.qtdProduto + " preco: " + ic.precoUnitario);
                         indice_Compra_ItemComprado.inserir(idCompra, idItemComprado);
                         indice_ItemComprado_Compra.inserir(idItemComprado, idCompra);
                         System.out.println("Adicionado "+ qtdProduto + "x '" + p.nomeProduto + "'");
