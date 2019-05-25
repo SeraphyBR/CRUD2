@@ -192,7 +192,7 @@ public class Principal{
     {//Inicio menuRelatorio
         byte opcao;
         boolean fecharMenu = false;
-        int idCliente;
+        int idCliente, idProduto;
         do{
             System.out.println(
                     "\n\t*** MENU RELATORIO ***\n"                       +
@@ -222,6 +222,9 @@ public class Principal{
                     int[] idsProdutos = indice_Cliente_Produto.lista(idCliente);
                     break;
                 case 5:
+                    System.out.print("Digite o id do Produto a consultar: ");
+                    idProduto = read.nextInt();
+                    int[] idsClientes = indice_Produto_Cliente.lista(idProduto);
                     break;
                 case 6:
                     fecharMenu = true;
@@ -349,6 +352,7 @@ public class Principal{
                     lista = indice_Compra_ItemComprado.lista(idCompra);
                     break;
                 case 4:
+                    System.out.println("Compra efetuada com sucesso!");
                     fecharMenu = true;
                     break;
                 case 5:
@@ -360,6 +364,7 @@ public class Principal{
                         arqItemComprado.remover(idItemComprado);
                     }
                     arqCompra.remover(idCompra);
+                    System.out.println("Sua compra foi cancelada!");
                     break;
                 default: 
                     System.out.println("Opcao invalida!\n");
@@ -374,7 +379,7 @@ public class Principal{
      * @param idCompra Id da compra
      * @throws Exception 
      * */
-    private static void adicionarItem(int idCompra) throws Exception{
+    private static void adicionarItem(int idCliente, int idCompra) throws Exception{
         int idItemComprado;
         boolean qtdInvalida = false;
         boolean idInvalido = false;
@@ -391,6 +396,8 @@ public class Principal{
                         idItemComprado = arqItemComprado.inserir(ic);
                         indice_Compra_ItemComprado.inserir(idCompra, idItemComprado);
                         indice_ItemComprado_Compra.inserir(idItemComprado, idCompra);
+                        indice_Produto_Cliente.inserir(p.idProduto, idCliente);
+                        indice_Cliente_Produto.inserir(idCliente, p.idProduto);
                         System.out.println("Adicionado "+ qtdProduto + "x '" + p.nomeProduto + "'");
                     }else {
                         System.out.println("Valor invalido!");
@@ -613,25 +620,31 @@ public class Principal{
         System.out.println("\t** Remover produto **\n");
         System.out.print("ID do produto a ser removido: ");
         id = read.nextInt();
-        do{
-            erro = false;
-            System.out.println("\nRemover produto?");
-            System.out.print("1 - SIM\n2 - NÂO\nR: ");
-            switch (read.nextByte()){
-                case 1:
-                    result = arqProdutos.remover(id - 1); 
-                    if(result) System.out.println("Removido com sucesso!");
-                    else System.out.println("Produto não encontrado!"); 
-                    break;
-                case 2:
-                    System.out.println("\nOperação Cancelada!");
-                    break;
-                default:
-                    System.out.println("\nOpção Inválida!\n");
-                    erro = true;
-                    break;
-            }
-        } while (erro);  
+        if(indice_Produto_Cliente.lista(id).length != 0){
+            System.out.println("Esse produto não pode ser removido pois foi comprado por algum Cliente!");
+        }
+        else{
+            do{
+                erro = false;
+                System.out.println("\nRemover produto?");
+                System.out.print("1 - SIM\n2 - NÂO\nR: ");
+                switch (read.nextByte()){
+                    case 1:
+                        result = arqProdutos.remover(id - 1); 
+                        if(result) System.out.println("Removido com sucesso!");
+                        else System.out.println("Produto não encontrado!"); 
+                        break;
+                    case 2:
+                        System.out.println("\nOperação Cancelada!");
+                        break;
+                    default:
+                        System.out.println("\nOpção Inválida!\n");
+                        erro = true;
+                        break;
+                }
+            } while (erro); 
+        }
+
     }//Fim removerP
 
     /**
