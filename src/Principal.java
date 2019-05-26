@@ -6,6 +6,7 @@ import java.util.Random;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.io.Console;
+import java.util.InputMismatchException;
 
 /**
  * @author Luiz Junio
@@ -50,7 +51,8 @@ public class Principal{
             arqCompra.close();
             arqItemComprado.close();
             read.close();
-        }//end try 
+        }//end try
+
         catch(Exception e){
             e.printStackTrace();
         }//end catch
@@ -65,28 +67,35 @@ public class Principal{
         byte opcao;
         boolean fecharMenu = false;
         do{
-            System.out.println(
-                    "\n\t*** MENU PRINCIPAL ***\n" +
-                    "0 - Efetuar login\n" +
-                    "1 - Novo cadastro\n" +
-                    "2 - Sair "
-                    ); 
-            System.out.print("Digite a opção: ");
-            opcao = read.nextByte();
-            switch(opcao){
-                case 0:
-                    menuLogin();
-                    break;
-                case 1:
-                    menuCadastro();
-                    break;
-                case 2:
-                    fecharMenu = true;
-                    break;
-                default: 
-                    System.out.println("Opcao invalida!\n");
-                    Thread.sleep(1000);  
-                    break;
+            try{
+                System.out.println(
+                        "\n\t*** MENU PRINCIPAL ***\n" +
+                        "0 - Efetuar login\n" +
+                        "1 - Novo cadastro\n" +
+                        "2 - Sair "
+                        ); 
+                System.out.print("Digite a opção: ");
+                opcao = read.nextByte();
+                switch(opcao){
+                    case 0:
+                        menuLogin();
+                        break;
+                    case 1:
+                        menuCadastro();
+                        break;
+                    case 2:
+                        fecharMenu = true;
+                        break;
+                    default: 
+                        System.out.println("Opcao invalida!\n");
+                        Thread.sleep(1000);  
+                        break;
+                    }
+            }
+            catch(InputMismatchException inputMismatchException){
+                System.out.println("\nOops! Parece que digitou algo errado por engano!\nTente novamente!");
+                Thread.sleep(1000);
+                read.next();//Limpar buffer do Scanner
             }
         }while(!fecharMenu);
 
