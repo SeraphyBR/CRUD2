@@ -236,6 +236,7 @@ public class Principal{
                     break;
                 case 1:
                     ArrayList<Cliente> list = arqClientes.toList();
+                    //Ordena a lista de forma decrescente:
                     list.sort((c1,c2) -> - Float.compare(c1.getGastoTotal(), c2.getGastoTotal()));
                     for(Cliente n: list){
                         System.out.println("Cliente de ID: " + n.getID() + " Nome:" + n.nomeCliente + "\tGasto total: " + n.getGastoTotal());
