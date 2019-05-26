@@ -5,7 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 
 class Compra implements Entidade{
-    protected int idCompra;
+    private int idCompra;
     protected int idCliente;
     protected Date dataCompra;
     private float valorCompra;
