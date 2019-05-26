@@ -11,7 +11,7 @@ import java.io.DataInputStream;
  * */  
 class Produto implements Entidade{
 
-    protected int    idProduto;
+    private   int    idProduto;
     protected String nomeProduto;
     protected String descricao;
     protected float  preco;
@@ -22,7 +22,7 @@ class Produto implements Entidade{
     //Construtor vazio
     public Produto(){
         this.idProduto    = -1;
-        this.nomeProduto = "";
+        this.nomeProduto  = "";
         this.descricao    = "";
         this.preco        = 0;
         this.marca        = "";

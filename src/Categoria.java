@@ -11,7 +11,7 @@ import java.io.DataInputStream;
  * */  
 class Categoria implements Entidade{
 
-    protected int    idCategoria;
+    private int    idCategoria;
     protected String nome;
 
     //construtor vazio

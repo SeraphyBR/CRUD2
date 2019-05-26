@@ -325,11 +325,11 @@ public class Principal{
                         listProdutos = arqProdutos.toList();
                         minhasCompras = listComprasC(idCliente);
                         for(Compra c: minhasCompras){
-                            System.out.println("\n*** ID: " + c.idCompra + " Data: " + df.format(c.dataCompra));
-                            meusItensComprados = listItensComprados(c.idCompra);
+                            System.out.println("\n*** ID: " + c.getID() + " Data: " + df.format(c.dataCompra));
+                            meusItensComprados = listItensComprados(c.getID());
                             for(ItemComprado ic: meusItensComprados){
                                 for(Produto p: listProdutos){
-                                    if(p.idProduto == ic.idProduto){
+                                    if(p.getID() == ic.idProduto){
                                         System.out.println(
                                                 "\n\tProduto: " + p.nomeProduto + 
                                                 "\n\tMarca: " + p.marca + 
@@ -388,11 +388,28 @@ public class Principal{
                     else System.out.println("\nAlgo de errado ocorreu!");
                     break;
                 case 1:
+                    System.out.print("\nDigite a senha atual: ");
+                    String senha = read.nextLine();
+                    senha = read.nextLine();
+                    if(c.validaSenha(senha)){
+                        System.out.print("Digite a nova senha: ");
+                        senha = read.nextLine();
+                        System.out.print("Digite novamente a nova senha: ");
+                        if(senha.equals(read.nextLine())){
+                            c.setSenha(senha);
+                            if(arqClientes.alterar(c.getID(), c)) System.out.println("\nSenha alterada com sucesso!");
+                            else System.out.println("\nAlgo de errado ocorreu!");
+                        }
+                        else System.out.println("Senhas não conferem!\nTente novamente!");
+                    }
+                    else System.out.println("Senhas não conferem!\nTente novamente!");
                     break;
                 case 2:
+                    fecharMenu = true;
                     break;
                 default:
-                    fecharMenu = true;
+                    System.out.println("Opcao invalida!\n");
+                    Thread.sleep(1000);                     
                     break;
             }
 
@@ -490,7 +507,7 @@ public class Principal{
             System.out.print("Digite o id do produto desejado: ");
             int id = read.nextInt();
             Produto p = arqProdutos.pesquisar(id - 1);
-            if (p != null && p.idProduto != -1 ){
+            if (p != null && p.getID() != -1 ){
                 do{
                     System.out.print("Qual a quantidade desejada? ");
                     byte qtdProduto = read.nextByte();
@@ -499,8 +516,8 @@ public class Principal{
                         idItemComprado = arqItemComprado.inserir(ic);
                         indice_Compra_ItemComprado.inserir(idCompra, idItemComprado);
                         indice_ItemComprado_Compra.inserir(idItemComprado, idCompra);
-                        indice_Produto_Cliente.inserir(p.idProduto, idCliente);
-                        indice_Cliente_Produto.inserir(idCliente, p.idProduto);
+                        indice_Produto_Cliente.inserir(p.getID(), idCliente);
+                        indice_Cliente_Produto.inserir(idCliente, p.getID());
                         System.out.println("Adicionado "+ qtdProduto + "x '" + p.nomeProduto + "'");
                     }else {
                         System.out.println("Valor invalido!");
@@ -807,7 +824,7 @@ public class Principal{
                                 case 0:
                                     for(Produto p: lista){
                                         System.out.println("Removendo '" + p.nomeProduto + "'...");
-                                        result = arqProdutos.remover(p.idProduto - 1);
+                                        result = arqProdutos.remover(p.getID() - 1);
                                     }
                                     System.out.println("Excluindo categoria '" + nomeCategoria + "'...");
                                     result = arqCategorias.remover(idCategoria - 1);
@@ -824,7 +841,7 @@ public class Principal{
                                         System.out.println("\nProdutos:");
                                         for(Produto p: lista){
                                             System.out.println(
-                                                    "\nId: "          + p.idProduto    + 
+                                                    "\nId: "          + p.getID()    + 
                                                     "\nNome: "        + p.nomeProduto + 
                                                     "\nDescricao: "   + p.descricao    + 
                                                     "\nMarca: "       + p.marca     
@@ -841,7 +858,7 @@ public class Principal{
                                                 } 
                                             } while(!valido);
                                             p.idCategoria = idCategoriaNew;
-                                            result = arqProdutos.alterar(p.idProduto, p);
+                                            result = arqProdutos.alterar(p.getID(), p);
                                             System.out.println("Movido com sucesso!");
                                         }
                                         result = arqCategorias.remover(idCategoria - 1);
@@ -962,10 +979,10 @@ public class Principal{
             System.out.println();
         } while(erro);
         p = arqProdutos.pesquisar(id - 1);
-        if (p != null && p.idProduto != -1 ){
+        if (p != null && p.getID() != -1 ){
             c = arqCategorias.pesquisar(p.idCategoria - 1);
             System.out.println(
-                    "Id: "            + p.idProduto    + 
+                    "Id: "            + p.getID()    + 
                     "\nNome: "        + p.nomeProduto + 
                     "\nDescricao: "   + p.descricao    + 
                     "\nPreco: "       + p.preco        + 
@@ -1005,7 +1022,7 @@ public class Principal{
             System.out.println("Produtos pertencentes a '" + nomeCategoria + "'");
             for(Produto p: lista){
                 System.out.println(
-                        "Id: "            + p.idProduto    + 
+                        "Id: "            + p.getID()    + 
                         "\nNome: "        + p.nomeProduto + 
                         "\nDescricao: "   + p.descricao    + 
                         "\nPreco: "       + p.preco        + 
@@ -1028,10 +1045,10 @@ public class Principal{
         ArrayList<Produto> lista = arqProdutos.toList();
         if(!lista.isEmpty()) System.out.println("\t** Lista dos produtos cadastrados **\n");
         for(Produto p: lista){
-            if (p != null && p.idProduto != -1 ){
+            if (p != null && p.getID() != -1 ){
                 nomeCategoria = getNomeCategoria(p.idCategoria - 1);
                 System.out.println(
-                        "Id: "            + p.idProduto    + 
+                        "Id: "            + p.getID()    + 
                         "\nNome: "        + p.nomeProduto + 
                         "\nDescricao: "   + p.descricao    + 
                         "\nPreco: "       + p.preco        + 
@@ -1061,7 +1078,7 @@ public class Principal{
             System.out.println("\t** Lista de categorias cadastradas **\n");
             for(Categoria c: lista){
                 System.out.println(c);
-                idsValidos[count] = c.idCategoria;
+                idsValidos[count] = c.getID();
                 count++;
             }
         }
