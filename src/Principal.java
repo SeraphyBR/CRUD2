@@ -342,6 +342,7 @@ public class Principal{
                         }
                         break;
                     case 2:
+                        menuAlterarDados(idCliente);
                         break;
                     case 3:
                         if(arqClientes.remover(idCliente-1)) System.out.println("Seu cadastro foi removido com sucesso!");
@@ -362,6 +363,41 @@ public class Principal{
             } 
         }while(!fecharMenu);
     }//Fim menuCliente
+
+    private static void menuAlterarDados(int idCliente) throws Exception
+    {//Inicio menuAlterarDados
+        byte opcao;
+        boolean fecharMenu = false;
+        Cliente c = arqClientes.pesquisar(idCliente - 1);
+        do{
+            System.out.println(
+                    "\n\t*** Alterar meus dados ***\n" +
+                    "0 - Alterar email\n" +
+                    "1 - Alterar senha\n" +
+                    "2 - Sair "
+                    );
+            System.out.print("Digite a opção: ");
+            opcao = read.nextByte();
+            System.out.println();
+            switch(opcao){
+                case 0:
+                    System.out.print("\nDigite o novo email: ");
+                    String email = read.nextLine();
+                    c.email = email;
+                    if(arqClientes.alterar(c.getID(), c)) System.out.println("\nEmail alterado com sucesso!");
+                    else System.out.println("\nAlgo de errado ocorreu!");
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                default:
+                    fecharMenu = true;
+                    break;
+            }
+
+        }while(!fecharMenu);
+    }//Fim menuAlterarDados
 
     /**
      * Menu de Compra do Cliente
