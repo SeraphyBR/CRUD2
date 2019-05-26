@@ -235,6 +235,11 @@ public class Principal{
                 case 0:
                     break;
                 case 1:
+                    ArrayList<Cliente> list = arqClientes.toList();
+                    list.sort((c1,c2) -> - Float.compare(c1.getGastoTotal(), c2.getGastoTotal()));
+                    for(Cliente n: list){
+                        System.out.println("Cliente de ID: " + n.getID() + " Nome:" + n.nomeCliente + "\tGasto total: " + n.getGastoTotal());
+                    }
                     break;
                 case 2:
                     break;
@@ -425,6 +430,7 @@ public class Principal{
     private static void menuCompra(int idCliente, int idCompra) throws Exception
     {//Inicio menuCompra
         byte opcao;
+        float gasto = 0;
         boolean fecharMenu = false, erro = false;
         int[] lista;
         int idItemComprado = 0;
@@ -447,27 +453,37 @@ public class Principal{
                         listaP();
                         break;
                     case 1:
-                        adicionarItem(idCliente,idCompra);
+                        gasto += adicionarItem(idCliente,idCompra);
                         break;
                     case 2:
-                        do{
+                        if(indice_Compra_ItemComprado.lista(idCompra).length == 0){
+                            System.out.println("\nNão ha itens a serem removidos");
+                        }
+                        else{
                             System.out.println("Qual o id do item a ser removido? ");
                             idItemComprado = read.nextInt();
-                            lista = indice_Compra_ItemComprado.lista(idItemComprado);
-                            if(lista.length == 0){
-                                erro = true;
-                                System.out.println("Id Invalido");
+                            ItemComprado ic = arqItemComprado.pesquisar(idItemComprado - 1);
+                            if(ic != null){
+                                if(arqItemComprado.remover(idItemComprado)){
+                                    indice_Compra_ItemComprado.excluir(idCompra, idItemComprado);
+                                    indice_ItemComprado_Compra.excluir(idItemComprado, idCompra);
+                                    Produto p = arqProdutos.pesquisar(ic.idProduto - 1);
+                                    gasto -= ic.precoUnitario * ic.qtdProduto;
+                                    System.out.println("Removido " + ic.qtdProduto + "x '" + p.nomeProduto + "' com sucesso!");
+                                }
+                                else System.out.println("\nAlgo de errado aconteceu!");
                             }
-                        }while(erro);
-                        indice_Compra_ItemComprado.excluir(idCompra, idItemComprado);
-                        indice_ItemComprado_Compra.excluir(idItemComprado, idCompra);
-                        arqItemComprado.remover(idItemComprado);
+                            else System.out.println("\nID invalido!");
+                        }
                         break;
                     case 3:
                         lista = indice_Compra_ItemComprado.lista(idCompra);
                         break;
                     case 4:
-                        System.out.println("Compra efetuada com sucesso!");
+                        Cliente c = arqClientes.pesquisar(idCliente - 1);
+                        c.addGasto(gasto);
+                        arqClientes.alterar(c.getID(), c);
+                        System.out.println("Compra efetuada com sucesso!\nGasto total nessa compra: R$" + gasto);
                         fecharMenu = true;
                         break;
                     case 5:
@@ -496,11 +512,14 @@ public class Principal{
 
     /**
      * Metodo para Adicionar um novo produto a compra
-     * @param idCompra Id da compra
+     * @param idCliente ID do cliente
+     * @param idCompra ID da compra
+     * @return O valor da compra do produto
      * @throws Exception 
      * */
-    private static void adicionarItem(int idCliente, int idCompra) throws Exception{
+    private static float adicionarItem(int idCliente, int idCompra) throws Exception{
         int idItemComprado;
+        float gasto = 0;
         boolean qtdInvalida = false;
         boolean idInvalido = false;
         do{
@@ -519,6 +538,7 @@ public class Principal{
                         indice_Produto_Cliente.inserir(p.getID(), idCliente);
                         indice_Cliente_Produto.inserir(idCliente, p.getID());
                         System.out.println("Adicionado "+ qtdProduto + "x '" + p.nomeProduto + "'");
+                        gasto = qtdProduto * p.preco;
                     }else {
                         System.out.println("Valor invalido!");
                         qtdInvalida = true;
@@ -529,6 +549,7 @@ public class Principal{
                 idInvalido = true;
             }
         }while(idInvalido);
+        return gasto;
     }//end adicionaritem
 
     /**
