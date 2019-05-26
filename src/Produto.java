@@ -1,4 +1,7 @@
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 
 /**
  * @author Luiz Junio

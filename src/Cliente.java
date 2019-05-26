@@ -1,8 +1,12 @@
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+ 
 /**
  * @author Luiz Junio
  * @author Allan Vivekanda
- * @author Breno
+ * @author Breno Soares
  * @author Henrique Fernandes
  * */
 class Cliente implements Entidade

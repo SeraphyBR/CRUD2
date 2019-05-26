@@ -1,6 +1,7 @@
-import java.io.*;
+import java.io.File;
 
-public class ProgramFile {
+public class ProgramFile
+{//Inicio classe ProgramFile
 
     protected String programName;
 
@@ -46,4 +47,4 @@ public class ProgramFile {
         }
         return file;
     }
-}
+}//Fim classe ProgramFile 

@@ -1,4 +1,10 @@
-import java.io.*;
+import java.io.RandomAccessFile;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.File; 
 import java.util.ArrayList;
 
 // Esta versão da árvore funciona apenas como um conjunto de par de chaves.

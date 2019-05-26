@@ -1,5 +1,8 @@
 import java.util.Date;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 
 class Compra implements Entidade{
     protected int idCompra;
