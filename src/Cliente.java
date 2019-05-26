@@ -11,7 +11,7 @@ import java.io.DataInputStream;
  * */
 class Cliente implements Entidade
 {
-    protected int idCliente;
+    private int idCliente;
     protected String nomeCliente;
     protected String email;
     protected String cpf;
@@ -36,6 +36,10 @@ class Cliente implements Entidade
 
     public boolean validaSenha(String senha){
         return this.senha.equals(senha);
+    }
+
+    public void setSenha(String senha){
+        this.senha = senha;
     }
 
     public void setID(int id){

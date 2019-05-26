@@ -388,11 +388,28 @@ public class Principal{
                     else System.out.println("\nAlgo de errado ocorreu!");
                     break;
                 case 1:
+                    System.out.print("\nDigite a senha atual: ");
+                    String senha = read.nextLine();
+                    senha = read.nextLine();
+                    if(c.validaSenha(senha)){
+                        System.out.print("Digite a nova senha: ");
+                        senha = read.nextLine();
+                        System.out.print("Digite novamente a nova senha: ");
+                        if(senha.equals(read.nextLine())){
+                            c.setSenha(senha);
+                            if(arqClientes.alterar(c.getID(), c)) System.out.println("\nSenha alterada com sucesso!");
+                            else System.out.println("\nAlgo de errado ocorreu!");
+                        }
+                        else System.out.println("Senhas não conferem!\nTente novamente!");
+                    }
+                    else System.out.println("Senhas não conferem!\nTente novamente!");
                     break;
                 case 2:
+                    fecharMenu = true;
                     break;
                 default:
-                    fecharMenu = true;
+                    System.out.println("Opcao invalida!\n");
+                    Thread.sleep(1000);                     
                     break;
             }
 
