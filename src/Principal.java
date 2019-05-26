@@ -90,9 +90,8 @@ public class Principal{
                         System.out.println("Opcao invalida!\n");
                         Thread.sleep(1000);  
                         break;
-                    }
-            }
-            catch(InputMismatchException inputMismatchException){
+                }
+            }catch(InputMismatchException inputMismatchException){
                 System.out.println("\nOops! Parece que digitou algo errado por engano!\nTente novamente!");
                 Thread.sleep(1000);
                 read.next();//Limpar buffer do Scanner
@@ -164,36 +163,43 @@ public class Principal{
         byte opcao;
         boolean fecharMenu = false;
         do{
-            System.out.println(
-                    "\n\t*** MENU ADMIN ***\n" +
-                    "0 - Gerenciar produtos\n"     +
-                    "1 - Gerenciar categorias\n"   +
-                    "2 - Gerar relatorios\n" +
-                    "3 - Listar usuarios cadastrados\n" +
-                    "4 - Logout"
-                    );
-            System.out.print("Digite a opção: ");
-            opcao = read.nextByte();
-            switch(opcao){
-                case 0:
-                    menuProdutos();
-                    break;
-                case 1:
-                    menuCategoria();
-                    break;
-                case 2:
-                    menuRelatorio();
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    fecharMenu = true;
-                    break;
-                default: 
-                    System.out.println("Opcao invalida!\n");
-                    Thread.sleep(1000);  
-                    break;
-            }
+            try{
+                System.out.println(
+                        "\n\t*** MENU ADMIN ***\n" +
+                        "0 - Gerenciar produtos\n"     +
+                        "1 - Gerenciar categorias\n"   +
+                        "2 - Gerar relatorios\n" +
+                        "3 - Listar usuarios cadastrados\n" +
+                        "4 - Logout"
+                        );
+                System.out.print("Digite a opção: ");
+                opcao = read.nextByte();
+                switch(opcao){
+                    case 0:
+                        menuProdutos();
+                        break;
+                    case 1:
+                        menuCategoria();
+                        break;
+                    case 2:
+                        menuRelatorio();
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        fecharMenu = true;
+                        break;
+                    default: 
+                        System.out.println("Opcao invalida!\n");
+                        Thread.sleep(1000);  
+                        break;
+                }
+            }catch(InputMismatchException inputMismatchException){
+                System.out.println("\nOops! Parece que digitou algo errado por engano!\nTente novamente!");
+                Thread.sleep(1000);
+                read.next();//Limpar buffer do Scanner
+            } 
+
         } while(!fecharMenu);
     }//Fim menuAdministrador 
 
@@ -276,55 +282,61 @@ public class Principal{
         ArrayList<Produto> listProdutos = null;
         boolean fecharMenu = false;
         do{
-            System.out.println(
-                    "\n\t*** MENU CLIENTE ***\n"             +
-                    "0 - Nova compra\n"                      +
-                    "1 - Minhas compras\n"                   +
-                    "2 - Alterar meus dados\n"               +
-                    "3 - Excluir conta\n"                    +
-                    "4 - Logout"
-                    );
-            System.out.print("Digite sua opcao: ");
-            opcao = read.nextByte();
-            switch(opcao){
-                case 0:
-                    idCompra = arqCompra.inserir(new Compra(idCliente, new Date()));
-                    menuCompra(idCliente, idCompra);
-                    break;
-                case 1:
-                    listProdutos = arqProdutos.toList();
-                    minhasCompras = listComprasC(idCliente);
-                    for(Compra c: minhasCompras){
-                        System.out.println("\n*** ID: " + c.idCompra + " Data: " + df.format(c.dataCompra));
-                        meusItensComprados = listItensComprados(c.idCompra);
-                        for(ItemComprado ic: meusItensComprados){
-                            for(Produto p: listProdutos){
-                                if(p.idProduto == ic.idProduto){
-                                    System.out.println(
-                                            "\n\tProduto: " + p.nomeProduto + 
-                                            "\n\tMarca: " + p.marca + 
-                                            "\n\tPreço: " + ic.precoUnitario + 
-                                            "\n\tQuant: "+ ic.qtdProduto
-                                            );
+            try{
+                System.out.println(
+                        "\n\t*** MENU CLIENTE ***\n"             +
+                        "0 - Nova compra\n"                      +
+                        "1 - Minhas compras\n"                   +
+                        "2 - Alterar meus dados\n"               +
+                        "3 - Excluir conta\n"                    +
+                        "4 - Logout"
+                        );
+                System.out.print("Digite sua opcao: ");
+                opcao = read.nextByte();
+                switch(opcao){
+                    case 0:
+                        idCompra = arqCompra.inserir(new Compra(idCliente, new Date()));
+                        menuCompra(idCliente, idCompra);
+                        break;
+                    case 1:
+                        listProdutos = arqProdutos.toList();
+                        minhasCompras = listComprasC(idCliente);
+                        for(Compra c: minhasCompras){
+                            System.out.println("\n*** ID: " + c.idCompra + " Data: " + df.format(c.dataCompra));
+                            meusItensComprados = listItensComprados(c.idCompra);
+                            for(ItemComprado ic: meusItensComprados){
+                                for(Produto p: listProdutos){
+                                    if(p.idProduto == ic.idProduto){
+                                        System.out.println(
+                                                "\n\tProduto: " + p.nomeProduto + 
+                                                "\n\tMarca: " + p.marca + 
+                                                "\n\tPreço: " + ic.precoUnitario + 
+                                                "\n\tQuant: "+ ic.qtdProduto
+                                                );
+                                    }
                                 }
                             }
                         }
-                    }
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    if(arqClientes.remover(idCliente-1)) System.out.println("Cliente removido com sucesso");
-                    fecharMenu = true;
-                    break;
-                case 4:
-                    fecharMenu = true;
-                    break;    
-                default:
-                    System.out.println("Opcao invalida!\n");
-                    Thread.sleep(1000);
-                    break;
-            }
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        if(arqClientes.remover(idCliente-1)) System.out.println("Cliente removido com sucesso");
+                        fecharMenu = true;
+                        break;
+                    case 4:
+                        fecharMenu = true;
+                        break;    
+                    default:
+                        System.out.println("Opcao invalida!\n");
+                        Thread.sleep(1000);
+                        break;
+                }
+            }catch(InputMismatchException inputMismatchException){
+                System.out.println("\nOops! Parece que digitou algo errado por engano!\nTente novamente!");
+                Thread.sleep(1000);
+                read.next();//Limpar buffer do Scanner
+            } 
         }while(!fecharMenu);
     }//Fim menuCliente
 
@@ -334,70 +346,77 @@ public class Principal{
      * @param idCompra ID da nova compra criada
      * @throws Exception 
      * */
-    private static void menuCompra(int idCliente, int idCompra) throws Exception{
+    private static void menuCompra(int idCliente, int idCompra) throws Exception
+    {//Inicio menuCompra
         byte opcao;
         boolean fecharMenu = false, erro = false;
         int[] lista;
         int idItemComprado = 0;
-        do{  
-            System.out.println(
-                    "\n\t*** MENU DE COMPRA ***\n"           +
-                    "0 - Listar produtos\n"                  +
-                    "1 - Adicionar produto a compra\n"       +
-                    "2 - Remover produto da compra\n"        +
-                    "3 - Visualizar compra\n"                +
-                    "4 - Finalizar compra\n"                 +
-                    "5 - Cancelar compra\n"
-                    );
-            System.out.print("Digite a opção: ");
-            opcao = read.nextByte();
-            System.out.println();
-            switch(opcao){
-                case 0:
-                    listaP();
-                    break;
-                case 1:
-                    adicionarItem(idCliente,idCompra);
-                    break;
-                case 2:
-                    do{
-                        System.out.println("Qual o id do item a ser removido? ");
-                        idItemComprado = read.nextInt();
-                        lista = indice_Compra_ItemComprado.lista(idItemComprado);
-                        if(lista.length == 0){
-                            erro = true;
-                            System.out.println("Id Invalido");
-                        }
-                    }while(erro);
-                    indice_Compra_ItemComprado.excluir(idCompra, idItemComprado);
-                    indice_ItemComprado_Compra.excluir(idItemComprado, idCompra);
-                    arqItemComprado.remover(idItemComprado);
-                    break;
-                case 3:
-                    lista = indice_Compra_ItemComprado.lista(idCompra);
-                    break;
-                case 4:
-                    System.out.println("Compra efetuada com sucesso!");
-                    fecharMenu = true;
-                    break;
-                case 5:
-                    fecharMenu = true;
-                    lista = indice_Compra_ItemComprado.lista(idCompra);
-                    for(int i = 0; i < lista.length; i++){
-                        indice_Compra_ItemComprado.excluir(idCompra, lista[i]);
-                        indice_ItemComprado_Compra.excluir(lista[i], idCompra);
+        do{ 
+            try{
+                System.out.println(
+                        "\n\t*** MENU DE COMPRA ***\n"           +
+                        "0 - Listar produtos\n"                  +
+                        "1 - Adicionar produto a compra\n"       +
+                        "2 - Remover produto da compra\n"        +
+                        "3 - Visualizar compra\n"                +
+                        "4 - Finalizar compra\n"                 +
+                        "5 - Cancelar compra\n"
+                        );
+                System.out.print("Digite a opção: ");
+                opcao = read.nextByte();
+                System.out.println();
+                switch(opcao){
+                    case 0:
+                        listaP();
+                        break;
+                    case 1:
+                        adicionarItem(idCliente,idCompra);
+                        break;
+                    case 2:
+                        do{
+                            System.out.println("Qual o id do item a ser removido? ");
+                            idItemComprado = read.nextInt();
+                            lista = indice_Compra_ItemComprado.lista(idItemComprado);
+                            if(lista.length == 0){
+                                erro = true;
+                                System.out.println("Id Invalido");
+                            }
+                        }while(erro);
+                        indice_Compra_ItemComprado.excluir(idCompra, idItemComprado);
+                        indice_ItemComprado_Compra.excluir(idItemComprado, idCompra);
                         arqItemComprado.remover(idItemComprado);
-                    }
-                    arqCompra.remover(idCompra);
-                    System.out.println("Sua compra foi cancelada!");
-                    break;
-                default: 
-                    System.out.println("Opcao invalida!\n");
-                    Thread.sleep(1000);  
-                    break;
-            }
+                        break;
+                    case 3:
+                        lista = indice_Compra_ItemComprado.lista(idCompra);
+                        break;
+                    case 4:
+                        System.out.println("Compra efetuada com sucesso!");
+                        fecharMenu = true;
+                        break;
+                    case 5:
+                        fecharMenu = true;
+                        lista = indice_Compra_ItemComprado.lista(idCompra);
+                        for(int i = 0; i < lista.length; i++){
+                            indice_Compra_ItemComprado.excluir(idCompra, lista[i]);
+                            indice_ItemComprado_Compra.excluir(lista[i], idCompra);
+                            arqItemComprado.remover(idItemComprado);
+                        }
+                        arqCompra.remover(idCompra);
+                        System.out.println("Sua compra foi cancelada!");
+                        break;
+                    default: 
+                        System.out.println("Opcao invalida!\n");
+                        Thread.sleep(1000);  
+                        break;
+                } 
+            }catch(InputMismatchException inputMismatchException){
+                System.out.println("\nOops! Parece que digitou algo errado por engano!\nTente novamente!");
+                Thread.sleep(1000);
+                read.next();//Limpar buffer do Scanner
+            } 
         }while(!fecharMenu);
-    }
+    }//Fim menuCompra
 
     /**
      * Metodo para Adicionar um novo produto a compra
