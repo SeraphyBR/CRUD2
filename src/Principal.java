@@ -193,6 +193,8 @@ public class Principal{
         byte opcao;
         boolean fecharMenu = false;
         int idCliente, idProduto;
+        Produto p = null;
+        Cliente c = null;
         do{
             System.out.println(
                     "\n\t*** MENU RELATORIO ***\n"                       +
@@ -220,11 +222,25 @@ public class Principal{
                     System.out.print("Digite o id do cliente desejado: ");
                     idCliente = read.nextInt();
                     int[] idsProdutos = indice_Cliente_Produto.lista(idCliente);
+                    for(int i = 0; i < idsProdutos.length; i++){
+                        p = arqProdutos.pesquisar(idsProdutos[i] - 1);
+                        System.out.println(
+                                "\n\tProduto " + i + " -> " + 
+                                " ID: " + p.getID() + 
+                                " Nome: " + p.nomeProduto + 
+                                " Marca: " + p.marca
+                                );
+                    }
                     break;
                 case 5:
                     System.out.print("Digite o id do Produto a consultar: ");
                     idProduto = read.nextInt();
                     int[] idsClientes = indice_Produto_Cliente.lista(idProduto);
+                    for(int i = 0; i < idsClientes.length; i++){
+                        c = arqClientes.pesquisar(idsClientes[i] - 1);
+                        System.out.println();
+                        System.out.println(c);
+                    }
                     break;
                 case 6:
                     fecharMenu = true;

@@ -78,8 +78,8 @@ class Produto implements Entidade{
     }//end fromByteArray
 
     public String toString(){
-        return "Id: "             + this.idProduto    + 
-            "\nNome: "        + this.nomeProduto + 
+        return "Id: "         + this.idProduto    + 
+            "\nNome: "        + this.nomeProduto  + 
             "\nDescricao: "   + this.descricao    + 
             "\nPreco: "       + this.preco        + 
             "\nMarca: "       + this.marca        + 
