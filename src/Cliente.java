@@ -16,6 +16,8 @@ class Cliente implements Entidade
     protected String email;
     protected String cpf;
     private String senha;
+    private float gastoTotal;
+    
 
     //Contrutor vazio
     public Cliente(){
@@ -24,6 +26,7 @@ class Cliente implements Entidade
         this.email = "";
         this.cpf = "";
         this.senha = "";
+        this.gastoTotal = 0;
     }
 
     //Construtor com parametros
@@ -32,6 +35,19 @@ class Cliente implements Entidade
         this.email = email;
         this.cpf = cpf;
         this.senha = senha;
+        this.gastoTotal = 0;
+    }
+
+    public void addGasto(float gasto){
+        this.gastoTotal += gasto;
+    }
+
+    public float getGastoTotal(){
+        return this.gastoTotal;
+    }
+
+    public void zerarGasto(){
+        this.gastoTotal = 0;
     }
 
     public boolean validaSenha(String senha){
@@ -60,6 +76,7 @@ class Cliente implements Entidade
         saida.writeUTF(this.email);
         saida.writeUTF(this.cpf);
         saida.writeUTF(this.senha);
+        saida.writeFloat(this.gastoTotal);
         return dados.toByteArray();
     }
 
@@ -73,6 +90,7 @@ class Cliente implements Entidade
         this.email = entrada.readUTF();
         this.cpf = entrada.readUTF();
         this.senha = entrada.readUTF();
+        this.gastoTotal = entrada.readFloat();
         entrada.close();
     }
 
