@@ -6,7 +6,7 @@ import java.io.DataInputStream;
 /**
  * @author Luiz Junio
  * @author Allan Vivekanda
- * @author Breno
+ * @author Breno Soares
  * @author Henrique Fernandes
  * */  
 class Produto implements Entidade{
