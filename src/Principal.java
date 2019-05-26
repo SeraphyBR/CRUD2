@@ -234,25 +234,41 @@ public class Principal{
                 case 4:
                     System.out.print("Digite o id do cliente desejado: ");
                     idCliente = read.nextInt();
-                    int[] idsProdutos = indice_Cliente_Produto.lista(idCliente);
-                    for(int i = 0; i < idsProdutos.length; i++){
-                        p = arqProdutos.pesquisar(idsProdutos[i] - 1);
-                        System.out.println(
-                                "\n\tProduto " + i + " -> " + 
-                                " ID: " + p.getID() + 
-                                " Nome: " + p.nomeProduto + 
-                                " Marca: " + p.marca
-                                );
+                    c = arqClientes.pesquisar(idCliente - 1);
+                    if (c != null){
+                        int[] idsProdutos = indice_Cliente_Produto.lista(idCliente);
+                        System.out.println("\nO cliente " + c.nomeCliente + " de ID " + c.getID() + " comprou: ");
+                        for(int i = 0; i < idsProdutos.length; i++){
+                            p = arqProdutos.pesquisar(idsProdutos[i] - 1);
+                            System.out.println(
+                                    "\n\tProduto " + i + " -> " + 
+                                    " ID: " + p.getID() + 
+                                    " Nome: " + p.nomeProduto + 
+                                    " Marca: " + p.marca
+                                    );
+                        }
+                    }
+                    else {
+                        System.out.println("Não há um cliente com esse ID!");
+                        Thread.sleep(1000);
                     }
                     break;
                 case 5:
                     System.out.print("Digite o id do Produto a consultar: ");
                     idProduto = read.nextInt();
-                    int[] idsClientes = indice_Produto_Cliente.lista(idProduto);
-                    for(int i = 0; i < idsClientes.length; i++){
-                        c = arqClientes.pesquisar(idsClientes[i] - 1);
-                        System.out.println();
-                        System.out.println(c);
+                    p = arqProdutos.pesquisar(idProduto - 1);
+                    if(p != null){
+                        int[] idsClientes = indice_Produto_Cliente.lista(idProduto);
+                        System.out.println("\nO produto " + p.nomeProduto + " de ID " + p.getID() + " foi comprado por: ");
+                        for(int i = 0; i < idsClientes.length; i++){
+                            c = arqClientes.pesquisar(idsClientes[i] - 1);
+                            System.out.println();
+                            System.out.println(c);
+                        }
+                    }
+                    else{
+                        System.out.println("\nEsse produto não existe!");
+                        Thread.sleep(1000);
                     }
                     break;
                 case 6:
