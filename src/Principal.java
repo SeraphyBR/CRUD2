@@ -184,6 +184,15 @@ public class Principal{
                         menuRelatorio();
                         break;
                     case 3:
+                        System.out.println();
+                        ArrayList<Cliente> list = arqClientes.toList();
+                        if(list.isEmpty()) System.out.println("Nao ha usuarios cadastrados!");
+                        else{
+                            for(Cliente c: list){
+                                System.out.println(c);
+                                Thread.sleep(500);
+                            }
+                        }
                         break;
                     case 4:
                         fecharMenu = true;
@@ -335,7 +344,7 @@ public class Principal{
                     case 2:
                         break;
                     case 3:
-                        if(arqClientes.remover(idCliente-1)) System.out.println("Cliente removido com sucesso");
+                        if(arqClientes.remover(idCliente-1)) System.out.println("Seu cadastro foi removido com sucesso!");
                         fecharMenu = true;
                         break;
                     case 4:
