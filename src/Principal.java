@@ -3,10 +3,10 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
+import java.util.InputMismatchException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.io.Console;
-import java.util.InputMismatchException;
 
 /**
  * @author Luiz Junio
@@ -52,7 +52,6 @@ public class Principal{
             arqItemComprado.close();
             read.close();
         }//end try
-
         catch(Exception e){
             e.printStackTrace();
         }//end catch
@@ -225,7 +224,6 @@ public class Principal{
             opcao = read.nextByte();
             switch(opcao){
                 case 0:
-
                     break;
                 case 1:
                     break;
@@ -688,7 +686,6 @@ public class Principal{
                 }
             } while (erro); 
         }
-
     }//Fim removerP
 
     /**
