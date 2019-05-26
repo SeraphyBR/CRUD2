@@ -215,7 +215,7 @@ public class Principal{
     {//Inicio menuRelatorio
         byte opcao;
         boolean fecharMenu = false;
-        int idCliente, idProduto;
+        int idCliente, idProduto, quant;
         Produto p = null;
         Cliente c = null;
         do{
@@ -233,13 +233,34 @@ public class Principal{
             opcao = read.nextByte();
             switch(opcao){
                 case 0:
+                    ArrayList<Produto> listP = arqProdutos.toList();
+                    if(listP.isEmpty()) System.out.println("\nNão ha produtos vendidos para mostrar!");
+                    else{
+                        System.out.print("Digite a quantidade de produtos que deseja saber: ");
+                        quant = read.nextInt();
+                        System.out.println();
+                        //Ordena a lista de forma decrescente:
+                        listP.sort((p1,p2) -> - Integer.compare(p1.getQuantVendidos(), p2.getQuantVendidos()));
+                        for(Produto n: listP){
+                            System.out.println("Produto de ID: " + n.getID() + " Nome: " + n.nomeProduto + "\tQuantidade vendida: " + n.getQuantVendidos());
+                            quant--;
+                            if(quant == 0) break;
+                        }
+                    }
                     break;
                 case 1:
-                    ArrayList<Cliente> list = arqClientes.toList();
-                    //Ordena a lista de forma decrescente:
-                    list.sort((c1,c2) -> - Float.compare(c1.getGastoTotal(), c2.getGastoTotal()));
-                    for(Cliente n: list){
-                        System.out.println("Cliente de ID: " + n.getID() + " Nome:" + n.nomeCliente + "\tGasto total: " + n.getGastoTotal());
+                    ArrayList<Cliente> listC = arqClientes.toList();
+                    if(listC.isEmpty()) System.out.println("Não ha clientes para mostrar!");
+                    else{
+                        System.out.print("Digite a quantidade de Clientes que deseja saber: ");
+                        quant = read.nextInt();
+                        //Ordena a lista de forma decrescente:
+                        listC.sort((c1,c2) -> - Float.compare(c1.getGastoTotal(), c2.getGastoTotal()));
+                        for(Cliente n: listC){
+                            System.out.println("Cliente de ID: " + n.getID() + " Nome:" + n.nomeCliente + "\tGasto total: " + n.getGastoTotal());
+                            quant--;
+                            if(quant == 0) break; 
+                        }
                     }
                     break;
                 case 2:
@@ -432,7 +453,7 @@ public class Principal{
     {//Inicio menuCompra
         byte opcao;
         float gasto = 0;
-        boolean fecharMenu = false, erro = false;
+        boolean fecharMenu = false;
         int[] lista;
         int idItemComprado = 0;
         do{ 
@@ -470,6 +491,8 @@ public class Principal{
                                     indice_ItemComprado_Compra.excluir(idItemComprado, idCompra);
                                     Produto p = arqProdutos.pesquisar(ic.idProduto - 1);
                                     gasto -= ic.precoUnitario * ic.qtdProduto;
+                                    p.addQuantVendidos(-ic.qtdProduto);
+                                    arqProdutos.alterar(p.getID(), p);
                                     System.out.println("Removido " + ic.qtdProduto + "x '" + p.nomeProduto + "' com sucesso!");
                                 }
                                 else System.out.println("\nAlgo de errado aconteceu!");
@@ -540,6 +563,8 @@ public class Principal{
                         indice_Cliente_Produto.inserir(idCliente, p.getID());
                         System.out.println("Adicionado "+ qtdProduto + "x '" + p.nomeProduto + "'");
                         gasto = qtdProduto * p.preco;
+                        p.addQuantVendidos(qtdProduto);
+                        arqProdutos.alterar(p.getID(), p);
                     }else {
                         System.out.println("Valor invalido!");
                         qtdInvalida = true;
@@ -880,8 +905,8 @@ public class Principal{
                                                 } 
                                             } while(!valido);
                                             p.idCategoria = idCategoriaNew;
-                                            result = arqProdutos.alterar(p.getID(), p);
-                                            System.out.println("Movido com sucesso!");
+                                            if(arqProdutos.alterar(p.getID(), p)) System.out.println("Movido com sucesso!");
+                                            else System.out.println("Algo de errado aconteceu!\nNão foi possivel mover!");
                                         }
                                         result = arqCategorias.remover(idCategoria - 1);
                                     }//Fim else

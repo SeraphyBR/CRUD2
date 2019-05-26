@@ -18,6 +18,7 @@ class Produto implements Entidade{
     protected String marca;
     protected String origem; 
     protected int    idCategoria;
+    private   int    quantVendidos;
 
     //Construtor vazio
     public Produto(){
@@ -28,6 +29,7 @@ class Produto implements Entidade{
         this.marca        = "";
         this.origem       = "";
         this.idCategoria  = -1;
+        this.quantVendidos = 0;
     }//end Produto 
 
     //construtor com parametros
@@ -38,6 +40,7 @@ class Produto implements Entidade{
         this.marca        = marca;
         this.origem       = origem;
         this.idCategoria = idCategoria;
+        this.quantVendidos = 0;
     }//end Produto
 
     public void setID(int id){
@@ -47,6 +50,18 @@ class Produto implements Entidade{
     public int getID(){
         return this.idProduto;
     }//end getId
+
+    public void addQuantVendidos(int quantVendidos){
+        this.quantVendidos += quantVendidos;
+    }
+
+    public void zeraQuantVendidos(){
+        this.quantVendidos = 0;
+    }
+
+    public int getQuantVendidos(){
+        return this.quantVendidos;
+    }
 
     //Retorna um array de bytes com os bytes para escrever no arquivo
     public byte[] toByteArray() throws Exception{
@@ -60,6 +75,7 @@ class Produto implements Entidade{
         saida.writeUTF(this.marca);
         saida.writeUTF(this.origem);
         saida.writeInt(this.idCategoria);
+        saida.writeInt(this.quantVendidos);
 
         return dados.toByteArray();
     }//end toByteArray
@@ -76,6 +92,7 @@ class Produto implements Entidade{
         this.marca        = entrada.readUTF();
         this.origem       = entrada.readUTF();
         this.idCategoria  = entrada.readInt();
+        this.quantVendidos = entrada.readInt();
 
         entrada.close();
     }//end fromByteArray
