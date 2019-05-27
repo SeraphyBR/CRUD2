@@ -147,7 +147,7 @@ public class IndiceChaveComposta {
         if(arquivo.length()<8) 
             arquivo.writeLong(-1);  // raiz vazia
     }
-    
+
     public IndiceChaveComposta(int o, File na) throws IOException {
 
         // Inicializa os atributos da árvore

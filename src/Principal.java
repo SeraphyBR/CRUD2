@@ -361,7 +361,7 @@ public class Principal{
                                                 "\n\tProduto: " + p.nomeProduto + 
                                                 "\n\tMarca: " + p.marca + 
                                                 "\n\tPreço: " + nf.format(ic.precoUnitario) + 
-                                                "\n\tQuant: "+ ic.qtdProduto
+                                                "\n\tQuant: " + ic.qtdProduto
                                                 );
                                     }
                                 }

@@ -5,7 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.File;
- 
+
 // Arvore B+ para ser usada como índice direto de algum arquivo de entidades
 // CHAVE: Int   (usado para id de alguma entidade)
 // VALOR: Long  (usado para endereço do registro dessa entidade no arquivo)
@@ -145,7 +145,7 @@ public class Indice{
         if(arquivo.length()<8) 
             arquivo.writeLong(-1);  // raiz vazia
     }
-     
+
     public Indice(int o, File na) throws IOException {
 
         // Inicializa os atributos da árvore

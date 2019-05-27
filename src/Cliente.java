@@ -2,7 +2,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
- 
+
 /**
  * @author Luiz Junio
  * @author Allan Vivekanda
@@ -17,7 +17,7 @@ class Cliente implements Entidade
     protected String cpf;
     private String senha;
     private float gastoTotal;
-    
+
 
     //Contrutor vazio
     public Cliente(){
