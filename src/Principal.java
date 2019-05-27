@@ -895,6 +895,7 @@ public class Principal{
                                 "2 - Cancelar remoção\n"
                                 );
                         do{
+                            erro = false;
                             System.out.print("Opção: ");
                             switch(read.nextByte())
                             {//Inicio switch
