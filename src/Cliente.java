@@ -2,6 +2,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
+import java.util.Date;
 
 /**
  * @author Luiz Junio
@@ -17,7 +18,7 @@ class Cliente implements Entidade
     protected String cpf;
     private String senha;
     private float gastoTotal;
-
+    protected Date ultimoLogin;
 
     //Contrutor vazio
     public Cliente(){
@@ -27,6 +28,7 @@ class Cliente implements Entidade
         this.cpf = "";
         this.senha = "";
         this.gastoTotal = 0;
+        this.ultimoLogin = null;
     }
 
     //Construtor com parametros
@@ -36,6 +38,7 @@ class Cliente implements Entidade
         this.cpf = cpf;
         this.senha = senha;
         this.gastoTotal = 0;
+        this.ultimoLogin = new Date();
     }
 
     public void addGasto(float gasto){
@@ -77,6 +80,7 @@ class Cliente implements Entidade
         saida.writeUTF(this.cpf);
         saida.writeUTF(this.senha);
         saida.writeFloat(this.gastoTotal);
+        saida.writeLong(this.ultimoLogin.getTime());
         return dados.toByteArray();
     }
 
@@ -91,6 +95,7 @@ class Cliente implements Entidade
         this.cpf = entrada.readUTF();
         this.senha = entrada.readUTF();
         this.gastoTotal = entrada.readFloat();
+        this.ultimoLogin = new Date(entrada.readLong());
         entrada.close();
     }
 

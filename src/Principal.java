@@ -116,7 +116,13 @@ public class Principal{
         if(email.equals("admin") && senha.equals("coffe")) menuAdministrador();
         else{
             Cliente c = getCliente(email);
-            if(c != null && c.validaSenha(senha)) menuCliente(c.getID());
+            if(c != null && c.validaSenha(senha)){
+                System.out.println("\nUltimo Login realizado em " + df.format(c.ultimoLogin));
+                c.ultimoLogin = new Date();
+                arqClientes.alterar(c.getID(), c);
+                Thread.sleep(1000);
+                menuCliente(c.getID());
+            }
             else System.out.println("Usuario não encontrado!\nVerifique se o email e senha estão corretos!");
         }
     }//Fim menuLogin
@@ -713,7 +719,7 @@ public class Principal{
      * @throws Exception
      * */
     private static void adicionarP() throws Exception
-    {//Inicio adicionar
+    {//Inicio adicionarP
         //inserir produto  
         String nomeProduto, descricao, marca, origem;
         int idCategoria = 0;
@@ -767,8 +773,7 @@ public class Principal{
             System.out.println("Por favor, crie ao menos uma categoria antes de adicionar um produto!");
             Thread.sleep(1000);
         }
-
-    }//Fim adicionar
+    }//Fim adicionarP
 
     /**
      * Metodo para adicionar uma categoria.
