@@ -2,12 +2,12 @@ import java.util.Scanner;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Random;
 import java.util.InputMismatchException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.text.NumberFormat;
 import java.io.Console;
+import java.security.SecureRandom;
 
 /**
  * @author Luiz Junio
@@ -19,9 +19,10 @@ public class Principal{
 
     private static final Scanner read = new Scanner(System.in);
     private static final Console term = System.console();
-    private static final DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+    private static final DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
     private static final NumberFormat nf = NumberFormat.getCurrencyInstance();
     private static final String programName = "crud";
+    private static final SecureRandom rd = new SecureRandom();
     private static Arquivo<Produto> arqProdutos;
     private static Arquivo<Categoria> arqCategorias;
     private static Arquivo<Cliente> arqClientes;
@@ -144,10 +145,9 @@ public class Principal{
                 erro = true;
             }
         }while(erro);
-        Random rd = new Random();
-        senha = new String("" + rd.nextInt(100000));
-        Cliente c = getCliente(email);
-        if(c == null){
+        if(getCliente(email) == null){
+            // Gera uma nova senha aleatoria de 6 digitos entre 999999 e 100000
+            senha = new String("" + (100000 + rd.nextInt(900000)));
             id = arqClientes.inserir(new Cliente(nome,email,cpf,senha));
             System.out.println("Cadastro efetuado!");
             System.out.println("Sua senha eh: " + senha);
@@ -229,10 +229,9 @@ public class Principal{
                     "\n\t*** MENU RELATORIO ***\n"                       +
                     "0 - Mostrar os N produtos mais Vendidos\n"          +
                     "1 - Mostrar os N melhores clientes\n"               +
-                    "2 - Mostrar os ganhos por Categoria\n"              +
-                    "3 - Mostrar os produtos comprados por um cliente\n" +
-                    "4 - Mostrar Clientes que compraram um produto\n"    +
-                    "5 - Sair"
+                    "2 - Mostrar os produtos comprados por um cliente\n" +
+                    "3 - Mostrar Clientes que compraram um produto\n"    +
+                    "4 - Sair"
                     );
             System.out.print("Digite sua opcao: ");
             opcao = read.nextByte();
@@ -270,8 +269,6 @@ public class Principal{
                     }
                     break;
                 case 2:
-                    break;
-                case 3:
                     System.out.print("Digite o id do cliente desejado: ");
                     idCliente = read.nextInt();
                     c = arqClientes.pesquisar(idCliente - 1);
@@ -293,7 +290,7 @@ public class Principal{
                         Thread.sleep(1000);
                     }
                     break;
-                case 4:
+                case 3:
                     System.out.print("Digite o id do Produto a consultar: ");
                     idProduto = read.nextInt();
                     p = arqProdutos.pesquisar(idProduto - 1);
@@ -311,7 +308,7 @@ public class Principal{
                         Thread.sleep(1000);
                     }
                     break;
-                case 5:
+                case 4:
                     fecharMenu = true;
                     break;    
                 default:
@@ -407,7 +404,7 @@ public class Principal{
             } 
         }while(!fecharMenu);
     }//Fim menuCliente
-    
+
     /**
      * Menu para alterar alguns dados de cadastro do cliente
      * @param idCliente ID do cliente
@@ -1217,7 +1214,7 @@ public class Principal{
         }
         return cliente;
     }//Fim getCliente
-    
+
     /**
      * Metodo para obter uma lista de compras de um cliente
      * @param idCliente
@@ -1230,7 +1227,7 @@ public class Principal{
         list.removeIf(c -> c.idCliente != idCliente);
         return list;
     }//Fim mostraCompras  
-    
+
     /**
      * Metodo para obter a lista de items comprados pertencentes a uma compra
      * @param idCompra O ID da compra da qual obter a lista
