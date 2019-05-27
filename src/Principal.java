@@ -504,11 +504,13 @@ public class Principal{
                         String nomeProduto;
                         ItemComprado ic = null;
                         if(lista.length == 0) System.out.println("\nVoce ainda não adicionou um produto!");
-                        for(int i = 0; i < lista.length; i++){
-                            ic = arqItemComprado.pesquisar(lista[i] - 1);
-                            nomeProduto = arqProdutos.pesquisar(ic.idProduto - 1).nomeProduto;
-                            System.out.println("\tID: " + ic.getID() + " " +
-                                    ic.qtdProduto + "x'" + nomeProduto + "'\tPreço Uni.: R$" + ic.precoUnitario);
+                        else {
+                            for(int i = 0; i < lista.length; i++){
+                                ic = arqItemComprado.pesquisar(lista[i] - 1);
+                                nomeProduto = arqProdutos.pesquisar(ic.idProduto - 1).nomeProduto;
+                                System.out.println("\tID: " + ic.getID() + " " +
+                                        ic.qtdProduto + "x'" + nomeProduto + "'\tPreço Uni.: R$" + ic.precoUnitario);
+                            }
                         }
                         break;
                     case 4:
