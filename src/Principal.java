@@ -258,7 +258,7 @@ public class Principal{
                         //Ordena a lista de forma decrescente:
                         listC.sort((c1,c2) -> - Float.compare(c1.getGastoTotal(), c2.getGastoTotal()));
                         for(Cliente n: listC){
-                            System.out.println("Cliente de ID: " + n.getID() + " Nome:" + n.nomeCliente + "\tGasto total: " + n.getGastoTotal());
+                            System.out.println("Cliente de ID: " + n.getID() + " Nome: " + n.nomeCliente + "\tGasto total: " + nf.format(n.getGastoTotal()));
                             quant--;
                             if(quant == 0) break; 
                         }
@@ -351,7 +351,7 @@ public class Principal{
                         listProdutos = arqProdutos.toList();
                         minhasCompras = listComprasC(idCliente);
                         for(Compra c: minhasCompras){
-                            System.out.println("\n*** ID: " + c.getID() + " Data: " + df.format(c.dataCompra));
+                            System.out.println("\n*** Compra de ID: " + c.getID() + " Data: " + df.format(c.dataCompra));
                             meusItensComprados = listItensComprados(c.getID());
                             for(ItemComprado ic: meusItensComprados){
                                 for(Produto p: listProdutos){
@@ -511,7 +511,7 @@ public class Principal{
                                 ic = arqItemComprado.pesquisar(lista[i] - 1);
                                 nomeProduto = arqProdutos.pesquisar(ic.idProduto - 1).nomeProduto;
                                 System.out.println("\tID: " + ic.getID() + " " +
-                                        ic.qtdProduto + "x'" + nomeProduto + "'\tPreço Uni.: R$" + nf.format(ic.precoUnitario));
+                                        ic.qtdProduto + "x'" + nomeProduto + "'\tPreço Uni.: " + nf.format(ic.precoUnitario));
                             }
                         }
                         break;
@@ -519,7 +519,7 @@ public class Principal{
                         Cliente c = arqClientes.pesquisar(idCliente - 1);
                         c.addGasto(gasto);
                         arqClientes.alterar(c.getID(), c);
-                        System.out.println("Compra efetuada com sucesso!\nGasto total nessa compra: R$" + gasto);
+                        System.out.println("Compra efetuada com sucesso!\nGasto total nessa compra: " + nf.format(gasto));
                         fecharMenu = true;
                         break;
                     case 5:
@@ -707,7 +707,7 @@ public class Principal{
         nomeProduto = read.nextLine();
         System.out.print("Descricao do produto: ");
         descricao = read.nextLine();
-        System.out.print("Preco do produto: R$");
+        System.out.print("Preco do produto: ");
         preco = read.nextFloat();
         System.out.print("Marca do produto: ");
         marca = read.nextLine();
