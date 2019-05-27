@@ -223,11 +223,10 @@ public class Principal{
                     "\n\t*** MENU RELATORIO ***\n"                       +
                     "0 - Mostrar os N produtos mais Vendidos\n"          +
                     "1 - Mostrar os N melhores clientes\n"               +
-                    "2 - Mostrar quantidade de vendas por mês\n"         +
-                    "3 - Mostrar os ganhos por Categoria\n"              +
-                    "4 - Mostrar os produtos comprados por um cliente\n" +
-                    "5 - Mostrar Clientes que compraram um produto\n"    +
-                    "6 - Sair"
+                    "2 - Mostrar os ganhos por Categoria\n"              +
+                    "3 - Mostrar os produtos comprados por um cliente\n" +
+                    "4 - Mostrar Clientes que compraram um produto\n"    +
+                    "5 - Sair"
                     );
             System.out.print("Digite sua opcao: ");
             opcao = read.nextByte();
@@ -266,8 +265,6 @@ public class Principal{
                 case 2:
                     break;
                 case 3:
-                    break;
-                case 4:
                     System.out.print("Digite o id do cliente desejado: ");
                     idCliente = read.nextInt();
                     c = arqClientes.pesquisar(idCliente - 1);
@@ -289,7 +286,7 @@ public class Principal{
                         Thread.sleep(1000);
                     }
                     break;
-                case 5:
+                case 4:
                     System.out.print("Digite o id do Produto a consultar: ");
                     idProduto = read.nextInt();
                     p = arqProdutos.pesquisar(idProduto - 1);
@@ -307,7 +304,7 @@ public class Principal{
                         Thread.sleep(1000);
                     }
                     break;
-                case 6:
+                case 5:
                     fecharMenu = true;
                     break;    
                 default:
@@ -482,13 +479,15 @@ public class Principal{
                             System.out.println("\nNão ha itens a serem removidos");
                         }
                         else{
-                            System.out.println("Qual o id do item a ser removido? ");
+                            System.out.print("Qual o id do item a ser removido: ");
                             idItemComprado = read.nextInt();
                             ItemComprado ic = arqItemComprado.pesquisar(idItemComprado - 1);
                             if(ic != null){
-                                if(arqItemComprado.remover(idItemComprado)){
-                                    indice_Compra_ItemComprado.excluir(idCompra, idItemComprado);
-                                    indice_ItemComprado_Compra.excluir(idItemComprado, idCompra);
+                                if(arqItemComprado.remover(ic.getID() - 1)){
+                                    indice_Compra_ItemComprado.excluir(idCompra, ic.getID());
+                                    indice_ItemComprado_Compra.excluir(ic.getID(), idCompra);
+                                    indice_Produto_Cliente.excluir(ic.idProduto, idCliente);
+                                    indice_Cliente_Produto.excluir(idCliente, ic.idProduto);
                                     Produto p = arqProdutos.pesquisar(ic.idProduto - 1);
                                     gasto -= ic.precoUnitario * ic.qtdProduto;
                                     p.addQuantVendidos(-ic.qtdProduto);
@@ -502,6 +501,15 @@ public class Principal{
                         break;
                     case 3:
                         lista = indice_Compra_ItemComprado.lista(idCompra);
+                        String nomeProduto;
+                        ItemComprado ic = null;
+                        if(lista.length == 0) System.out.println("\nVoce ainda não adicionou um produto!");
+                        for(int i = 0; i < lista.length; i++){
+                            ic = arqItemComprado.pesquisar(lista[i] - 1);
+                            nomeProduto = arqProdutos.pesquisar(ic.idProduto - 1).nomeProduto;
+                            System.out.println("\tID: " + ic.getID() + " " +
+                                    ic.qtdProduto + "x'" + nomeProduto + "'\tPreço Uni.: R$" + ic.precoUnitario);
+                        }
                         break;
                     case 4:
                         Cliente c = arqClientes.pesquisar(idCliente - 1);
@@ -516,9 +524,11 @@ public class Principal{
                         for(int i = 0; i < lista.length; i++){
                             indice_Compra_ItemComprado.excluir(idCompra, lista[i]);
                             indice_ItemComprado_Compra.excluir(lista[i], idCompra);
-                            arqItemComprado.remover(idItemComprado);
+                            indice_Produto_Cliente.excluir(arqItemComprado.pesquisar(lista[i]).idProduto, idCliente);
+                            indice_Cliente_Produto.excluir(idCliente, arqItemComprado.pesquisar(lista[i]).idProduto);
+                            arqItemComprado.remover(lista[i] - 1);
                         }
-                        arqCompra.remover(idCompra);
+                        arqCompra.remover(idCompra - 1);
                         System.out.println("Sua compra foi cancelada!");
                         break;
                     default: 
@@ -544,14 +554,16 @@ public class Principal{
     private static float adicionarItem(int idCliente, int idCompra) throws Exception{
         int idItemComprado;
         float gasto = 0;
-        boolean qtdInvalida = false;
+        boolean qtdInvalida;
         boolean idInvalido = false;
         do{
+            qtdInvalida = false;
             System.out.print("Digite o id do produto desejado: ");
             int id = read.nextInt();
             Produto p = arqProdutos.pesquisar(id - 1);
             if (p != null && p.getID() != -1 ){
-                do{
+                do{ 
+                    qtdInvalida = false;
                     System.out.print("Qual a quantidade desejada? ");
                     byte qtdProduto = read.nextByte();
                     if(qtdProduto > 0 && qtdProduto <= 255){
@@ -571,7 +583,7 @@ public class Principal{
                     }
                 }while(qtdInvalida);   
             }else{
-                System.out.print("Id invalido!");
+                System.out.println("\nId invalido!");
                 idInvalido = true;
             }
         }while(idInvalido);
