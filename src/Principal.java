@@ -255,6 +255,7 @@ public class Principal{
                     else{
                         System.out.print("Digite a quantidade de Clientes que deseja saber: ");
                         quant = read.nextInt();
+                        System.out.println();
                         //Ordena a lista de forma decrescente:
                         listC.sort((c1,c2) -> - Float.compare(c1.getGastoTotal(), c2.getGastoTotal()));
                         for(Cliente n: listC){
@@ -284,7 +285,7 @@ public class Principal{
                         }
                     }
                     else {
-                        System.out.println("Não há um cliente com esse ID!");
+                        System.out.println("\nNão há um cliente com esse ID!");
                         Thread.sleep(1000);
                     }
                     break;
@@ -294,7 +295,7 @@ public class Principal{
                     p = arqProdutos.pesquisar(idProduto - 1);
                     if(p != null){
                         int[] idsClientes = indice_Produto_Cliente.lista(idProduto);
-                        System.out.println("\nO produto " + p.nomeProduto + " de ID " + p.getID() + " foi comprado por: ");
+                        System.out.println("\nO produto '" + p.nomeProduto + "' de ID " + p.getID() + " foi comprado por: ");
                         for(int i = 0; i < idsClientes.length; i++){
                             c = arqClientes.pesquisar(idsClientes[i] - 1);
                             System.out.println();
@@ -371,7 +372,20 @@ public class Principal{
                         menuAlterarDados(idCliente);
                         break;
                     case 3:
-                        if(arqClientes.remover(idCliente-1)) System.out.println("Seu cadastro foi removido com sucesso!");
+                        System.out.println("\nVoce tem absoluta certeza disso!?\n0 - Sim\n1 - Nao");
+                        System.out.println("Digite sua opcao: ");
+                        switch(read.nextInt()){
+                            case 0:
+                                if(arqClientes.remover(idCliente-1)) System.out.println("Seu cadastro foi removido com sucesso!");
+                                break;
+                            case 1:
+                                System.out.println("\nAinda bem, pois estamos felizes por ter voce!");
+                                break;
+                            default:
+                                System.out.println("\nOpcao invalida!");
+                                Thread.sleep(1000);
+                                break;
+                        }
                         fecharMenu = true;
                         break;
                     case 4:
