@@ -213,6 +213,10 @@ public class Principal{
         } while(!fecharMenu);
     }//Fim menuAdministrador 
 
+    /**
+     * Menu administrativo de acesso a relatorios de compra do sistema
+     * @throws Exception
+     * */
     private static void menuRelatorio() throws Exception 
     {//Inicio menuRelatorio
         byte opcao;
@@ -403,7 +407,12 @@ public class Principal{
             } 
         }while(!fecharMenu);
     }//Fim menuCliente
-
+    
+    /**
+     * Menu para alterar alguns dados de cadastro do cliente
+     * @param idCliente ID do cliente
+     * @throws Exception
+     * */
     private static void menuAlterarDados(int idCliente) throws Exception
     {//Inicio menuAlterarDados
         byte opcao;
@@ -1190,6 +1199,12 @@ public class Principal{
         return nome;
     }//Fim getNomeCategoria
 
+    /**
+     * Metodo para obter um cliente por meio do email
+     * @param email
+     * @return O cliente com o email correspondente
+     * @throws Exception 
+     * */
     private static Cliente getCliente(String email) throws Exception
     {//Inicio getCliente
         Cliente cliente = null;
@@ -1202,14 +1217,26 @@ public class Principal{
         }
         return cliente;
     }//Fim getCliente
-
+    
+    /**
+     * Metodo para obter uma lista de compras de um cliente
+     * @param idCliente
+     * @return Um ArrayList apenas com compras do Cliente
+     * @throws Exception
+     * */
     private static ArrayList<Compra> listComprasC(int idCliente) throws Exception
     {//Inicio mostraCompras
         ArrayList<Compra> list =  arqCompra.toList();
         list.removeIf(c -> c.idCliente != idCliente);
         return list;
     }//Fim mostraCompras  
-
+    
+    /**
+     * Metodo para obter a lista de items comprados pertencentes a uma compra
+     * @param idCompra O ID da compra da qual obter a lista
+     * @return Um ArrayList apenas com os itens comprados da compra especificada
+     * @throws Exception
+     * */
     private static ArrayList<ItemComprado> listItensComprados(int idCompra) throws Exception 
     {//Inicio listItensComprados
         ArrayList<ItemComprado> list = arqItemComprado.toList();
