@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.InputMismatchException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.text.NumberFormat;
 import java.io.Console;
 
 /**
@@ -19,6 +20,7 @@ public class Principal{
     private static final Scanner read = new Scanner(System.in);
     private static final Console term = System.console();
     private static final DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+    private static final NumberFormat nf = NumberFormat.getCurrencyInstance();
     private static final String programName = "crud";
     private static Arquivo<Produto> arqProdutos;
     private static Arquivo<Categoria> arqCategorias;
@@ -357,7 +359,7 @@ public class Principal{
                                         System.out.println(
                                                 "\n\tProduto: " + p.nomeProduto + 
                                                 "\n\tMarca: " + p.marca + 
-                                                "\n\tPreço: " + ic.precoUnitario + 
+                                                "\n\tPreço: " + nf.format(ic.precoUnitario) + 
                                                 "\n\tQuant: "+ ic.qtdProduto
                                                 );
                                     }
@@ -509,7 +511,7 @@ public class Principal{
                                 ic = arqItemComprado.pesquisar(lista[i] - 1);
                                 nomeProduto = arqProdutos.pesquisar(ic.idProduto - 1).nomeProduto;
                                 System.out.println("\tID: " + ic.getID() + " " +
-                                        ic.qtdProduto + "x'" + nomeProduto + "'\tPreço Uni.: R$" + ic.precoUnitario);
+                                        ic.qtdProduto + "x'" + nomeProduto + "'\tPreço Uni.: R$" + nf.format(ic.precoUnitario));
                             }
                         }
                         break;
@@ -1046,7 +1048,7 @@ public class Principal{
                     "Id: "            + p.getID()    + 
                     "\nNome: "        + p.nomeProduto + 
                     "\nDescricao: "   + p.descricao    + 
-                    "\nPreco: "       + p.preco        + 
+                    "\nPreco: "       + nf.format(p.preco) + 
                     "\nMarca: "       + p.marca        + 
                     "\nOrigem: "      + p.origem
                     );
@@ -1086,7 +1088,7 @@ public class Principal{
                         "Id: "            + p.getID()    + 
                         "\nNome: "        + p.nomeProduto + 
                         "\nDescricao: "   + p.descricao    + 
-                        "\nPreco: "       + p.preco        + 
+                        "\nPreco: "       + nf.format(p.preco) + 
                         "\nMarca: "       + p.marca        + 
                         "\nOrigem: "      + p.origem       +
                         "\nCategoria: "   + nomeCategoria  
@@ -1112,7 +1114,7 @@ public class Principal{
                         "Id: "            + p.getID()    + 
                         "\nNome: "        + p.nomeProduto + 
                         "\nDescricao: "   + p.descricao    + 
-                        "\nPreco: "       + p.preco        + 
+                        "\nPreco: "       + nf.format(p.preco) + 
                         "\nMarca: "       + p.marca        + 
                         "\nOrigem: "      + p.origem
                         );
