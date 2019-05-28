@@ -4,6 +4,12 @@ import java.io.DataOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 
+/**
+ * @author Luiz Junio
+ * @author Allan Vivekanda
+ * @author Breno Soares
+ * @author Henrique Fernandes
+ * */ 
 class Compra implements Entidade{
     private int idCompra;
     protected int idCliente;

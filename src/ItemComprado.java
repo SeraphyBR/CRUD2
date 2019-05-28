@@ -3,6 +3,12 @@ import java.io.DataOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 
+/**
+ * @author Luiz Junio
+ * @author Allan Vivekanda
+ * @author Breno Soares
+ * @author Henrique Fernandes
+ * */ 
 class ItemComprado implements Entidade
 {//Inicio classe ItemComprado
 

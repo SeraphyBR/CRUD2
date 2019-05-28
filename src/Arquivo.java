@@ -5,7 +5,7 @@ import java.io.RandomAccessFile;
 /**
  * @author Luiz Junio
  * @author Allan Vivekanda
- * @author Breno
+ * @author Breno Soares
  * @author Henrique Fernandes
  * */  
 public class Arquivo<G extends Entidade>{

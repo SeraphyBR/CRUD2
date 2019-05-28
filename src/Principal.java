@@ -40,6 +40,7 @@ public class Principal{
             arqClientes = new Arquivo<>(Cliente.class.getConstructor(), "Clientes", programName);
             arqCompra = new Arquivo<>(Compra.class.getConstructor(), "Compras", programName);
             arqItemComprado = new Arquivo<>(ItemComprado.class.getConstructor(), "ItensComprados", programName);
+
             ProgramFile pf = new ProgramFile(programName);
             indice_Compra_ItemComprado = new IndiceChaveComposta(20, pf.addFile("indice_Compra_ItemComprado.idxc"));
             indice_ItemComprado_Compra = new IndiceChaveComposta(20, pf.addFile("indice_ItemComprado_Compra.idxc"));
