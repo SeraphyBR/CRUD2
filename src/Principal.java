@@ -113,7 +113,11 @@ public class Principal{
         System.out.println("\n\t*** LOGIN ***\n");
         System.out.print("Email: ");
         email = read.next();
-        senha = new String(term.readPassword("Senha: "));
+        if(term != null) senha = new String(term.readPassword("Senha: "));
+        else {
+            System.out.print("Senha: ");
+            senha = read.next();
+        }         
         if(email.equals("admin") && senha.equals("coffe")) menuAdministrador();
         else{
             Cliente c = getCliente(email);
