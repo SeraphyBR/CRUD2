@@ -1,13 +1,13 @@
-import java.util.Scanner;
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.InputMismatchException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.text.NumberFormat;
 import java.io.Console;
 import java.security.SecureRandom;
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 /**
  * @author Luiz Junio
@@ -15,7 +15,7 @@ import java.security.SecureRandom;
  * @author Breno Soares
  * @author Henrique Fernandes
  * */
-public class Principal{
+public class Principal {
 
     private static final Scanner read = new Scanner(System.in);
     private static final Console term = System.console();
@@ -63,9 +63,9 @@ public class Principal{
 
     /**
      * Menu Principal
-     * @throws Exception 
+     * @throws Exception
      * */
-    private static void menuPrincipal() throws Exception 
+    private static void menuPrincipal() throws Exception
     {//Inicio menuPrincipal
         byte opcao;
         boolean fecharMenu = false;
@@ -76,7 +76,7 @@ public class Principal{
                         "0 - Efetuar login\n" +
                         "1 - Novo cadastro\n" +
                         "2 - Sair "
-                        ); 
+                        );
                 System.out.print("Digite a opção: ");
                 opcao = read.nextByte();
                 switch(opcao){
@@ -89,9 +89,9 @@ public class Principal{
                     case 2:
                         fecharMenu = true;
                         break;
-                    default: 
+                    default:
                         System.out.println("Opcao invalida!\n");
-                        Thread.sleep(1000);  
+                        Thread.sleep(1000);
                         break;
                 }
             }catch(InputMismatchException inputMismatchException){
@@ -101,13 +101,13 @@ public class Principal{
             }
         }while(!fecharMenu);
 
-    }//Fim menuPrincipal 
+    }//Fim menuPrincipal
 
     /**
      * Menu de Login
-     * @throws Exception 
+     * @throws Exception
      * */
-    private static void menuLogin() throws Exception 
+    private static void menuLogin() throws Exception
     {//Inicio menuLogin
         String email, senha;
         System.out.println("\n\t*** LOGIN ***\n");
@@ -117,7 +117,7 @@ public class Principal{
         else {
             System.out.print("Senha: ");
             senha = read.next();
-        }         
+        }
         if(email.equals("admin") && senha.equals("coffe")) menuAdministrador();
         else{
             Cliente c = getCliente(email);
@@ -134,10 +134,10 @@ public class Principal{
 
     /**
      * Menu de cadastro de cliente
-     * @throws Exception 
+     * @throws Exception
      * */
-    private static void menuCadastro() throws Exception 
-    {//Inicio menuCadastro 
+    private static void menuCadastro() throws Exception
+    {//Inicio menuCadastro
         String nome, email, cpf, senha;
         int id;
         boolean erro = false;
@@ -163,15 +163,15 @@ public class Principal{
             System.out.println("Cadastro efetuado!");
             System.out.println("Sua senha eh: " + senha);
         }
-        else System.out.println("\nJá existe Usuario com esse email!\nCadastro cancelado!"); 
-    }//Fim menuCadastro 
+        else System.out.println("\nJá existe Usuario com esse email!\nCadastro cancelado!");
+    }//Fim menuCadastro
 
     /**
      * Menu de acoes administrativas
-     * @throws Exception 
+     * @throws Exception
      * */
-    private static void menuAdministrador() throws Exception 
-    {//Inicio menuAdministrador    
+    private static void menuAdministrador() throws Exception
+    {//Inicio menuAdministrador
         byte opcao;
         boolean fecharMenu = false;
         do{
@@ -210,25 +210,25 @@ public class Principal{
                     case 4:
                         fecharMenu = true;
                         break;
-                    default: 
+                    default:
                         System.out.println("Opcao invalida!\n");
-                        Thread.sleep(1000);  
+                        Thread.sleep(1000);
                         break;
                 }
             }catch(InputMismatchException inputMismatchException){
                 System.out.println("\nOops! Parece que digitou algo errado por engano!\nTente novamente!");
                 Thread.sleep(1000);
                 read.next();//Limpar buffer do Scanner
-            } 
+            }
 
         } while(!fecharMenu);
-    }//Fim menuAdministrador 
+    }//Fim menuAdministrador
 
     /**
      * Menu administrativo de acesso a relatorios de compra do sistema
      * @throws Exception
      * */
-    private static void menuRelatorio() throws Exception 
+    private static void menuRelatorio() throws Exception
     {//Inicio menuRelatorio
         byte opcao;
         boolean fecharMenu = false;
@@ -275,7 +275,7 @@ public class Principal{
                         for(Cliente n: listC){
                             System.out.println("Cliente de ID: " + n.getID() + " Nome: " + n.nomeCliente + "\tGasto total: " + nf.format(n.getGastoTotal()));
                             quant--;
-                            if(quant == 0) break; 
+                            if(quant == 0) break;
                         }
                     }
                     break;
@@ -289,9 +289,9 @@ public class Principal{
                         for(int i = 0; i < idsProdutos.length; i++){
                             p = arqProdutos.pesquisar(idsProdutos[i] - 1);
                             System.out.println(
-                                    "\n\tProduto " + i + " -> " + 
-                                    " ID: " + p.getID() + 
-                                    " Nome: " + p.nomeProduto + 
+                                    "\n\tProduto " + i + " -> " +
+                                    " ID: " + p.getID() +
+                                    " Nome: " + p.nomeProduto +
                                     " Marca: " + p.marca
                                     );
                         }
@@ -321,22 +321,22 @@ public class Principal{
                     break;
                 case 4:
                     fecharMenu = true;
-                    break;    
+                    break;
                 default:
                     System.out.println("Opcao invalida!\n");
                     Thread.sleep(1000);
                     break;
             }
-        }while(!fecharMenu); 
-    }//Fim menuRelatorio 
+        }while(!fecharMenu);
+    }//Fim menuRelatorio
 
     /**
      * Menu de acoes do Usuario
      * @param idCliente O id do cliente que fez login
-     * @throws Exception 
+     * @throws Exception
      * */
     private static void menuCliente(int idCliente) throws Exception
-    {//Inicio menuCliente 
+    {//Inicio menuCliente
         byte opcao;
         int idCompra;
         ArrayList<Compra> minhasCompras = null;
@@ -370,9 +370,9 @@ public class Principal{
                                 for(Produto p: listProdutos){
                                     if(p.getID() == ic.idProduto){
                                         System.out.println(
-                                                "\n\tProduto: " + p.nomeProduto + 
-                                                "\n\tMarca: " + p.marca + 
-                                                "\n\tPreço: " + nf.format(ic.precoUnitario) + 
+                                                "\n\tProduto: " + p.nomeProduto +
+                                                "\n\tMarca: " + p.marca +
+                                                "\n\tPreço: " + nf.format(ic.precoUnitario) +
                                                 "\n\tQuant: " + ic.qtdProduto
                                                 );
                                     }
@@ -402,7 +402,7 @@ public class Principal{
                         break;
                     case 4:
                         fecharMenu = true;
-                        break;    
+                        break;
                     default:
                         System.out.println("Opcao invalida!\n");
                         Thread.sleep(1000);
@@ -412,7 +412,7 @@ public class Principal{
                 System.out.println("\nOops! Parece que digitou algo errado por engano!\nTente novamente!");
                 Thread.sleep(1000);
                 read.next();//Limpar buffer do Scanner
-            } 
+            }
         }while(!fecharMenu);
     }//Fim menuCliente
 
@@ -466,7 +466,7 @@ public class Principal{
                     break;
                 default:
                     System.out.println("Opcao invalida!\n");
-                    Thread.sleep(1000);                     
+                    Thread.sleep(1000);
                     break;
             }
 
@@ -477,7 +477,7 @@ public class Principal{
      * Menu de Compra do Cliente
      * @param idCliente ID do cliente que fez login
      * @param idCompra ID da nova compra criada
-     * @throws Exception 
+     * @throws Exception
      * */
     private static void menuCompra(int idCliente, int idCompra) throws Exception
     {//Inicio menuCompra
@@ -486,7 +486,7 @@ public class Principal{
         boolean fecharMenu = false;
         int[] lista;
         int idItemComprado = 0;
-        do{ 
+        do{
             try{
                 System.out.println(
                         "\n\t*** MENU DE COMPRA ***\n"           +
@@ -566,16 +566,16 @@ public class Principal{
                         arqCompra.remover(idCompra - 1);
                         System.out.println("Sua compra foi cancelada!");
                         break;
-                    default: 
+                    default:
                         System.out.println("Opcao invalida!\n");
-                        Thread.sleep(1000);  
+                        Thread.sleep(1000);
                         break;
-                } 
+                }
             }catch(InputMismatchException inputMismatchException){
                 System.out.println("\nOops! Parece que digitou algo errado por engano!\nTente novamente!");
                 Thread.sleep(1000);
                 read.next();//Limpar buffer do Scanner
-            } 
+            }
         }while(!fecharMenu);
     }//Fim menuCompra
 
@@ -584,7 +584,7 @@ public class Principal{
      * @param idCliente ID do cliente
      * @param idCompra ID da compra
      * @return O valor da compra do produto
-     * @throws Exception 
+     * @throws Exception
      * */
     private static float adicionarItem(int idCliente, int idCompra) throws Exception{
         int idItemComprado;
@@ -597,7 +597,7 @@ public class Principal{
             int id = read.nextInt();
             Produto p = arqProdutos.pesquisar(id - 1);
             if (p != null && p.getID() != -1 ){
-                do{ 
+                do{
                     qtdInvalida = false;
                     System.out.print("Qual a quantidade desejada? ");
                     byte qtdProduto = read.nextByte();
@@ -616,7 +616,7 @@ public class Principal{
                         System.out.println("Valor invalido!");
                         qtdInvalida = true;
                     }
-                }while(qtdInvalida);   
+                }while(qtdInvalida);
             }else{
                 System.out.println("\nId invalido!");
                 idInvalido = true;
@@ -626,7 +626,7 @@ public class Principal{
     }//end adicionaritem
 
     /**
-     * Menu de categorias de produtos 
+     * Menu de categorias de produtos
      * @throws Exception
      * */
     private static void menuCategoria() throws Exception
@@ -634,7 +634,7 @@ public class Principal{
         byte opcao;
         boolean fecharMenu = false;
         Integer[] listaC = null;
-        do{  
+        do{
             System.out.println(
                     "\n\t*** MENU DE CATEGORIAS ***\n"                   +
                     "0 - Adicionar categoria\n"                          +
@@ -663,18 +663,18 @@ public class Principal{
                 case 4:
                     fecharMenu = true;
                     break;
-                default: 
+                default:
                     System.out.println("Opcao invalida!\n");
-                    Thread.sleep(1000);  
+                    Thread.sleep(1000);
                     break;
             }
         }while(!fecharMenu);
     }//Fim menuCategoria
 
     /**
-     * Menu administrativo de Produtos 
+     * Menu administrativo de Produtos
      * @throws Exception
-     * */  
+     * */
     private static void menuProdutos() throws Exception
     {//Inicio menuProdutos
         byte opcao;
@@ -711,7 +711,7 @@ public class Principal{
                 case 5:
                     fecharMenu = true;
                     break;
-                default:                    
+                default:
                     System.out.println("Opcao invalida!\n");
                     Thread.sleep(1000);
                     break;
@@ -725,13 +725,13 @@ public class Principal{
      * */
     private static void adicionarP() throws Exception
     {//Inicio adicionarP
-        //inserir produto  
+        //inserir produto
         String nomeProduto, descricao, marca, origem;
         int idCategoria = 0;
         Integer[] idsValidosC;
         float preco;
-        int id; 
-        boolean erro, valido;     
+        int id;
+        boolean erro, valido;
         System.out.println("\t** Adicionar produto **\n");
         System.out.print("Nome do produto: ");
         nomeProduto = read.nextLine();
@@ -761,7 +761,7 @@ public class Principal{
                 switch (read.nextByte()){
                     case 1:
                         id = arqProdutos.inserir(new Produto(nomeProduto,descricao,preco,marca,origem,idCategoria));
-                        System.out.println("\nProduto inserido com o ID: " + id);   
+                        System.out.println("\nProduto inserido com o ID: " + id);
                         break;
                     case 2:
                         System.out.println("\nNovo produto não foi inserido!");
@@ -771,7 +771,7 @@ public class Principal{
                         erro = true;
                         break;
                 }
-            } while(erro);  
+            } while(erro);
         }
         else{
             System.out.println("\nOps..! Aparentemente não existem categorias para associar o novo produto!");
@@ -783,7 +783,7 @@ public class Principal{
     /**
      * Metodo para adicionar uma categoria.
      * @throws Exception
-     * */  
+     * */
     private static void adicionarC() throws Exception
     {//inicio adicionarC
         String nomeCategoria;
@@ -806,7 +806,7 @@ public class Principal{
                         System.out.println("\nCategoria criada com o ID: " + id);
                         System.out.println("Operacao concluida com sucesso!");
                         Thread.sleep(1000);
-                        System.out.println("\nDeseja criar outra categoria ?"); 
+                        System.out.println("\nDeseja criar outra categoria ?");
                         System.out.print("1 - SIM\n2 - NÂO\nR: ");
                         if (read.nextByte() == 1) outro = true;
                         break;
@@ -828,8 +828,8 @@ public class Principal{
      * */
     private static void removerP() throws Exception
     {//Inicio removerP
-        int id; 
-        boolean erro, result;  
+        int id;
+        boolean erro, result;
         System.out.println("\t** Remover produto **\n");
         System.out.print("ID do produto a ser removido: ");
         id = read.nextInt();
@@ -843,9 +843,9 @@ public class Principal{
                 System.out.print("1 - SIM\n2 - NÂO\nR: ");
                 switch (read.nextByte()){
                     case 1:
-                        result = arqProdutos.remover(id - 1); 
+                        result = arqProdutos.remover(id - 1);
                         if(result) System.out.println("Removido com sucesso!");
-                        else System.out.println("Produto não encontrado!"); 
+                        else System.out.println("Produto não encontrado!");
                         break;
                     case 2:
                         System.out.println("\nOperação Cancelada!");
@@ -855,7 +855,7 @@ public class Principal{
                         erro = true;
                         break;
                 }
-            } while (erro); 
+            } while (erro);
         }
     }//Fim removerP
 
@@ -863,7 +863,7 @@ public class Principal{
      * Metodo para remover uma categoria
      * @throws Exception
      * */
-    private static void removerC() throws Exception 
+    private static void removerC() throws Exception
     {//Inicio removerC
         int idCategoria;
         int idCategoriaNew;
@@ -881,11 +881,11 @@ public class Principal{
                 if(nomeCategoria == null){
                     erro = true;
                     System.out.println("Categoria inexistente!");
-                } 
+                }
             }
             else {
                 erro = true;
-                System.out.println("ID Inválida!");  
+                System.out.println("ID Inválida!");
             }
             System.out.println();
         } while(erro);
@@ -899,7 +899,7 @@ public class Principal{
                     lista = listProdutosC(idCategoria);
                     if (lista.isEmpty()){
                         System.out.println("Não ha produtos associados a '" + nomeCategoria + "', procedendo com remoção...");
-                        result = arqCategorias.remover(idCategoria - 1); 
+                        result = arqCategorias.remover(idCategoria - 1);
                         if(result) System.out.println("Removido com sucesso!");
                     }
                     else {
@@ -935,11 +935,11 @@ public class Principal{
                                         System.out.println("\nProdutos:");
                                         for(Produto p: lista){
                                             System.out.println(
-                                                    "\nId: "          + p.getID()    + 
-                                                    "\nNome: "        + p.nomeProduto + 
-                                                    "\nDescricao: "   + p.descricao    + 
-                                                    "\nMarca: "       + p.marca     
-                                                    );  
+                                                    "\nId: "          + p.getID()    +
+                                                    "\nNome: "        + p.nomeProduto +
+                                                    "\nDescricao: "   + p.descricao    +
+                                                    "\nMarca: "       + p.marca
+                                                    );
                                             System.out.print("\nEscolha uma outra categoria para o produto,\ne digite o ID: ");
                                             do{
                                                 valido = false;
@@ -949,7 +949,7 @@ public class Principal{
                                                 else if(idCategoriaNew == idCategoria){
                                                     System.out.println("Não pode escolher a mesma categoria antiga!\nDigite um ID valido: ");
                                                     valido = false;
-                                                } 
+                                                }
                                             } while(!valido);
                                             p.idCategoria = idCategoriaNew;
                                             if(arqProdutos.alterar(p.getID(), p)) System.out.println("Movido com sucesso!");
@@ -960,11 +960,11 @@ public class Principal{
                                     break;
                                 case 2:
                                     System.out.println("\nOperação Cancelada!");
-                                    break;  
+                                    break;
                                 default:
                                     System.out.println("\nOpção Inválida!\n");
                                     erro = true;
-                                    break; 
+                                    break;
                             }//Fim switch
                         }while(erro);
                     }
@@ -977,7 +977,7 @@ public class Principal{
                     erro = true;
                     break;
             }
-        } while (erro);  
+        } while (erro);
     }//Fim removerC
 
     /**
@@ -986,12 +986,12 @@ public class Principal{
      * */
     private static void alterarP() throws Exception
     {//Inicio alterarP
-        String nomeProduto, descricao, marca, origem; 
+        String nomeProduto, descricao, marca, origem;
         int idCategoria;
         Integer[] idsValidosC;
         float preco;
-        int id; 
-        boolean erro, result, valido; 
+        int id;
+        boolean erro, result, valido;
         System.out.println("\t** Alterar produto **\n");
         do{
             erro = false;
@@ -1002,7 +1002,7 @@ public class Principal{
                 System.out.println("ID Inválida! ");
             }
             System.out.println();
-        } while(erro);   
+        } while(erro);
         System.out.print("Nome do produto: ");
         nomeProduto = read.nextLine();
         nomeProduto = read.nextLine();
@@ -1032,7 +1032,7 @@ public class Principal{
                     case 1:
                         result = arqProdutos.alterar(id, new Produto(nomeProduto,descricao,preco,marca,origem,idCategoria));
                         if(result) System.out.println("Alterado com sucesso!");
-                        else System.out.println("Produto para alterar não encontrado!");  
+                        else System.out.println("Produto para alterar não encontrado!");
                         break;
                     case 2:
                         System.out.println("\nOperação Cancelada!");
@@ -1042,13 +1042,13 @@ public class Principal{
                         erro = true;
                         break;
                 }
-            } while (erro);   
+            } while (erro);
         }
         else{
             System.out.println("\nOps..! Aparentemente não existem categorias para associar ao produto!");
             System.out.println("Por favor, crie ao menos uma categoria antes de adicionar um produto!");
             Thread.sleep(1000);
-        } 
+        }
     }//Fim alterarP
 
     /**
@@ -1076,23 +1076,23 @@ public class Principal{
         if (p != null && p.getID() != -1 ){
             c = arqCategorias.pesquisar(p.idCategoria - 1);
             System.out.println(
-                    "Id: "            + p.getID()    + 
-                    "\nNome: "        + p.nomeProduto + 
-                    "\nDescricao: "   + p.descricao    + 
-                    "\nPreco: "       + nf.format(p.preco) + 
-                    "\nMarca: "       + p.marca        + 
+                    "Id: "            + p.getID()    +
+                    "\nNome: "        + p.nomeProduto +
+                    "\nDescricao: "   + p.descricao    +
+                    "\nPreco: "       + nf.format(p.preco) +
+                    "\nMarca: "       + p.marca        +
                     "\nOrigem: "      + p.origem
                     );
             if(c != null) System.out.println("Categoria: " + c.nome);
-            else System.out.println("Categoria: " + p.idCategoria);  
+            else System.out.println("Categoria: " + p.idCategoria);
         }
-        else System.out.println("Produto não encontrado!");  
+        else System.out.println("Produto não encontrado!");
     }//Fim consultaP
 
     /**
      * Metodo para mostrar todos os produtos de uma categoria
      * @throws Exception
-     * */  
+     * */
     private static void consultaC() throws Exception
     {//Inicio consultaC
         boolean erro;
@@ -1116,14 +1116,14 @@ public class Principal{
             System.out.println("Produtos pertencentes a '" + nomeCategoria + "'");
             for(Produto p: lista){
                 System.out.println(
-                        "Id: "            + p.getID()    + 
-                        "\nNome: "        + p.nomeProduto + 
-                        "\nDescricao: "   + p.descricao    + 
-                        "\nPreco: "       + nf.format(p.preco) + 
-                        "\nMarca: "       + p.marca        + 
+                        "Id: "            + p.getID()    +
+                        "\nNome: "        + p.nomeProduto +
+                        "\nDescricao: "   + p.descricao    +
+                        "\nPreco: "       + nf.format(p.preco) +
+                        "\nMarca: "       + p.marca        +
                         "\nOrigem: "      + p.origem       +
-                        "\nCategoria: "   + nomeCategoria  
-                        );     
+                        "\nCategoria: "   + nomeCategoria
+                        );
             }
         }
         else System.out.println("Não ha produtos nessa categoria, ou ela não existe!");
@@ -1132,7 +1132,7 @@ public class Principal{
     /**
      * Metodo para mostrar todos os produtos cadastrados
      * @throws Exception
-     * */  
+     * */
     private static void listaP() throws Exception
     {//Inicio listaP
         String nomeCategoria;
@@ -1142,19 +1142,19 @@ public class Principal{
             if (p != null && p.getID() != -1 ){
                 nomeCategoria = getNomeCategoria(p.idCategoria - 1);
                 System.out.println(
-                        "Id: "            + p.getID()    + 
-                        "\nNome: "        + p.nomeProduto + 
-                        "\nDescricao: "   + p.descricao    + 
-                        "\nPreco: "       + nf.format(p.preco) + 
-                        "\nMarca: "       + p.marca        + 
+                        "Id: "            + p.getID()    +
+                        "\nNome: "        + p.nomeProduto +
+                        "\nDescricao: "   + p.descricao    +
+                        "\nPreco: "       + nf.format(p.preco) +
+                        "\nMarca: "       + p.marca        +
                         "\nOrigem: "      + p.origem
                         );
                 if(nomeCategoria != null) System.out.println("Categoria: " + nomeCategoria);
                 else System.out.println("Categoria: " + p.idCategoria);
                 System.out.println();
                 Thread.sleep(500);
-            }  
-        } 
+            }
+        }
     }//Fim listaP
 
     /**
@@ -1185,20 +1185,20 @@ public class Principal{
      * @return Arraylist de produtos da categoria
      * @throws Exception
      * */
-    private static ArrayList<Produto> listProdutosC(int idCategoria) throws Exception 
+    private static ArrayList<Produto> listProdutosC(int idCategoria) throws Exception
     {//Inicio listProdutosC
         ArrayList<Produto> lista = arqProdutos.toList();
         lista.removeIf(p -> p.idCategoria != idCategoria);
         return lista;
-    }//Fim listProdutosC 
+    }//Fim listProdutosC
 
     /**
      * Metodo para obter o nome da categoria
-     * @param idCategoria 
+     * @param idCategoria
      * @return O nome da categoria
      * @throws Exception
      * */
-    private static String getNomeCategoria(int idCategoria) throws Exception 
+    private static String getNomeCategoria(int idCategoria) throws Exception
     {//Inicio getNomeCategoria
         String nome = null;
         Categoria c = arqCategorias.pesquisar(idCategoria);
@@ -1210,7 +1210,7 @@ public class Principal{
      * Metodo para obter um cliente por meio do email
      * @param email
      * @return O cliente com o email correspondente
-     * @throws Exception 
+     * @throws Exception
      * */
     private static Cliente getCliente(String email) throws Exception
     {//Inicio getCliente
@@ -1236,7 +1236,7 @@ public class Principal{
         ArrayList<Compra> list =  arqCompra.toList();
         list.removeIf(c -> c.idCliente != idCliente);
         return list;
-    }//Fim mostraCompras  
+    }//Fim mostraCompras
 
     /**
      * Metodo para obter a lista de items comprados pertencentes a uma compra
@@ -1244,7 +1244,7 @@ public class Principal{
      * @return Um ArrayList apenas com os itens comprados da compra especificada
      * @throws Exception
      * */
-    private static ArrayList<ItemComprado> listItensComprados(int idCompra) throws Exception 
+    private static ArrayList<ItemComprado> listItensComprados(int idCompra) throws Exception
     {//Inicio listItensComprados
         ArrayList<ItemComprado> list = arqItemComprado.toList();
         list.removeIf(ic -> ic.idCompra != idCompra);
